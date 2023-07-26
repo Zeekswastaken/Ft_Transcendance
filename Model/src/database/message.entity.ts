@@ -5,9 +5,9 @@ export class Message{
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
-    name: string;  
+    name: String;  
     @Column()
-    text: string;
+    text: String;
     @Column()
     Sender_id: number;
     @Column()

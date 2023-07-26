@@ -5,13 +5,13 @@ export class User{
     @PrimaryGeneratedColumn()
     id: number;
     @Column({unique: true})
-    username: string;
+    username: String;
     @Column()
     birthday: Date;
     @Column()
-    gender: string;
+    gender: String;
     @Column()
-    avatar_URL: string;
+    avatar_URL: String;
     @OneToMany(() => ChannelMembership, membership => membership.user)
   memberships: ChannelMembership[];
 }

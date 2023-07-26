@@ -5,11 +5,11 @@ export class Channel {
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
-    Name: string;
+    Name: String;
     @Column()
-    Type:string;
+    Type:String;
     @Column({nullable: true})
-    Password:string;
+    Password:String;
     @OneToMany(() => ChannelMembership, ChannelMembership => ChannelMembership.Channelid)
     memberships: ChannelMembership[];
 }
