@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 import { Response ,Request} from 'express';
 import { TokenGuard } from './auth/guards';
 import { UserService } from './user/user.service';
-import { UserDto } from './user/use.Dto';
+import { UserDto } from './Dto/use.Dto';
 import { JWToken } from './auth/jwt.service';
 
 
@@ -19,6 +19,7 @@ export class AppController {
         res.sendFile('/Users/orbiay/Desktop/App2/app/views/index.html');
     if(status.status == 'authorized')
     {
+        console.log(query.avatar_URL);
         //return req.body;
         const decoded = await this.jwt.decoded(status.token);
         const user = await this.userservice.findByemail((decoded).email);
@@ -26,6 +27,7 @@ export class AppController {
         console.log('user == '+ JSON.stringify(user));
         res.render('profile',{user});
     }
+    console.log("status = " + status);
     return status;
   }
 }

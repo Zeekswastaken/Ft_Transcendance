@@ -1,4 +1,4 @@
-import { StringifyOptions } from "querystring";
+
 // @Entity()
 // export class User 
 // {
@@ -14,23 +14,23 @@ import { StringifyOptions } from "querystring";
 //     @Column({default:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU'})
 //     image:String;
 // }
+
 import {Entity, PrimaryColumn, Column, PrimaryGeneratedColumn, Collection, ManyToMany, OneToMany, ManyToOne, JoinColumn} from "typeorm";
+
 @Entity()
 export class User{
     @PrimaryGeneratedColumn()
-    id: number;
+    id: Number;
     @Column({unique: true})
-    username: string;
-    @Column()
-    email:String;
-    @Column({default:'Oauth'})
-    password:String
+    username: String;
     @Column({nullable:true})
     birthday: Date;
     @Column({nullable:true})
-    gender: string;
+    gender: String;
+    @Column()
+    email: String;
+    @Column({default:'Oauth'})
+    password: String;
     @Column({default:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU'})
-    avatar_URL: string;
-    // @OneToMany(() => ChannelMembership, membership => membership.user)
-    //memberships: ChannelMembership[];
+    avatar_URL: String;
 }

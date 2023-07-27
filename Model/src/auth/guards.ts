@@ -41,12 +41,13 @@ export class TokenGuard implements CanActivate {
     const req = context.switchToHttp().getRequest<CustomRequest>();
     const res = context.switchToHttp().getResponse<Response>();
     const authorizationHeader = req.headers['authorization'];
+    console.log("\n\n\n\n\nauthorizationHeader = "+ authorizationHeader + "\n\n\n\n")
     if (authorizationHeader && await authorizationHeader.startsWith('Bearer ')) {
-      const token = await authorizationHeader.substring(7); // Extract the token from the "Bearer " prefix
-      console.log('token = ' + token);
+      const token = await authorizationHeader.substring(7); 
+      console.log('token2 = ' + token + "\n\n\n\n\n\n");
       
       if (await this.jwtToken.verify(token)) {
-        console.log('Token is valid');
+        console.log('Token is valid\n\n\n\n\n');
         //Object.defineProperty(req, 'user', { value: { status: 'authorized', message:'token valid' } });
         req.user = { status: 'authorized', message: 'token valid',token:token };
         return true;

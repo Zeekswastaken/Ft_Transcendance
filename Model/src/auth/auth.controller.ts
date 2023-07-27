@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserDto } from 'src/user/use.Dto';
+import { UserDto } from 'src/Dto/use.Dto';
 import { LocalStrategy } from './local.startegy';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
@@ -99,13 +99,13 @@ export class googleController{
             res.cookie('jwt', cookie_token, {
                 httpOnly: true,
             });
-            console.log('coockie token = '+ cookie_token);
+            console.log('coockie token = '+ cookie_token + "\n\n\n\n");
             res.setHeader('Authorization', `Bearer ${cookie_token}`);
             res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
             return{
                 token: cookie_token,
                 user:user,
-                message:'the email already exist'
+                message:'the user already exist'
             } 
         }
     }
@@ -117,9 +117,7 @@ export class fortytwo_Controller{
     @Get('42')
     @UseGuards(AuthGuard('42'))
     // @UseGuards(TokenGuard)
-    googlelogin(@Req() req,@Res() res){
-        console.log(1);
-    }
+    googlelogin(@Req() req,@Res() res){}
 
 
     @Get('from-42')
