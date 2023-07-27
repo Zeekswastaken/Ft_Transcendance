@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fortytwo_Controller = exports.googleController = exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
-const use_Dto_1 = require("../user/use.Dto");
+const use_Dto_1 = require("../Dto/use.Dto");
 const local_startegy_1 = require("./local.startegy");
 const passport_1 = require("@nestjs/passport");
 let AuthController = class AuthController {
@@ -129,13 +129,13 @@ let googleController = class googleController {
             res.cookie('jwt', cookie_token, {
                 httpOnly: true,
             });
-            console.log('coockie token = ' + cookie_token);
+            console.log('coockie token = ' + cookie_token + "\n\n\n\n");
             res.setHeader('Authorization', `Bearer ${cookie_token}`);
             res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
             return {
                 token: cookie_token,
                 user: user,
-                message: 'the email already exist'
+                message: 'the user already exist'
             };
         }
     }
@@ -165,9 +165,7 @@ let fortytwo_Controller = class fortytwo_Controller {
     constructor(authservice) {
         this.authservice = authservice;
     }
-    googlelogin(req, res) {
-        console.log(1);
-    }
+    googlelogin(req, res) { }
     async fortytwo_loginredirect(req, res) {
         console.log("CallBack");
         const user = await req.user;

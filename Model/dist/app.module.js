@@ -21,8 +21,8 @@ let AppModule = class AppModule {
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [auth_module_1.AuthModule, user_module_1.UserModule, jwt_1.JwtModule.register({
-                secret: 'k9vL9fr02UHQm1I7C5sO8bjdMnG3FpWz',
-                signOptions: { expiresIn: '3m' },
+                secret: "0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
+                signOptions: { expiresIn: '1h' },
             })],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, guards_1.TokenGuard, jwt_service_1.JWToken, user_service_1.UserService],

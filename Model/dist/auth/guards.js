@@ -20,11 +20,12 @@ let TokenGuard = class TokenGuard {
         const req = context.switchToHttp().getRequest();
         const res = context.switchToHttp().getResponse();
         const authorizationHeader = req.headers['authorization'];
+        console.log("\n\n\n\n\nauthorizationHeader = " + authorizationHeader + "\n\n\n\n");
         if (authorizationHeader && await authorizationHeader.startsWith('Bearer ')) {
             const token = await authorizationHeader.substring(7);
-            console.log('token = ' + token);
+            console.log('token2 = ' + token + "\n\n\n\n\n\n");
             if (await this.jwtToken.verify(token)) {
-                console.log('Token is valid');
+                console.log('Token is valid\n\n\n\n\n');
                 req.user = { status: 'authorized', message: 'token valid', token: token };
                 return true;
             }

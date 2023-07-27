@@ -12,10 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JWToken = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const jsonwebtoken_1 = require("jsonwebtoken");
 let JWToken = class JWToken {
     constructor(jwtService) {
         this.jwtService = jwtService;
-        this.secret_key = 'k9vL9fr02UHQm1I7C5sO8bjdMnG3FpWz';
+        this.secret_key = '0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6';
     }
     async generateToken(user) {
         return this.jwtService.sign(user);
@@ -23,22 +24,25 @@ let JWToken = class JWToken {
     async verify(token) {
         try {
             if (token) {
+                console.log("Token verify is " + token + "\n\n\n\n\n\n\n\n");
                 const decoded = await this.jwtService.verifyAsync(token, { secret: this.secret_key.toString() });
                 console.log('Decoded:', decoded);
-                const currentTime = Math.floor(Date.now() / 1000);
-                if (decoded.exp > currentTime) {
-                    console.log('EHO EHO');
-                    return true;
-                }
-                else {
-                    return false;
-                }
+                return true;
             }
             else
                 return false;
         }
         catch (error) {
-            console.log('4');
+            console.log('catch Verify : the token had expired\n\n\n');
+            if (error instanceof jsonwebtoken_1.TokenExpiredError) {
+                console.error('Token has expired:', error.message);
+            }
+            else if (error instanceof jsonwebtoken_1.JsonWebTokenError) {
+                console.error('Invalid token:', error.message);
+            }
+            else {
+                console.error('Token verification failed:', error);
+            }
             return false;
         }
     }

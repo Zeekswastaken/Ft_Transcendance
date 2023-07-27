@@ -16,7 +16,7 @@ exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const guards_1 = require("./auth/guards");
 const user_service_1 = require("./user/user.service");
-const use_Dto_1 = require("./user/use.Dto");
+const use_Dto_1 = require("./Dto/use.Dto");
 const jwt_service_1 = require("./auth/jwt.service");
 let AppController = class AppController {
     constructor(userservice, jwt) {
@@ -29,11 +29,13 @@ let AppController = class AppController {
         if (status.status == 'unauthorized')
             res.sendFile('/Users/orbiay/Desktop/App2/app/views/index.html');
         if (status.status == 'authorized') {
+            console.log(query.avatar_URL);
             const decoded = await this.jwt.decoded(status.token);
             const user = await this.userservice.findByemail((decoded).email);
             console.log('user == ' + JSON.stringify(user));
             res.render('profile', { user });
         }
+        console.log("status = " + status);
         return status;
     }
 };

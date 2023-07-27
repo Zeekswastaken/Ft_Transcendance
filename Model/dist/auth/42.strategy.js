@@ -17,7 +17,7 @@ let fortytwo_Strategy = class fortytwo_Strategy extends (0, passport_1.PassportS
     constructor() {
         super({
             clientID: 'u-s4t2ud-97201b0b9664120cef3e2130f4f15b0f1993c65c776a8593967c46214ef534d6',
-            clientSecret: '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',
+            clientSecret: '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',
             callbackURL: 'http://localhost:3000/auth/from-42',
         });
     }

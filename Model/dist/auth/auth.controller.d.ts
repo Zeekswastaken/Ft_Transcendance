@@ -1,5 +1,5 @@
 import { AuthService } from './auth.service';
-import { UserDto } from 'src/user/use.Dto';
+import { UserDto } from 'src/Dto/use.Dto';
 import { LocalStrategy } from './local.startegy';
 import { Response } from 'express';
 export declare class AuthController {

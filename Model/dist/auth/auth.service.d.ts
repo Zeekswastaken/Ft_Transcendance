@@ -1,6 +1,6 @@
 import { Response } from 'express';
-import { UserDto, jwtDTO } from 'src/user/use.Dto';
-import { User } from 'src/user/user.entities';
+import { UserDto, jwtDTO } from 'src/Dto/use.Dto';
+import { User } from 'src/DB_tables/user.entities';
 import { UserService } from 'src/user/user.service';
 import { JWToken } from './jwt.service';
 export declare class AuthService {
