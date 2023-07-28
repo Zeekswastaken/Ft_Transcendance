@@ -84,13 +84,14 @@ export class googleController{
                 httpOnly: true,
               });
             res.setHeader('Authorization', `Bearer ${cookie_token}`);
-            res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
+            //res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
             console.log('coockie token = '+ cookie_token);
-            return {
-                token : cookie_token,
-                user:user,
-                message:'the user create secssufully',
-            }
+            res.status(200).redirect("http://localhost:3001/");
+            // return {
+            //     token : cookie_token,
+            //     user:user,
+            //     message:'the user create secssufully',
+            // }
         }
         else{
             console.log('error');
@@ -101,7 +102,8 @@ export class googleController{
             });
             console.log('coockie token = '+ cookie_token + "\n\n\n\n");
             res.setHeader('Authorization', `Bearer ${cookie_token}`);
-            res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
+            //res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
+            res.status(200).redirect("http://localhost:3001/");
             return{
                 token: cookie_token,
                 user:user,
@@ -117,7 +119,9 @@ export class fortytwo_Controller{
     @Get('42')
     @UseGuards(AuthGuard('42'))
     // @UseGuards(TokenGuard)
-    googlelogin(@Req() req,@Res() res){}
+    googlelogin(@Req() req,@Res() res){
+        console.log("heloWorld")
+    }
 
 
     @Get('from-42')
@@ -130,13 +134,12 @@ export class fortytwo_Controller{
             const cookie_token = await this.authservice.generatOken(user);
             res.setHeader('Authorization', `Bearer ${cookie_token}`);
             console.log('coockie token = '+ cookie_token);
-            res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
-
-            return {
-                token : cookie_token,
+            //res.sendFile('/Usrs/orbiay/Desktop/App2/app/views/home.html');
+            res.status(200).redirect("http://localhost:3001/");
+            const user_data = {token: cookie_token,
                 user:user,
-                message:'the user create secssufully',
-            }
+                message:'the email already exist'}
+            return user_data;
         }
         else{
             console.log('error');
@@ -147,12 +150,13 @@ export class fortytwo_Controller{
               });
             console.log('coockie token = '+ cookie_token);
             res.setHeader('Authorization', `Bearer ${cookie_token}`);
-            res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
-            return{
-                token: cookie_token,
+            //res.sendFile('/Users/orbiay/Desktop/App2/app/views/home.html');
+            res.status(200).redirect("http://localhost:3001/");
+            //res.redirect("http://localhost:3001/");
+            const user_data = {token: cookie_token,
                 user:user,
-                message:'the email already exist'
-            } 
+                message:'the email already exist'}
+            return user_data;
         }
     }
 }
