@@ -101,7 +101,7 @@ let googleController = class googleController {
     constructor(authservice) {
         this.authservice = authservice;
     }
-    googlelogin(response) {
+    googlelogin() {
         console.log("Auth/google");
     }
     async googleloginredirect(req, res) {
@@ -110,12 +110,13 @@ let googleController = class googleController {
         console.log(user);
         if (await this.authservice.create_Oauth(user) == true) {
             const cookie_token = await this.authservice.generatOken(user);
-            res.cookie('jwt', cookie_token, {
+            res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
             });
-            res.setHeader('Authorization', `Bearer ${cookie_token}`);
+            res.redirect("http://localhost:3001/");
             console.log('coockie token = ' + cookie_token);
             return {
+                status: 200,
                 token: cookie_token,
                 user: user,
                 message: 'the user create secssufully',
@@ -124,13 +125,13 @@ let googleController = class googleController {
         else {
             console.log('error');
             const cookie_token = await this.authservice.generatOken(user);
-            console.log('create token2');
-            res.cookie('jwt', cookie_token, {
+            res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
             });
+            res.redirect("http://localhost:3001/");
             console.log('coockie token = ' + cookie_token + "\n\n\n\n");
-            res.setHeader('Authorization', `Bearer ${cookie_token}`);
             return {
+                status: 200,
                 token: cookie_token,
                 user: user,
                 message: 'the user already exist'
@@ -139,11 +140,10 @@ let googleController = class googleController {
     }
 };
 __decorate([
-    (0, common_1.Get)('google'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('google')),
-    __param(0, (0, common_1.Res)()),
+    (0, common_1.Get)('google'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], googleController.prototype, "googlelogin", null);
 __decorate([
@@ -172,27 +172,27 @@ let fortytwo_Controller = class fortytwo_Controller {
         const user = await req.user;
         if (await this.authservice.create_Oauth(user) == true) {
             const cookie_token = await this.authservice.generatOken(user);
-            res.setHeader('Authorization', `Bearer ${cookie_token}`);
-            console.log('coockie token = ' + cookie_token);
-            res.status(200).redirect("http://localhost:3001/");
+            res.cookie('accessToken', cookie_token, {
+                httpOnly: true, secure: false
+            });
+            res.redirect("http://localhost:3001/");
             const user_data = { token: cookie_token,
                 user: user,
                 message: 'the email already exist' };
+            console.log(user_data);
             return user_data;
         }
         else {
-            console.log('error');
             const cookie_token = await this.authservice.generatOken(user);
-            console.log('create token2');
-            res.cookie('Access Token', cookie_token, {
-                httpOnly: true,
+            res.cookie('accessToken', cookie_token, {
+                httpOnly: true, secure: false
             });
             console.log('coockie token = ' + cookie_token);
-            res.setHeader('Authorization', `Bearer ${cookie_token}`);
-            res.status(200).redirect("http://localhost:3001/");
+            res.redirect("http://localhost:3001/");
             const user_data = { token: cookie_token,
                 user: user,
                 message: 'the email already exist' };
+            console.log(user_data);
             return user_data;
         }
     }

@@ -1,27 +1,11 @@
 "use client"
 import axios from "axios";
-import { error } from "console";
-import { kill } from "process";
 import React, { useEffect } from "react"
 
-const login = () => {
-  const handleSubmit = () => {
-    console.log("Submited");
-  }
-  const handleGoogle = async () => {
-    console.log("here");
-    const res = await axios.get("http://localhost:3000/auth/google").then((re)=>{console.log(re)}).catch((err)=>{console.log(err)})
 
-  
-  }
-  const handle_42 = async () => {
-    const res =  await axios.get("http://localhost:3000/auth/42")
-    console.log(res.data);
-    // alert(res);
-    // console.log(res.headers);
-  }
 
-  const link_42 = "http://localhost:3000/auth/42";
+
+  const link_42 = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-97201b0b9664120cef3e2130f4f15b0f1993c65c776a8593967c46214ef534d6&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Ffrom-42&response_type=code";
 
   const link_google = "http://localhost:3000/auth/google"
 
@@ -34,11 +18,11 @@ const login = () => {
             <p className=" text-[45px] pt-10">Welcome Back</p>
           </div> 
             <div className="space-x-11 flex place-content-center mt-8">
-              <a href={link_42} onClick={handle_42} className=" shadow-2xl bg-[#472B4E] hover:bg-[#472B4E]/[0.8] transition-all duration-300 p-2 flex space-x-2 rounded-2xl hover:text-gray-100">
+              <a href={link_42} className=" shadow-2xl bg-[#472B4E] hover:bg-[#472B4E]/[0.8] transition-all duration-300 p-2 flex space-x-2 rounded-2xl hover:text-gray-100">
                 <img className="" src="/42.svg" alt="42" width={20} height={20} />
                 <p>Network</p>
               </a>
-              <a href={link_google} onClick={handleGoogle} className=" shadow-2xl bg-[#A1216C] hover:bg-[#A1216C]/[0.8] transition-all duration-300 p-2 flex space-x-2 rounded-2xl hover:text-gray-100">
+              <a href={link_google}  className=" shadow-2xl bg-[#A1216C] hover:bg-[#A1216C]/[0.8] transition-all duration-300 p-2 flex space-x-2 rounded-2xl hover:text-gray-100">
                 <img src="/google.svg" alt="google" width={20} height={20} />
                 <p>Google</p>
               </a>
