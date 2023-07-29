@@ -42,7 +42,7 @@ const ProfileDropDown = () => {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href='#'
+                    href='/profile'
                     className={`${
                       active ? 'bg-[#be67d2] duration-300' : ''
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

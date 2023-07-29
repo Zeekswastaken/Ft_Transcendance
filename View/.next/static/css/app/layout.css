@@ -4808,6 +4808,12 @@ details.collapse summary::-webkit-details-marker {
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
+.bg-\[url\(\'\/background2\.jpeg\'\)\] {
+  background-image: url('/background2.jpeg');
+}
+.bg-\[url\(\'\/background3\.jpg\'\)\] {
+  background-image: url('/background3.jpg');
+}
 .from-cyan-400 {
   --tw-gradient-from: #22d3ee var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(34 211 238 / 0) var(--tw-gradient-to-position);
