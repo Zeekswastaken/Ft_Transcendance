@@ -6,19 +6,15 @@ export declare class AuthController {
     private readonly authservice;
     private readonly localStrategy;
     constructor(authservice: AuthService, localStrategy: LocalStrategy);
-    singin(res: Response): void;
-    singup(res: Response): void;
-    create(Body: UserDto, res: Response): Promise<{
-        user: UserDto;
-        message: string;
-    }>;
-    checking(Body: UserDto, res: Response): Promise<Object>;
+    create(Body: UserDto, res: Response): Promise<void>;
+    checking(Body: UserDto, res: Response): Promise<void>;
 }
 export declare class googleController {
     private readonly authservice;
     constructor(authservice: AuthService);
-    googlelogin(response: Response): void;
+    googlelogin(): void;
     googleloginredirect(req: any, res: Response): Promise<{
+        status: number;
         token: string;
         user: any;
         message: string;
