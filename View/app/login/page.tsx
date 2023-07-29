@@ -2,6 +2,10 @@
 import axios from "axios";
 import React, { useEffect } from "react"
 
+const login = () => {
+  const handleSubmit = () => {
+    console.log("Submited");
+  }
 
 
 
