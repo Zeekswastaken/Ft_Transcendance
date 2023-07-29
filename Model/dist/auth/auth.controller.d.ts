@@ -17,7 +17,7 @@ export declare class AuthController {
 export declare class googleController {
     private readonly authservice;
     constructor(authservice: AuthService);
-    googlelogin(): void;
+    googlelogin(response: Response): void;
     googleloginredirect(req: any, res: Response): Promise<{
         token: string;
         user: any;

@@ -1,6 +1,7 @@
 "use client"
 import axios from "axios";
 import { error } from "console";
+import { kill } from "process";
 import React, { useEffect } from "react"
 
 const login = () => {
@@ -8,10 +9,10 @@ const login = () => {
     console.log("Submited");
   }
   const handleGoogle = async () => {
-    
-    const res =  await axios.get("http://localhost:3000/auth/google")
-    alert(res);
-    console.log(res.headers);
+    console.log("here");
+    const res = await axios.get("http://localhost:3000/auth/google").then((re)=>{console.log(re)}).catch((err)=>{console.log(err)})
+
+  
   }
   const handle_42 = async () => {
     const res =  await axios.get("http://localhost:3000/auth/42")

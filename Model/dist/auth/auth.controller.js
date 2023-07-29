@@ -101,7 +101,7 @@ let googleController = class googleController {
     constructor(authservice) {
         this.authservice = authservice;
     }
-    googlelogin() {
+    googlelogin(response) {
         console.log("Auth/google");
     }
     async googleloginredirect(req, res) {
@@ -115,7 +115,11 @@ let googleController = class googleController {
             });
             res.setHeader('Authorization', `Bearer ${cookie_token}`);
             console.log('coockie token = ' + cookie_token);
-            res.status(200).redirect("http://localhost:3001/");
+            return {
+                token: cookie_token,
+                user: user,
+                message: 'the user create secssufully',
+            };
         }
         else {
             console.log('error');
@@ -126,7 +130,6 @@ let googleController = class googleController {
             });
             console.log('coockie token = ' + cookie_token + "\n\n\n\n");
             res.setHeader('Authorization', `Bearer ${cookie_token}`);
-            res.status(200).redirect("http://localhost:3001/");
             return {
                 token: cookie_token,
                 user: user,
@@ -136,10 +139,11 @@ let googleController = class googleController {
     }
 };
 __decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('google')),
     (0, common_1.Get)('google'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('google')),
+    __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], googleController.prototype, "googlelogin", null);
 __decorate([
