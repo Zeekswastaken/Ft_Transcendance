@@ -20,7 +20,7 @@ const signup = () => {
   return (
     <div className=" grid place-items-center h-screen ">
       <div className=" bg-[#1B071C]/[0.8] min-w-[300px] overflow-auto h-[600px] w-[500px] mt-[140px] rounded-2xl border-[#D16ACE] border">
-      <form action="/" className=" text-center grid  place-content-center  font-semibold">
+      <form onSubmit={handleSubmit} action="/" className=" text-center grid  place-content-center  font-semibold">
         <div className=" text-white text-center grid place-content-center mt-5 ">
           <div className="font-Bomb">
             <p className=" text-[35px] pt-6">Complete your profile</p>
@@ -37,8 +37,8 @@ const signup = () => {
               <DatePicker placeholderText="Birth Date" className=" text-gray-400 font-normal bg-[#1C0D16] w-full px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4  mt-10 sm:mx-0 mx-10 rounded-xl" selected={startDate} onChange={handleDateChange} />
               {/* <p className=" tex absolute">DD / MM / YYYY</p> */}
             {/* </div> */}
-            <select placeholder="Gender" className=" text-[#837F7F] font-normal bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300 p-4 mt-2 sm:mx-0 mx-10 rounded-xl">
-              <option className="" disabled selected>Gender</option>
+            <select defaultValue="G" placeholder="Gender" className=" text-[#837F7F] font-normal bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300 p-4 mt-2 sm:mx-0 mx-10 rounded-xl">
+              <option className="" value="G" disabled>Gender</option>
               <option className="" value="F">Female</option>
               <option className="" value="M">Male</option>
             </select>

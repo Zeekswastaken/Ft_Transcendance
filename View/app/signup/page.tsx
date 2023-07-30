@@ -3,32 +3,45 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 import axios from "axios";
-import PasswordChecklist from "react-password-checklist"
+import { checkPasswordStrength } from '@/utils/passwordChecker';
+
 
 const signup = () => {
   
+  
   const router = useRouter();
   
+  const [passwordError, setPasswordError] = useState('');
+  const [passNotMatch, setPassNotMatch] = useState('')
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
-    await axios.post("http://localhost:3000/auth/signup", {
-      username,
-      email,
-      password,
-    })
-    .then((res) => {console.log(res)}).catch(err => {console.log(err)})
-    router.push("/");
+    const passStrength = checkPasswordStrength(password);
+    console.log(passStrength);
+    if (password !== repassword){
+      setPassNotMatch("Passwords do not match.");
+      setPasswordError("")
+      return;
+    }
+    if (passStrength === "Strong") {
+      await axios.post("http://localhost:3000/auth/signup", {
+        username,
+        password,
+      })
+      .then((res) => {console.log(res)}).catch(err => {console.log(err)})
+      //  router.push("/signup/complete-profile");
+    }
+    else {
+        setPasswordError("Your Password not Strong enough, Please try again.")
+        setPassNotMatch("");
+    }
   }
   
   const link_42 = "http://localhost:3000/auth/42";
   const link_google = "http://localhost:3000/auth/google"
-
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
-  const [email, setEmail] = useState("");
-
   return (
     <div className="grid place-items-center h-screen ">
       <div className=" bg-[#1B071C]/[0.8] min-w-[300px] overflow-auto h-[600px] w-[500px] rounded-2xl border-[#D16ACE] border">
@@ -47,24 +60,18 @@ const signup = () => {
                 <p>Google</p>
               </a>
             </div>
-            <div className=" pt-3 divider">or</div>
+            <div className=" pt-6 divider">or</div>
             
-            
-              <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Username" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-4 sm:mx-0 mx-5 rounded-xl "/>
-              <input onChange={e =>setEmail(e.target.value)} value={email} type="text" placeholder="Your Email" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-2 sm:mx-0 mx-20 rounded-xl"/>
-              <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="Password" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-2 sm:mx-0 mx-20 rounded-xl "/>
-              <PasswordChecklist
-                rules={["minLength","specialChar","number","capital"]}
-                minLength={8}
-                value={password}
-                className=" hidden"
-              />
-              <input onChange={e => setRePassword(e.target.value)} value={repassword} type="password" placeholder="Re-Password" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-2 sm:mx-0 mx-20 rounded-xl"/>
-            
-            
+            <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Username" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-7 sm:mx-0 mx-5 rounded-xl "/>
+
+            <input onChange={e => setPassword(e.target.value)} id="password" value={password} type="password" placeholder="Password" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-3 sm:mx-0 mx-20 rounded-xl peer ... "/>
+            {passwordError && <p className="text-red-500 text-xs pt-1 text-left">{passwordError}</p>}
+
+            <input onChange={e => setRePassword(e.target.value)} value={repassword} type="password" placeholder="Re-Password" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-3 sm:mx-0 mx-20 rounded-xl"/>
+            {passNotMatch && <p className="text-red-500 text-xs pt-1 text-left">{passNotMatch}</p>}
             
             <a href="#" className=" hover:underline pt-2 text-[#EBA3EA] text-end font-normal text-sm">Forgot  Password?</a>
-            <button type="submit" className= " bg-primary-pink-300 hover:bg-primary-pink-300/[0.8] transition duration-300 hover:border font-Bomb mx-20 mt-3 p-2 rounded-2xl text-center text-xl">
+            <button type="submit" className= " bg-primary-pink-300 hover:bg-primary-pink-300/[0.8] transition duration-300 hover:border font-Bomb mx-20 mt-6 p-2 rounded-2xl text-center text-xl">
               sign up
             </button>
             <p className=" font-normal text-xs mt-2">Already have an account? <a className=" hover:underline text-[#EBA3EA]" href="/login">Log In</a></p>

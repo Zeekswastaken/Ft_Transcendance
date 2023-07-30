@@ -1,10 +1,9 @@
 enum PasswordStrength {
     Weak = 'Weak',
-    Medium = 'Medium',
     Strong = 'Strong',
   }
   
-  function checkPasswordStrength(password: string): PasswordStrength {
+  export function checkPasswordStrength(password: string): PasswordStrength {
     const minLength = 8;
     const minUpperCase = 1;
     const minLowerCase = 1;
