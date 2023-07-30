@@ -1,15 +1,18 @@
-import { Entity , PrimaryColumn, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { ChannelMembership } from './channelMembership.entity';
 
 @Entity()
-export class Message{
-    @PrimaryGeneratedColumn()
-    id: number;
-    @Column()
-    name: String;  
-    @Column()
-    text: String;
-    @Column()
-    Sender_id: number;
-    @Column()
-    Created_at: Date;
+export class Message {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  text: string;
+
+  @Column()
+  Created_at: Date;
+
+  @ManyToOne(() => ChannelMembership, membership => membership.messages)
+  @JoinColumn({ name: 'Membership_id' })
+  membership: ChannelMembership;
 }

@@ -16,7 +16,7 @@ export class MessagesGateway {
   @SubscribeMessage('createMessage')
   async create(@MessageBody() createMessageDto: CreateMessageDto, @ConnectedSocket() client: Socket) {
     console.log("====> ", client.id);
-    const message = await this.messagesService.createMessage(createMessageDto, client.id);
+    const message = await this.messagesService.createMessage(createMessageDto, +client.id);
     console.log("==========> ", message);
     this.server.emit('message', message);
     return message;
@@ -33,9 +33,9 @@ export class MessagesGateway {
   //   return this.messagesService.identify(name, client.id);
   // }
 
-  @SubscribeMessage('typing')
-  async typing(@MessageBody('isTyping') isTyping: boolean, @ConnectedSocket() client: Socket,){
-    const name = await this.messagesService.getClientName(client.id);
-    client.broadcast.emit('typing', {name, isTyping});
-  }
+  // @SubscribeMessage('typing')
+  // async typing(@MessageBody('isTyping') isTyping: boolean, @ConnectedSocket() client: Socket,){
+  //   const name = await this.messagesService.getClientName(client.id);
+  //   client.broadcast.emit('typing', {name, isTyping});
+  // }
 }

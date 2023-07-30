@@ -23,17 +23,13 @@ let MessagesGateway = exports.MessagesGateway = class MessagesGateway {
     }
     async create(createMessageDto, client) {
         console.log("====> ", client.id);
-        const message = await this.messagesService.createMessage(createMessageDto, client.id);
+        const message = await this.messagesService.createMessage(createMessageDto, +client.id);
         console.log("==========> ", message);
         this.server.emit('message', message);
         return message;
     }
     findAll() {
         return this.messagesService.findAll();
-    }
-    async typing(isTyping, client) {
-        const name = await this.messagesService.getClientName(client.id);
-        client.broadcast.emit('typing', { name, isTyping });
     }
 };
 __decorate([
@@ -54,14 +50,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], MessagesGateway.prototype, "findAll", null);
-__decorate([
-    (0, websockets_1.SubscribeMessage)('typing'),
-    __param(0, (0, websockets_1.MessageBody)('isTyping')),
-    __param(1, (0, websockets_1.ConnectedSocket)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Boolean, socket_io_1.Socket]),
-    __metadata("design:returntype", Promise)
-], MessagesGateway.prototype, "typing", null);
 exports.MessagesGateway = MessagesGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {

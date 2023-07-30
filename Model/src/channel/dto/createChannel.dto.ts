@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString, IsOptional} from 'class-validator'
 export class CreateChannelDto extends Channel{
     @IsNotEmpty()
     @IsString()
-    name: String;
+    name: string;
 
     @IsNotEmpty()
     @IsString()

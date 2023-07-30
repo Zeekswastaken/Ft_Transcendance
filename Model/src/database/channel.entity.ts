@@ -5,7 +5,7 @@ export class Channel {
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
-    Name: String;
+    Name: string;
     @Column()
     Type:String;
     @Column({nullable: true})

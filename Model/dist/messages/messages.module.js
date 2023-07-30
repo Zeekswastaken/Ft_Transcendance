@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const messages_service_1 = require("./messages.service");
 const messages_gateway_1 = require("./messages.gateway");
-const message_entity_1 = require("./entities/message.entity");
+const message_entity_1 = require("../database/message.entity");
 let MessagesModule = exports.MessagesModule = class MessagesModule {
 };
 exports.MessagesModule = MessagesModule = __decorate([

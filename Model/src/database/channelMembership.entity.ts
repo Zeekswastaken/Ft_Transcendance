@@ -1,6 +1,7 @@
 import {Entity, PrimaryColumn, Column, PrimaryGeneratedColumn, Collection, ManyToMany, OneToMany, ManyToOne, JoinColumn} from "typeorm";
 import { Channel } from './channel.entity'
 import { User } from './user.entity'
+import { Message} from './message.entity'
 @Entity()
 export class ChannelMembership {
     @PrimaryGeneratedColumn()
@@ -8,11 +9,14 @@ export class ChannelMembership {
     @Column()
     Channelid: number;
     @Column()
-    Type:string;
+    Type:String;
     @ManyToOne(() => Channel, channel => channel.memberships)
     @JoinColumn({ name: 'Channelid', referencedColumnName: 'id'})
     channel: Channel;
     @ManyToOne(() => User, user => user.memberships)
     @JoinColumn({ name: 'Userid', referencedColumnName: 'id'})
     user: User;
+
+    @OneToMany(() => Message, message => message.membership)
+    messages: Message[];
 }
