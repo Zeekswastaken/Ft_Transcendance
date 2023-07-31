@@ -6,6 +6,7 @@ import { CreateChannelDto } from './dto/createchannel.dto';
 import { ChannelMembership } from '../database/channelMembership.entity';
 import { User } from '../database/user.entity';
 import * as bcrypt from 'bcrypt';
+import { find } from 'rxjs';
 
 @Injectable()
 export class ChannelService {
@@ -50,6 +51,36 @@ export class ChannelService {
         return savedChannel;
     }
 
+    async assignAdmin(channelID: number, userId: number, initiatorId: number): Promise<ChannelMembership>
+    {
+        const initiator = await this.userRepository.findOne({where: { id: initiatorId}});
+        const channel = await this.channelRepository.findOne({ where: {id: channelID}});
+        const user = await this.userRepository.findOne({where: {id: userId}});
+        if (!channel || !user || !initiator)
+            throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
+        
+        const membership = await this.channelMembershipRepository.findOne( { where:  {
+            user: {id: user.id}
+            , channel:{id: channel.id}
+            , Type: 'admin'}});
+        if (membership)
+            throw new HttpException("The user is already an admin", HttpStatus.FORBIDDEN);
+        
+            const membership_init = await this.channelMembershipRepository.findOne( { where : {
+            user: {id: user.id}
+            , channel:{id: channel.id}
+            , Type: 'owner'
+        }});
+        if (!membership_init)
+            throw new HttpException("The user can only assign someone as admin if he's the owner of this channel", HttpStatus.FORBIDDEN);
+        
+        const adminmembership = new ChannelMembership();
+        adminmembership.user = user;
+        adminmembership.channel = channel;
+        adminmembership.Type = 'admin';
+        return this.channelMembershipRepository.save(adminmembership);
+    }
+
     async getAllChannels(): Promise<Channel[]> 
     {
         return this.channelRepository.find({
@@ -72,7 +103,6 @@ export class ChannelService {
         return bcrypt.compare(password , pass);
     }
 
-    async assignAdmin()<>
 
     async hashPassword(password: String): Promise<String> {
         const saltOrRounds = 10; // The number of salt rounds (recommended: 10 or higher)

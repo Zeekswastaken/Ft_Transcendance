@@ -36,8 +36,6 @@ export class MessagesService {
       return null;
     }
   }
-
-
   async createMessage(createMessageDto: CreateMessageDto, clientId: number) {
     const user = await this.userRepository.findOne({ where: { id: clientId } });
     if (!user) {

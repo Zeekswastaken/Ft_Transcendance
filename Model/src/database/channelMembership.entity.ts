@@ -9,7 +9,7 @@ export class ChannelMembership {
     @Column()
     Channelid: number;
     @Column()
-    Type:String;
+    Type:string;
     @ManyToOne(() => Channel, channel => channel.memberships)
     @JoinColumn({ name: 'Channelid', referencedColumnName: 'id'})
     channel: Channel;
