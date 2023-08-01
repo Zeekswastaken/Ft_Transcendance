@@ -5,5 +5,5 @@ export declare class UserService {
     private readonly userRepo;
     constructor(userRepo: Repository<User>);
     save(Body: UserDto): Promise<void>;
-    findByemail(email: any): Promise<User>;
+    findByName(username: any): Promise<User>;
 }

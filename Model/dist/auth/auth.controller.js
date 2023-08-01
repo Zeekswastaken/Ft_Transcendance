@@ -23,59 +23,44 @@ let AuthController = class AuthController {
         this.authservice = authservice;
         this.localStrategy = localStrategy;
     }
-    singin(res) {
-        this.authservice.singin(res);
-    }
-    singup(res) {
-        this.authservice.singup(res);
-    }
     async create(Body, res) {
-        if (await this.authservice.check_and_create(Body) != null) {
-            res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
+        const ret = await this.authservice.check_and_create(Body);
+        if (ret == true) {
+            const cookie_token = await this.authservice.generatOken(Body);
+            res.cookie('accessToken', cookie_token, {
+                httpOnly: true,
+            });
+            res.send("Success");
         }
         else
-            return {
-                user: Body,
-                message: 'something wrong with email or password',
-            };
+            res.send({
+                message: ret,
+            });
     }
     async checking(Body, res) {
-        const user = await this.localStrategy.validate(Body.email, Body.password);
+        const user = await this.localStrategy.validate(Body.username, Body.password);
         if (!user) {
             var obj = {
                 token: 'error',
                 user: Body,
-                message: 'something wrong with email or password'
+                message: 'something wrong with username or password'
             };
             res.send(obj);
-            return obj;
         }
         else {
-            const jwtoken = await this.authservice.generatOken(Body);
+            const cookie_token = await this.authservice.generatOken(Body);
+            res.cookie('accessToken', cookie_token, {
+                httpOnly: true,
+            });
             var obj = {
-                token: jwtoken,
+                token: cookie_token,
                 user: Body,
                 message: 'the user entrance secssufully'
             };
             res.send(obj);
-            return obj;
         }
     }
 };
-__decorate([
-    (0, common_1.Get)('signin'),
-    __param(0, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], AuthController.prototype, "singin", null);
-__decorate([
-    (0, common_1.Get)('signup'),
-    __param(0, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], AuthController.prototype, "singup", null);
 __decorate([
     (0, common_1.Post)('signup'),
     __param(0, (0, common_1.Body)()),

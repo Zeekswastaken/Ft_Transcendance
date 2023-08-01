@@ -25,7 +25,7 @@ AppModule = __decorate([
                 signOptions: { expiresIn: '1m' },
             })],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, guards_1.TokenGuard, jwt_service_1.JWToken, user_service_1.UserService],
+        providers: [app_service_1.AppService, guards_1.TokenGuard, jwt_service_1.JWToken, user_service_1.UserService,],
     })
 ], AppModule);
 exports.AppModule = AppModule;

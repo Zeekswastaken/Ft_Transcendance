@@ -31,7 +31,7 @@ let AppController = class AppController {
         if (status.status == 'authorized') {
             console.log(query.avatar_URL);
             const decoded = await this.jwt.decoded(status.token);
-            const user = await this.userservice.findByemail((decoded).email);
+            const user = await this.userservice.findByName((decoded).username);
             console.log('user == ' + JSON.stringify(user));
             res.render('profile', { user });
         }

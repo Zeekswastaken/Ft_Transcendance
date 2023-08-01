@@ -12,52 +12,62 @@ import { error } from 'console';
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authservice:AuthService,private readonly localStrategy:LocalStrategy){}
-    @Get('signin')
-   // @UseGuards(TokenGuard)
-    singin(@Res() res:Response){
-        this.authservice.singin(res);
-    }
-    @Get('signup')
-    //@UseGuards(TokenGuard)
-    singup(@Res() res:Response){
-        this.authservice.singup(res);
-    }
+//     @Get('signin')
+//    // @UseGuards(TokenGuard)
+//     singin(@Res() res:Response){
+//         this.authservice.singin(res);
+//     }
+//     @Get('signup')
+//     //@UseGuards(TokenGuard)
+//     singup(@Res() res:Response){
+//         this.authservice.singup(res);
+//     }
     @Post('signup')
     async create(@Body() Body:UserDto,@Res() res:Response){
-        if(await this.authservice.check_and_create(Body)  != null)
+        
+        const ret = await this.authservice.check_and_create(Body);
+        if(ret == true)
         {
-            res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
+            const cookie_token = await this.authservice.generatOken(Body);
+            res.cookie('accessToken', cookie_token, {
+                httpOnly: true,
+              });
+            res.send("Success");
+            // res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
         }
         else
-            return {
-                user:Body,
-                message:'something wrong with email or password',
-            }
+             res.send({
+                message: ret,
+             })
     }
     @Post('login')
     async checking(@Body() Body:UserDto,@Res() res:Response){
 
-        const user = await this.localStrategy.validate(Body.email,Body.password);
+        // console.log(Body);
+        const user = await this.localStrategy.validate(Body.username,Body.password);
         if (!user)
         {
             var obj:Object = {
                 token:'error',
                 user:Body,
-                message:'something wrong with email or password'
+                message:'something wrong with username or password'
             }
             res.send(obj);
-            return obj;
+            //return obj;
         }
         else 
         {
-            const jwtoken = await this.authservice.generatOken(Body);
+            const cookie_token = await this.authservice.generatOken(Body);
+            res.cookie('accessToken', cookie_token, {
+                httpOnly: true,
+              });
              var obj:Object  = {
-                token:jwtoken,
+                token:cookie_token,
                 user:Body,
                 message:'the user entrance secssufully'
             }
             res.send(obj);
-            return obj;
+            //return obj;
         }
     }
 }

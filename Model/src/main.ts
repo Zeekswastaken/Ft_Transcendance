@@ -16,11 +16,11 @@ async function bootstrap() {
     next();
   });
 
-  app.enableCors({
-    origin: 'http://localhost:3001', // Set this to your frontend domain
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type,Authorization,cookie',
-  });
+  // app.enableCors({
+  //   origin: '0.0.0.0:3000',
+  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  //   allowedHeaders: 'Content-Type,Authorization,cookie',
+  // });
    await app.listen(3000);
   app.useStaticAssets(join(__dirname, '..', 'views'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));

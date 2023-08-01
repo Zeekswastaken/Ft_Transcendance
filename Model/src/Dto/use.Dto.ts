@@ -8,20 +8,20 @@
 // }
 export class UserDto {
     username:String;
-    email:String;
     password:String;
-    confirmpassword:String;
+    repassword:String;
     avatar_URL:String;
     gender:String;
     constructor(){
         this.avatar_URL='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU';
-        this.confirmpassword = 'none';
+        this.repassword = 'none';
         this.password = 'Oauth';
     }
 }
 export class jwtDTO{
     username:String;
-    email:String;
+    avatar_URL: String;
+    gender: String;
 }
 // export class UserDtosave {
 //     username:String;

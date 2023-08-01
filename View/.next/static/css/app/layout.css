@@ -3783,6 +3783,9 @@ details.collapse summary::-webkit-details-marker {
 .mt-6 {
   margin-top: 1.5rem;
 }
+.mt-7 {
+  margin-top: 1.75rem;
+}
 .mt-8 {
   margin-top: 2rem;
 }
@@ -4799,6 +4802,9 @@ details.collapse summary::-webkit-details-marker {
 .bg-\[url\(\'\/30\.png\'\)\] {
   background-image: url('/30.png');
 }
+.bg-\[url\(\'\/background3\.jpg\'\)\] {
+  background-image: url('/background3.jpg');
+}
 .bg-\[url\(\'\/girl\.png\'\)\] {
   background-image: url('/girl.png');
 }
@@ -5130,6 +5136,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .pt-0 {
   padding-top: 0px;
+}
+.pt-1 {
+  padding-top: 0.25rem;
 }
 .pt-10 {
   padding-top: 2.5rem;

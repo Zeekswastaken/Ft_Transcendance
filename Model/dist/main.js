@@ -10,11 +10,6 @@ async function bootstrap() {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
-    app.enableCors({
-        origin: 'http://localhost:3001',
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        allowedHeaders: 'Content-Type,Authorization,cookie',
-    });
     await app.listen(3000);
     app.useStaticAssets((0, path_1.join)(__dirname, '..', 'views'));
     app.setBaseViewsDir((0, path_1.join)(__dirname, '..', 'views'));

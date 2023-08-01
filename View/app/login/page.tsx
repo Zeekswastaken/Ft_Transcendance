@@ -1,22 +1,36 @@
 "use client"
 import axios from "axios";
-import React, { useEffect } from "react"
+import { redirect } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import React, { useState } from "react"
+import { FormEvent } from "react";
 
-const login = () => {
-  const handleSubmit = () => {
-    console.log("Submited");
-  }
+const login = ({response}:any) => {
+  
+  const router = useRouter();
+  
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    await axios.post("http://localhost:3000/auth/login", {
+      password,
+      username,
+    })
+    
+    // Your logic here, if needed
+    // console.log(result);
+    router.push("/");
+  };
+  
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
-
-
-  const link_42 = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-97201b0b9664120cef3e2130f4f15b0f1993c65c776a8593967c46214ef534d6&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Ffrom-42&response_type=code";
-
+  const link_42 = "http://localhost:3000/auth/42";
   const link_google = "http://localhost:3000/auth/google"
 
   return (
     <div className=" grid place-items-center h-screen ">
       <div className=" bg-[#1B071C]/[0.8] min-w-[300px] overflow-auto h-[600px] w-[500px] rounded-2xl border-[#D16ACE] border">
-      <form  className=" text-center grid  place-content-center  font-semibold">
+      <form onSubmit={handleSubmit}  className=" text-center grid  place-content-center  font-semibold">
         <div className=" text-white text-center grid place-content-center  ">
           <div className="font-Glitch">
             <p className=" text-[45px] pt-10">Welcome Back</p>
@@ -32,11 +46,15 @@ const login = () => {
               </a>
             </div>
             <div className=" pt-10 divider">or</div>
-            <input type="text" placeholder="Username" className="bg-[#1C0D16] border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-10 sm:mx-0 mx-5 rounded-xl"/>
-            <input type="password" placeholder="Password" className="bg-[#1C0D16] border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-4 sm:mx-0 mx-5 rounded-xl "/>
+
+            
+            
+            <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Username" className="bg-[#1C0D16] border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-10 sm:mx-0 mx-5 rounded-xl"/>
+            <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="Password" className="bg-[#1C0D16] border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-4 sm:mx-0 mx-5 rounded-xl "/>
+            
+            
             <a href="#" className=" hover:underline pt-2 text-[#EBA3EA] text-end font-normal text-sm">Forgot  Password?</a>
-            <a href="/" className= " text-center text-xl bg-primary-pink-300 hover:bg-primary-pink-300/[0.8] transition duration-300 hover:border font-Bomb mx-20 mt-10 p-2 rounded-2xl">log in
-            </a>
+            <button type="submit" className= " text-center text-xl bg-primary-pink-300 hover:bg-primary-pink-3000./[8] transition duration-300 hover:border font-Bomb mx-20 mt-10 p-2 rounded-2xl">log in</button>
             <p className=" font-normal text-xs mt-3">Don’t have an account? <a className=" hover:underline text-[#EBA3EA]" href="/signup">Sing up</a></p>
         </div>
       </form>

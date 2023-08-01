@@ -3,7 +3,6 @@ export declare class User {
     username: String;
     birthday: Date;
     gender: String;
-    email: String;
     password: String;
     avatar_URL: String;
 }

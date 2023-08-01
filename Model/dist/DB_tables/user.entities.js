@@ -30,10 +30,6 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "gender", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
     (0, typeorm_1.Column)({ default: 'Oauth' }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);

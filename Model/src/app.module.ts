@@ -15,6 +15,6 @@ import { UserService } from './user/user.service';
     signOptions: { expiresIn: '1m' }, 
   })],
   controllers: [AppController],
-  providers: [AppService,TokenGuard,JWToken,UserService],
+  providers: [AppService,TokenGuard,JWToken,UserService,],
 })
 export class AppModule {}
