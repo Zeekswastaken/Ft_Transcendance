@@ -13,6 +13,8 @@ const signup = () => {
   }
   // const [startDate, setStartDate] = useState(new Date());
   const [startDate, setStartDate] = useState<Date | null>(null);
+  const [birthDay, setBirthDay] = useState("");
+  console.log(birthDay);
 
   const handleDateChange: ReactDatePickerProps['onChange'] = (date) => {
     setStartDate(date);
@@ -34,7 +36,7 @@ const signup = () => {
             </div>
             <p className=" font-Heading tracking-wider mt-4">Upload Image</p>
             {/* <div className=" "> */}
-              <DatePicker placeholderText="Birth Date" className=" text-gray-400 font-normal bg-[#1C0D16] w-full px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4  mt-10 sm:mx-0 mx-10 rounded-xl" selected={startDate} onChange={handleDateChange} />
+              <DatePicker onChangeRaw={e => setBirthDay(e.target.value)} value={birthDay} placeholderText="Birth Date" className=" text-gray-400 font-normal bg-[#1C0D16] w-full px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4  mt-10 sm:mx-0 mx-10 rounded-xl" selected={startDate} onChange={handleDateChange} />
               {/* <p className=" tex absolute">DD / MM / YYYY</p> */}
             {/* </div> */}
             <select defaultValue="G" placeholder="Gender" className=" text-[#837F7F] font-normal bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300 p-4 mt-2 sm:mx-0 mx-10 rounded-xl">

@@ -12,32 +12,52 @@ const signup = () => {
   const router = useRouter();
   
   const [passwordError, setPasswordError] = useState('');
-  const [passNotMatch, setPassNotMatch] = useState('')
+  const [passNotMatch, setPassNotMatch] = useState('');
+  const [userNotFound, setUserNotFound] = useState('');
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const passStrength = checkPasswordStrength(password);
-    console.log(passStrength);
-    if (password !== repassword){
-      setPassNotMatch("Passwords do not match.");
-      setPasswordError("")
-      return;
-    }
-    if (passStrength === "Strong") {
-      await axios.post("http://localhost:3000/auth/signup", {
+    // const passStrength = checkPasswordStrength(password);
+    // console.log(passStrength);
+    // if (password !== repassword){
+    //   setPassNotMatch("Passwords do not match.");
+    //   setPasswordError("")
+    //   return;
+    // }
+    // if (passStrength === "Strong") {
+      await axios.post("http://10.11.4.5:3000/auth/signup", {
         username,
         password,
+        repassword
       })
-      .then((res) => {console.log(res)}).catch(err => {console.log(err)})
+      .then((res) => {
+        console.log(res.data)
+        if (res.data.message === "empty") {
+          setUserNotFound("Invalid Username, please try again!");
+          setPassNotMatch("");
+          setPasswordError("");
+          return ;
+        }
+        else if (res.data.message === "weak") {
+          setPasswordError("Your Password not Strong enough, Please try again.");
+          setUserNotFound("");
+          setPassNotMatch("");
+          return ;
+        }
+        else if (res.data.message === 'notMatch') {
+          setPassNotMatch("Passwords do not match.");
+          setPasswordError("");
+          setUserNotFound("");
+          return;
+        }
+      }).catch(err => {console.log(err)})
       //  router.push("/signup/complete-profile");
-    }
-    else {
-        setPasswordError("Your Password not Strong enough, Please try again.")
-        setPassNotMatch("");
-    }
+    // }
+    // else {
+    // }
   }
   
-  const link_42 = "http://localhost:3000/auth/42";
-  const link_google = "http://localhost:3000/auth/google"
+  const link_42 = "http://10.11.4.5:3000/auth/42";
+  const link_google = "http://10.11.4.5:3000/auth/google"
   
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -63,6 +83,7 @@ const signup = () => {
             <div className=" pt-6 divider">or</div>
             
             <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Username" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-7 sm:mx-0 mx-5 rounded-xl "/>
+            {userNotFound && <p className="text-red-500 text-xs pt-1 text-left">{userNotFound}</p>}
 
             <input onChange={e => setPassword(e.target.value)} id="password" value={password} type="password" placeholder="Password" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-3 sm:mx-0 mx-20 rounded-xl peer ... "/>
             {passwordError && <p className="text-red-500 text-xs pt-1 text-left">{passwordError}</p>}
