@@ -101,8 +101,11 @@ export class ChannelService {
         const adminmembership = await this.channelMembershipRepository.findOne({ where:
         {user: {id: user.id}
          , channel:{id:channel.id}
-         ,    
-    }})
+         , Type: 'admin' 
+        }})
+        if (!adminmembership)
+            throw new HttpException("The user isn't an admin", HttpStatus.FORBIDDEN);
+        
     }
 
     async getAllChannels(): Promise<Channel[]> 
