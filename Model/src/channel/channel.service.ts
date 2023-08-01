@@ -7,6 +7,7 @@ import { ChannelMembership } from '../database/channelMembership.entity';
 import { User } from '../database/user.entity';
 import * as bcrypt from 'bcrypt';
 import { find } from 'rxjs';
+import { channel } from 'diagnostics_channel';
 
 @Injectable()
 export class ChannelService {
@@ -74,11 +75,34 @@ export class ChannelService {
         if (!membership_init)
             throw new HttpException("The user can only assign someone as admin if he's the owner of this channel", HttpStatus.FORBIDDEN);
         
-        const adminmembership = new ChannelMembership();
-        adminmembership.user = user;
-        adminmembership.channel = channel;
+        const adminmembership = await this.channelMembershipRepository.findOne( {where: {
+            user: {id: user.id}
+            , channel:{id: channel.id}}
+        });
         adminmembership.Type = 'admin';
-        return this.channelMembershipRepository.save(adminmembership);
+        return await this.channelMembershipRepository.save(adminmembership);
+    }
+
+    async removeadmin(channelID: number, userID: number, initiatorID: number): Promise<ChannelMembership>
+    {
+        const initiator = await this.userRepository.findOne({where: { id: initiatorID}});
+        const channel = await this.channelRepository.findOne({ where: {id : channelID}});
+        const user = await this.userRepository.findOne({where:{id: userID}});
+        if (!channel || !user || !initiator)
+            throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
+        
+        const ownermembership = await this.channelMembershipRepository.findOne( { where: {
+            user: {id: initiator.id}
+            , channel: {id: channel.id}
+            , Type: 'owner'
+        }})
+        if (!ownermembership)
+            throw new HttpException("The initiator should be an owner for this action to go through", HttpStatus.FORBIDDEN);
+        const adminmembership = await this.channelMembershipRepository.findOne({ where:
+        {user: {id: user.id}
+         , channel:{id:channel.id}
+         ,    
+    }})
     }
 
     async getAllChannels(): Promise<Channel[]> 
