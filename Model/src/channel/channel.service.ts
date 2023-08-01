@@ -8,6 +8,7 @@ import { User } from '../database/user.entity';
 import * as bcrypt from 'bcrypt';
 import { find } from 'rxjs';
 import { channel } from 'diagnostics_channel';
+import e from 'express';
 
 @Injectable()
 export class ChannelService {
@@ -98,14 +99,123 @@ export class ChannelService {
         }})
         if (!ownermembership)
             throw new HttpException("The initiator should be an owner for this action to go through", HttpStatus.FORBIDDEN);
-        const adminmembership = await this.channelMembershipRepository.findOne({ where:
+        const updatedmembership = await this.channelMembershipRepository.findOne({ where:
         {user: {id: user.id}
          , channel:{id:channel.id}
          , Type: 'admin' 
         }})
-        if (!adminmembership)
+        if (!updatedmembership)
             throw new HttpException("The user isn't an admin", HttpStatus.FORBIDDEN);
+        updatedmembership.Type = 'member';
+       return await this.channelMembershipRepository.save(updatedmembership);
+    }
+
+    async joinChannel(channelID: number, userID: number): Promise<ChannelMembership>
+    {
+        const channel = await this.channelRepository.findOne({where: {id : channelID}});
+        const user = await this.userRepository.findOne({where: {id: userID}});
+        if (!channel || !user)
+            throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
+        const membership = await this.channelMembershipRepository.findOne({ where: {
+            user: {id: user.id}
+            , channel:{id:channel.id}}}
+        );
+        if (membership)
+            throw new HttpException("The User is already in the chat", HttpStatus.FORBIDDEN);
+        const newmembership = new ChannelMembership();
+        newmembership.Userid = user.id;
+        newmembership.Channelid = channel.id
+        newmembership.Type = "member";
+        return await this.channelMembershipRepository.save(newmembership);
+    }
+
+    async muteUser(channelID: number, userID: number, amount: number): Promise<ChannelMembership>
+    {
+        const channel = await this.channelRepository.findOne({where: {id: channelID}});
+        const user = await this.userRepository.findOne({where: {id: userID}});
+        if (!channel || !user)
+            throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
         
+        const user2 = await this.channelMembershipRepository.findOne( { where: {Userid: userID, Type: 'member'}});
+        if (user2)
+            throw new HttpException("This User doesn't have the rights to perform this action", HttpStatus.FORBIDDEN);
+
+        const membership = await this.channelMembershipRepository.findOne({
+            where: [
+              {
+                user: { id: user.id },
+                channel: { id: channel.id },
+                isMuted: true,
+              },
+              {
+                user: { id: user.id },
+                channel: { id: channel.id },
+                isBanned: true,
+              },
+            ],
+        });
+        if (membership)
+            throw new HttpException("The User might already be Muted/Banned", HttpStatus.FORBIDDEN);
+        const normalmembership = await this.channelMembershipRepository.findOne({ where: {
+            user: {id: user.id}
+            , channel:{id:channel.id}, isMuted: false}});
+        normalmembership.isMuted = true;
+        //REMIND YOUSSEF TO GIVE YOU THE AMOUNT IN MINUTES
+        normalmembership.muteEndDate = new Date();
+        normalmembership.muteEndDate.setMinutes(normalmembership.muteEndDate.getMinutes() + amount);
+        return this.channelMembershipRepository.save(normalmembership);
+    }
+
+    async banUser(channelID: number, userID: number, amount: number): Promise<ChannelMembership>
+    {
+        const channel = await this.channelRepository.findOne({where: {id: channelID}});
+        const user = await this.userRepository.findOne({where: {id: userID}});
+        if (!channel || !user)
+            throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
+        
+        const user2 = await this.channelMembershipRepository.findOne( { where: {Userid: userID, Type: 'member'}});
+        if (user2)
+            throw new HttpException("This User doesn't have the rights to perform this action", HttpStatus.FORBIDDEN);
+
+        const membership = await this.channelMembershipRepository.findOne({
+            where: [
+              {
+                user: { id: user.id },
+                channel: { id: channel.id },
+                isMuted: true,
+              },
+              {
+                user: { id: user.id },
+                channel: { id: channel.id },
+                isBanned: true,
+              },
+            ],
+        });
+        if (membership)
+            throw new HttpException("The User might already be Muted/Banned", HttpStatus.FORBIDDEN);
+        const normalmembership = await this.channelMembershipRepository.findOne({ where: {
+            user: {id: user.id}
+            , channel:{id:channel.id}, isBanned: false}});
+        normalmembership.isBanned = true;
+        //REMIND YOUSSEF TO GIVE YOU THE AMOUNT IN MINUTES
+        normalmembership.banEndDate = new Date();
+        normalmembership.banEndDate.setMinutes(normalmembership.muteEndDate.getMinutes() + amount);
+        return this.channelMembershipRepository.save(normalmembership);
+    }
+
+    async unmuteUser(channelID: number, userID: number): Promise<ChannelMembership>
+    {
+        const channel = await this.channelRepository.findOne({where: {id: channelID}});
+        const user = await this.userRepository.findOne({where: {id:userID}});
+        if (!channel || !user)
+            throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
+
+        
+        const user2 = await this.channelMembershipRepository.findOne( { where: {Userid: userID, Type: 'member'}});
+        if (user2)
+            throw new HttpException("This User doesn't have the rights to perform this action", HttpStatus.FORBIDDEN);
+        
+        const membership = await this.channelMembershipRepository.findOne()
     }
 
     async getAllChannels(): Promise<Channel[]> 
