@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 // import { FormEvent } from "react";
 import axios from "axios";
 import Cookies from 'js-cookie'
-import { getCookie } from 'cookies-next';
 import { setCookie } from 'cookies-next';
 
 
@@ -18,7 +17,7 @@ const signup = () => {
   const [userNotFound, setUserNotFound] = useState('');
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await axios.post("http://10.11.4.5:3000/auth/signup", {
+    await axios.post("http://10.11.3.3:3000/auth/signup", {
         username,
         password,
         repassword
@@ -51,8 +50,8 @@ const signup = () => {
       }).catch(err => {console.log(err)})
   }
   
-  const link_42 = "http://10.11.4.5:3000/auth/42";
-  const link_google = "http://10.11.4.5:3000/auth/google"
+  const link_42 = "http://10.11.3.3:3000/auth/42";
+  const link_google = "http://10.11.3.3:3000/auth/google"
   
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
