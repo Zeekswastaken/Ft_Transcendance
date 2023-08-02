@@ -1,9 +1,11 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, FormEvent } from "react"
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+// import { FormEvent } from "react";
 import axios from "axios";
-import { checkPasswordStrength } from '@/utils/passwordChecker';
+import Cookies from 'js-cookie'
+import { getCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 
 
 const signup = () => {
@@ -16,22 +18,16 @@ const signup = () => {
   const [userNotFound, setUserNotFound] = useState('');
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const passStrength = checkPasswordStrength(password);
-    // console.log(passStrength);
-    // if (password !== repassword){
-    //   setPassNotMatch("Passwords do not match.");
-    //   setPasswordError("")
-    //   return;
-    // }
-    // if (passStrength === "Strong") {
-      await axios.post("http://10.11.4.5:3000/auth/signup", {
+    await axios.post("http://10.11.4.5:3000/auth/signup", {
         username,
         password,
         repassword
       })
       .then((res) => {
-        console.log(res.data)
-        if (res.data.message === "empty") {
+        // console.log(res.data)
+        
+        
+        if (res.data.message === "empty" || res.data.message === "exists") {
           setUserNotFound("Invalid Username, please try again!");
           setPassNotMatch("");
           setPasswordError("");
@@ -49,11 +45,10 @@ const signup = () => {
           setUserNotFound("");
           return;
         }
+        // console.log("tokennn = " + res.data);
+        setCookie("accessToken", res.data);
+        router.push("/signup/complete-profile")
       }).catch(err => {console.log(err)})
-      //  router.push("/signup/complete-profile");
-    // }
-    // else {
-    // }
   }
   
   const link_42 = "http://10.11.4.5:3000/auth/42";
