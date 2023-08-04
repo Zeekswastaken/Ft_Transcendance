@@ -1,13 +1,19 @@
+import { UserService } from './../user/user.service';
 import { AuthService } from './auth.service';
 import { UserDto } from 'src/Dto/use.Dto';
 import { LocalStrategy } from './local.startegy';
 import { Response } from 'express';
+import { JWToken } from './jwt.service';
 export declare class AuthController {
     private readonly authservice;
     private readonly localStrategy;
-    constructor(authservice: AuthService, localStrategy: LocalStrategy);
-    create(Body: UserDto, res: Response): Promise<void>;
+    private readonly userservice;
+    private readonly jwtservice;
+    constructor(authservice: AuthService, localStrategy: LocalStrategy, userservice: UserService, jwtservice: JWToken);
+    modyfiy(Body: any, res: Response): Promise<void>;
+    create(Body: UserDto, res: any): Promise<void>;
     checking(Body: UserDto, res: Response): Promise<void>;
+    log_out(Body: any, res: Response): Promise<void>;
 }
 export declare class googleController {
     private readonly authservice;

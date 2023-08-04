@@ -3,10 +3,11 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as ejs from 'ejs';
 import { join } from 'path';
-import { Request } from 'express';
+import { Request, urlencoded ,json} from 'express';
 import { createServer } from 'http';
 import * as corsAnywhere from 'cors-anywhere';
 import cors = require("cors")
+import multer = require('multer');
 async function bootstrap() {
   const app = await NestFactory.create< NestExpressApplication>(AppModule,{cors:true});
 
@@ -21,6 +22,9 @@ async function bootstrap() {
   //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   //   allowedHeaders: 'Content-Type,Authorization,cookie',
   // });
+  app.use(multer().any());
+  app.use(json({ limit: '5mb' }));
+  app.use(urlencoded({ limit: '5mb', extended: true }));
    await app.listen(3000);
   app.useStaticAssets(join(__dirname, '..', 'views'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));

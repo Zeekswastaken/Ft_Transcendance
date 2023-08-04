@@ -10,5 +10,6 @@ export declare class AuthService {
     validate_by_email(username: String, password: String): Promise<User | null>;
     create_Oauth(body: UserDto): Promise<boolean>;
     generatOken(user: jwtDTO): Promise<string>;
+    generateToken_2(user: jwtDTO): Promise<string>;
     isValid(token: String): Promise<boolean>;
 }

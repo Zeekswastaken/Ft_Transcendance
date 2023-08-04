@@ -58,6 +58,9 @@ let AuthService = class AuthService {
     async generatOken(user) {
         return await this.jwtoken.generateToken(user);
     }
+    async generateToken_2(user) {
+        return await this.jwtoken.generateToken_2(user);
+    }
     async isValid(token) {
         return await this.jwtoken.verify(token);
     }

@@ -10,7 +10,7 @@ import { JWToken } from './auth/jwt.service';
 @Controller()
 export class AppController {
   constructor(private readonly userservice:UserService,private readonly jwt:JWToken){}
-  @Get()
+  @Get('hamza')
   @UseGuards(TokenGuard)
   async default(@Res() res:Response,@Req() req:Request,@Query() query: UserDto){
     const status = (req as any).user;

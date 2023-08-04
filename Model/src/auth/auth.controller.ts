@@ -1,76 +1,87 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+
+
+import { UserService } from './../user/user.service';
+import { Body, Controller, Get, Post, Req, Res, UseGuards,Put } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserDto } from 'src/Dto/use.Dto';
+import { UserDto, MoreInfos, TO_update, jwtDTO, UserDto2 } from 'src/Dto/use.Dto';
 import { LocalStrategy } from './local.startegy';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { TokenGuard } from './guards';
 import { error } from 'console';
+import { JWToken } from './jwt.service';
+import { BSON } from 'typeorm';
+import { User } from 'src/DB_tables/user.entities';
 
 
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authservice:AuthService,private readonly localStrategy:LocalStrategy){}
-//     @Get('signin')
-//    // @UseGuards(TokenGuard)
-//     singin(@Res() res:Response){
-//         this.authservice.singin(res);
-//     }
-//     @Get('signup')
-//     //@UseGuards(TokenGuard)
-//     singup(@Res() res:Response){
-//         this.authservice.singup(res);
-//     }
+    constructor(private readonly authservice:AuthService,private readonly localStrategy:LocalStrategy,private readonly userservice:UserService,private readonly jwtservice:JWToken){}
+
+    @Put('modify-data')
+    async modyfiy(@Body() Body,@Res() res:Response){
+        console.log(Body);
+        const decode = await this.jwtservice.decoded(Body.cookie);
+        delete Body.cookie;
+        const id = decode.id as number;
+        await this.userservice.update(Body,id);
+        var user= await this.userservice.findById(id);
+        if (user)
+        {
+            //console.log(user);
+            console.log("HOLOALDJN");
+            const cookie_token = await this.authservice.generateToken_2(user);
+            console.log(await this.jwtservice.decoded(cookie_token));
+            res.send(cookie_token);
+        }
+        else
+            res.send('Error');
+    }
+
     @Post('signup')
-    async create(@Body() Body:UserDto,@Res() res:Response){
-        
+    async create(@Body() Body:UserDto,@Res() res){
+
         const ret = await this.authservice.check_and_create(Body);
         if(ret == true)
         {
             const cookie_token = await this.authservice.generatOken(Body);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
-              });
-            res.send("Success");
-            // res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
+            res.send(cookie_token);
         }
         else
              res.send({
                 message: ret,
              })
     }
+
     @Post('login')
     async checking(@Body() Body:UserDto,@Res() res:Response){
 
         // console.log(Body);
+        if (!Body.username)
+            res.send('empty');
         const user = await this.localStrategy.validate(Body.username,Body.password);
         if (!user)
-        {
-            var obj:Object = {
-                token:'error',
-                user:Body,
-                message:'something wrong with username or password'
-            }
-            res.send(obj);
-            //return obj;
-        }
+            res.send('notExists');
         else 
         {
             const cookie_token = await this.authservice.generatOken(Body);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
               });
-             var obj:Object  = {
-                token:cookie_token,
-                user:Body,
-                message:'the user entrance secssufully'
-            }
-            res.send(obj);
+            res.send('success');
             //return obj;
         }
     }
+    @Get('Sign-Out')
+    async log_out(@Body() Body,@Res() res:Response){
+        // const decode = await this.jwtservice.decoded(Body.cookie);
+        res.clearCookie('accessToken');
+        res.status(200)
+        .redirect('localhost:3001/login');
+    }
 }
+
 @Controller('auth')
 export class googleController{
     constructor(private readonly authservice:AuthService){}

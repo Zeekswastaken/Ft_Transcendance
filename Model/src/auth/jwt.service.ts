@@ -10,7 +10,12 @@ export class JWToken{
 
     private secret_key:String = '0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6';
     async generateToken(user:jwtDTO){
+      
         return  this.jwtService.sign(user);
+    }
+    async generateToken_2(user:jwtDTO){
+      const obj = {username:user.username,gender:user.gender,birthday:user.birthDay,avatar_URL:user.avatar_URL};
+        return  this.jwtService.sign(obj);
     }
     async verify(token):Promise<boolean>
     {
@@ -50,7 +55,6 @@ export class JWToken{
           if (token)
           {
             const user = await this.jwtService.verifyAsync(token, {secret:this.secret_key.toString()});
-            console.log('Decoded:', user);
             return user;
           }
           else 
@@ -58,7 +62,7 @@ export class JWToken{
         } 
         catch (error) {
           console.log('4---------------->>>>');
-          return null; // Token is invalid
+          return error; // Token is invalid
         }
     }
   }

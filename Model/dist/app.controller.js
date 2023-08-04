@@ -40,7 +40,7 @@ let AppController = class AppController {
     }
 };
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('hamza'),
     (0, common_1.UseGuards)(guards_1.TokenGuard),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Req)()),

@@ -12,16 +12,53 @@ export class UserDto {
     repassword:String;
     avatar_URL:String;
     gender:String;
+    birthDay: Date;
     constructor(){
         this.avatar_URL='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU';
         this.repassword = 'none';
         this.password = 'Oauth';
+        this.username = ''
     }
 }
+
+export class UserDto2 {
+    username:String;
+    password:String;
+    avatar_URL:String;
+    gender:String;
+    birthDay: Date;
+    constructor(){
+        this.avatar_URL='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU';
+        this.password = 'Oauth';
+        this.username = ''
+    }
+}
+
 export class jwtDTO{
     username:String;
     avatar_URL: String;
     gender: String;
+    birthDay:Date;
+}
+
+export class MoreInfos{
+    id:number;
+    avatar_URL:String;
+    gender:String;
+    birthDay: Date;
+    cookie:String;
+    constructor(){
+        //this.avatar_URL='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU';
+        this.id = -1;
+    }
+}
+export class TO_update{
+    avatar_URL:String;
+    gender:String;
+    birthDay: Date;
+    constructor(){
+       // this.avatar_URL='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU';
+    }
 }
 // export class UserDtosave {
 //     username:String;

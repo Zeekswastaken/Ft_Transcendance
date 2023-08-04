@@ -24,8 +24,15 @@ let UserService = class UserService {
     async save(Body) {
         await this.userRepo.save(Body);
     }
+    async update(Body, id) {
+        await this.userRepo.update(id, Body);
+    }
     async findByName(username) {
         const user = await this.userRepo.findOne({ where: { username: username } });
+        return user;
+    }
+    async findById(id) {
+        const user = await this.userRepo.findOne({ where: { id: id } });
         return user;
     }
 };

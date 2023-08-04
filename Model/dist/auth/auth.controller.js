@@ -13,24 +13,41 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fortytwo_Controller = exports.googleController = exports.AuthController = void 0;
+const user_service_1 = require("./../user/user.service");
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const use_Dto_1 = require("../Dto/use.Dto");
 const local_startegy_1 = require("./local.startegy");
 const passport_1 = require("@nestjs/passport");
+const jwt_service_1 = require("./jwt.service");
 let AuthController = class AuthController {
-    constructor(authservice, localStrategy) {
+    constructor(authservice, localStrategy, userservice, jwtservice) {
         this.authservice = authservice;
         this.localStrategy = localStrategy;
+        this.userservice = userservice;
+        this.jwtservice = jwtservice;
+    }
+    async modyfiy(Body, res) {
+        console.log(Body);
+        const decode = await this.jwtservice.decoded(Body.cookie);
+        delete Body.cookie;
+        const id = decode.id;
+        await this.userservice.update(Body, id);
+        var user = await this.userservice.findById(id);
+        if (user) {
+            console.log("HOLOALDJN");
+            const cookie_token = await this.authservice.generateToken_2(user);
+            console.log(await this.jwtservice.decoded(cookie_token));
+            res.send(cookie_token);
+        }
+        else
+            res.send('Error');
     }
     async create(Body, res) {
         const ret = await this.authservice.check_and_create(Body);
         if (ret == true) {
             const cookie_token = await this.authservice.generatOken(Body);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
-            });
-            res.send("Success");
+            res.send(cookie_token);
         }
         else
             res.send({
@@ -38,29 +55,33 @@ let AuthController = class AuthController {
             });
     }
     async checking(Body, res) {
+        if (!Body.username)
+            res.send('empty');
         const user = await this.localStrategy.validate(Body.username, Body.password);
-        if (!user) {
-            var obj = {
-                token: 'error',
-                user: Body,
-                message: 'something wrong with username or password'
-            };
-            res.send(obj);
-        }
+        if (!user)
+            res.send('notExists');
         else {
             const cookie_token = await this.authservice.generatOken(Body);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
             });
-            var obj = {
-                token: cookie_token,
-                user: Body,
-                message: 'the user entrance secssufully'
-            };
-            res.send(obj);
+            res.send('success');
         }
     }
+    async log_out(Body, res) {
+        res.clearCookie('accessToken');
+        res.status(200)
+            .redirect('localhost:3001/login');
+    }
 };
+__decorate([
+    (0, common_1.Put)('modify-data'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "modyfiy", null);
 __decorate([
     (0, common_1.Post)('signup'),
     __param(0, (0, common_1.Body)()),
@@ -77,9 +98,17 @@ __decorate([
     __metadata("design:paramtypes", [use_Dto_1.UserDto, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "checking", null);
+__decorate([
+    (0, common_1.Get)('Sign-Out'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "log_out", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
-    __metadata("design:paramtypes", [auth_service_1.AuthService, local_startegy_1.LocalStrategy])
+    __metadata("design:paramtypes", [auth_service_1.AuthService, local_startegy_1.LocalStrategy, user_service_1.UserService, jwt_service_1.JWToken])
 ], AuthController);
 exports.AuthController = AuthController;
 let googleController = class googleController {

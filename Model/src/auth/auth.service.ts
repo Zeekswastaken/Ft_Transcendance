@@ -62,6 +62,10 @@ export class AuthService {
     async generatOken(user:jwtDTO){
         return await this.jwtoken.generateToken(user);
     }
+    async generateToken_2(user:jwtDTO)
+    {
+        return await this.jwtoken.generateToken_2(user);
+    }
     async isValid(token:String)
     {
         return await this.jwtoken.verify(token);

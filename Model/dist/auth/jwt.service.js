@@ -21,6 +21,10 @@ let JWToken = class JWToken {
     async generateToken(user) {
         return this.jwtService.sign(user);
     }
+    async generateToken_2(user) {
+        const obj = { username: user.username, gender: user.gender, birthday: user.birthDay, avatar_URL: user.avatar_URL };
+        return this.jwtService.sign(obj);
+    }
     async verify(token) {
         try {
             if (token) {
@@ -50,7 +54,6 @@ let JWToken = class JWToken {
         try {
             if (token) {
                 const user = await this.jwtService.verifyAsync(token, { secret: this.secret_key.toString() });
-                console.log('Decoded:', user);
                 return user;
             }
             else
@@ -58,7 +61,7 @@ let JWToken = class JWToken {
         }
         catch (error) {
             console.log('4---------------->>>>');
-            return null;
+            return error;
         }
     }
 };
