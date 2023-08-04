@@ -22,11 +22,11 @@ let fortytwo_Strategy = class fortytwo_Strategy extends (0, passport_1.PassportS
         });
     }
     async validate(accessToken, refreshToken, profile) {
-        const { name, emails, photos } = profile;
+        const { name, emails, _json } = profile;
         const user = {
             username: name,
             email: emails[0].value,
-            image: photos[0].value,
+            avatar_URL: _json.image.versions.small,
         };
         return user;
     }

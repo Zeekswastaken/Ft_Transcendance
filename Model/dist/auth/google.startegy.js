@@ -13,11 +13,12 @@ class GoogleStrategy extends (0, passport_1.PassportStrategy)(passport_google_oa
         });
     }
     async validate(accessToken, refreshToken, profile) {
+        console.log("Profile = " + JSON.stringify(passport_google_oauth20_1.Profile));
         const { name, emails, photos } = profile;
         const user = {
             username: name,
             email: emails[0].value,
-            image: photos[0].value,
+            avatar_URL: photos[0].value,
         };
         return user;
     }

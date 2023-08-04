@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 
-
+// interface avatar{setAvatar: string;}
 
 export const metadata: Metadata = {
   title: 'transcendence',
@@ -14,7 +14,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  let checkAuth ="false";
+  let checkAuth ="f";
   return (
     <html lang="en">
       <body className=" bg-[url('/30.png')] bg-cover bg-center bg-no-repeat flex justify-center ">

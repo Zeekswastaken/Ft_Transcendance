@@ -60,16 +60,18 @@ export class AuthController {
         // console.log(Body);
         if (!Body.username)
             res.send('empty');
-        const user = await this.localStrategy.validate(Body.username,Body.password);
-        if (!user)
-            res.send('notExists');
+        const user1 = await this.localStrategy.validate(Body.username,Body.password);
+        const user = await this.userservice.findByName(Body.username);
+        if (!user1)
+            res.send({message:'notExists'});
         else 
         {
-            const cookie_token = await this.authservice.generatOken(Body);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
-              });
-            res.send('success');
+            const cookie_token = await this.authservice.generateToken_2(user);
+            const user2 = await this.jwtservice.decoded(cookie_token);
+            // res.cookie('accessToken', cookie_token, {
+            //     httpOnly: true,
+            //   });
+            res.send({message:'success',cookie:cookie_token,user:user2});
             //return obj;
         }
     }

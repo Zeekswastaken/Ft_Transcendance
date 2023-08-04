@@ -1,8 +1,10 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, FormEvent } from "react"
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+// import { FormEvent } from "react";
 import axios from "axios";
+import Cookies from 'js-cookie'
+import { setCookie } from 'cookies-next';
 
 
 const signup = () => {
@@ -10,34 +12,42 @@ const signup = () => {
   
   const router = useRouter();
   
-  // const [passwordError, setPasswordError] = useState('');
-  // const [passNotMatch, setPassNotMatch] = useState('')
+  const [passwordError, setPasswordError] = useState('');
+  const [passNotMatch, setPassNotMatch] = useState('');
+  const [userNotFound, setUserNotFound] = useState('');
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const passStrength = checkPasswordStrength(password);
-    // console.log(passStrength);
-    // if (password !== repassword){
-    //   setPassNotMatch("Passwords do not match.");
-    //   setPasswordError("")
-    //   return;
-    // }
-    // if (passStrength === "Strong") {
-      await axios.post("http://localhost:3000/auth/signup", {
+    await axios.post("http://localhost:3000/auth/signup", {
         username,
         password,
         repassword
       })
       .then((res) => {
+        // console.log(res.data)
         
-        console.log(res)
-      })
-      .catch(err => {console.log(err)})
-      //  router.push("/signup/complete-profile");
-    // }
-    // else {
-    //     setPasswordError("Your Password not Strong enough, Please try again.")
-    //     setPassNotMatch("");
-    // }
+        
+        if (res.data.message === "empty" || res.data.message === "exists") {
+          setUserNotFound("Invalid Username, please try again!");
+          setPassNotMatch("");
+          setPasswordError("");
+          return ;
+        }
+        else if (res.data.message === "weak") {
+          setPasswordError("Your Password not Strong enough, Please try again.");
+          setUserNotFound("");
+          setPassNotMatch("");
+          return ;
+        }
+        else if (res.data.message === 'notMatch') {
+          setPassNotMatch("Passwords do not match.");
+          setPasswordError("");
+          setUserNotFound("");
+          return;
+        }
+        // console.log("tokennn = " + res.data);
+        setCookie("accessToken", res.data);
+        router.push("/signup/complete-profile")
+      }).catch(err => {console.log(err)})
   }
   
   const link_42 = "http://localhost:3000/auth/42";
@@ -67,6 +77,7 @@ const signup = () => {
             <div className=" pt-6 divider">or</div>
             
             <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Username" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-7 sm:mx-0 mx-5 rounded-xl "/>
+            {userNotFound && <p className="text-red-500 text-xs pt-1 text-left">{userNotFound}</p>}
 
             <input onChange={e => setPassword(e.target.value)} id="password" value={password} type="password" placeholder="Password" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-3 sm:mx-0 mx-20 rounded-xl peer ... "/>
             {/* {passwordError && <p className="text-red-500 text-xs pt-1 text-left">{passwordError}</p>} */}

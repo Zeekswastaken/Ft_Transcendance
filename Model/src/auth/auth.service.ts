@@ -60,6 +60,7 @@ export class AuthService {
             return false;
     }
     async generatOken(user:jwtDTO){
+        console.log(user);
         return await this.jwtoken.generateToken(user);
     }
     async generateToken_2(user:jwtDTO)

@@ -1,0 +1,49 @@
+import React from 'react'
+import SelectFriend from './SelectFriend'
+
+const OneVsOne:React.FC  = () => {
+  return (
+    <div className=' w-auto place-content-center'>
+      <div className=' flex items-center justify-between my-10 space-x-6'>
+        {/* <div className=' rounded-xl'> */}
+          <img className=' rounded-xl' src="/Spectate.png" height={120} width={120} alt="" />
+        {/* </div> */}
+        <p className=' text-white text-[50px] font-Bomb'>VS</p>
+        <a className=' bg-amber-700 h-[120px] w-[120px]'>
+          
+        </a>
+      </div>
+      <div className=' mx-8'>
+        <SelectFriend />
+      </div>  
+    </div>
+  )
+}
+
+const ModalContent = ({title}: {title : any}) => {
+    let content: React.ReactNode ;
+    switch (title) {
+        case "One Vs One" :
+          content = <OneVsOne/>
+                {/* One Vs One */}
+          break;
+        case "One Vs Bot":
+          content = 
+            <div>
+              One Vs Bot
+            </div>;
+          break;
+        case "Spectate" :
+          content =
+            <div>
+              Spectate
+            </div>
+      }
+  return (
+    <>
+        {content}
+    </>
+  )
+}
+
+export default ModalContent
