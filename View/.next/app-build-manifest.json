@@ -16,10 +16,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/game/page.js"
     ],
-    "/groups/page": [
+    "/profile/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/groups/page.js"
+      "static/chunks/app/profile/page.js"
+    ],
+    "/profile/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/profile/layout.js"
+    ],
+    "/chat/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/chat/page.js"
     ],
     "/leaderboard/page": [
       "static/chunks/webpack.js",

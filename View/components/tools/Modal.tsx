@@ -44,14 +44,14 @@ const OneVsOne:React.FC  = () => {
           </div>
         </div>
         ) : (
-          <div className=" text-black flex justify-center items-center space-x-[50px] my-10">
+          <div className=" flex justify-between items-center space-x-[50px] my-10 ">
 
-            <button onClick={handleFriendOpponent} className=" w-[200px] h-[200px] bg-amber-100 ">
-              Choose Friend
+            <button onClick={handleFriendOpponent} className=" w-[200px] h-[200px] bg-gradient-to-br from-primary-pink-300 to-black hover:to-white rounded-2xl duration-700">
+              <p className=' text-white text-3xl font-Bomb'> Choose Friend </p>
             </button>
             <p className=" font-Bomb text-[50px] text-white ">OR</p>
-            <button onClick={handleRandomlyOpponent} className=" w-[200px] h-[200px] bg-amber-100 ">
-              Choose Randomly
+            <button onClick={handleRandomlyOpponent} className=" w-[200px] h-[200px] bg-gradient-to-br from-primary-pink-300 to-black hover:to-white text-white rounded-2xl  ">
+              <p className='  text-3xl font-Bomb'> Choose Randomly </p>
             </button>
           </div>
         )}

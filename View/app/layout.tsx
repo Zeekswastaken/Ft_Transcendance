@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import { Providers } from "@/redux/provider";
+import { useRouter } from 'next/navigation';
 
 // interface avatar{setAvatar: string;}
 
@@ -15,6 +16,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // const router = useRouter()
   let checkAuth ="true";
   return (
     <html lang="en">

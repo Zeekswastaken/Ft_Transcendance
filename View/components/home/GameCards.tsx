@@ -81,7 +81,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95"
                   >
-                    <Dialog.Panel className="w-full max-w-3xl transform  rounded-2xl bg-[#A1216C] p-6 text-center align-middle shadow-xl transition-all">
+                    <Dialog.Panel className="w-full max-w-3xl transform  rounded-2xl bg-[url('/artwork.jpeg')] bg-cover bg-center p-6 text-center align-middle shadow-xl transition-all">
                       <Dialog.Title
                         as="h3"
                         className="text-[40px] mt-2 font-Bomb leading-6 text-white tracking-wide"
