@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
+import { Providers } from "@/redux/provider";
 
 // interface avatar{setAvatar: string;}
 
@@ -19,7 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className=" bg-[url('/30.png')] bg-cover bg-center bg-no-repeat flex justify-center ">
         {checkAuth === "true" ? <Navbar /> : "" }
-        {children}
+        <Providers>
+          {children}
+        </Providers>
         {/* <Footer /> */}
       </body>
     </html>

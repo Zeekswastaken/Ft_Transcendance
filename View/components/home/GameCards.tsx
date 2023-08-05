@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, Fragment, ReactNode } from "react";
+import { useState, Fragment, ReactNode, FormEvent } from "react";
 import ModalContent from "../tools/Modal";
 import { Dialog, Transition } from '@headlessui/react'
+import { useRouter } from "next/navigation";
 
 type Cards = {
   title: string
@@ -14,6 +15,19 @@ type Cards = {
 
 const Card = ( {title, description, buttonText, image, span} : Cards ) => {
   
+  const [clicked, setClicked] = useState(false);
+  const router = useRouter();
+  const handleRandomlyOpponent= (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    router.push("/game");
+    
+  }
+  const handleFriendOpponent = (e: React.MouseEvent<HTMLElement>) => {
+    setClicked(true);
+  }
+  const changeState = (state:boolean) => {
+    setClicked(state);
+  }
 
   const targetWord = span;
   const index = description.indexOf(targetWord);
@@ -21,7 +35,10 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
   const secondPart = description.slice(index + targetWord.length);
   let [isOpen, setIsOpen] = useState(false)
 
-  function closeModal() {setIsOpen(false)}
+  function closeModal() {
+    setIsOpen(false)
+    setClicked(false)
+  }
   function openModal() {setIsOpen(true)}
 
   return (
@@ -43,7 +60,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
             <Dialog as="div" className="relative z-10" onClose={closeModal}>
               <Transition.Child
                 as={Fragment}
-                enter="ease-out duration-300"
+                enter="ease-out duration-200"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
                 leave="ease-in duration-200"
@@ -57,7 +74,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
                 <div className="flex min-h-full items-center justify-center p-4 text-center">
                   <Transition.Child
                     as={Fragment}
-                    enter="ease-out duration-300"
+                    enter="ease-out duration-200"
                     enterFrom="opacity-0 scale-95"
                     enterTo="opacity-100 scale-100"
                     leave="ease-in duration-200"
@@ -67,29 +84,44 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
                     <Dialog.Panel className="w-full max-w-3xl transform  rounded-2xl bg-[#A1216C] p-6 text-center align-middle shadow-xl transition-all">
                       <Dialog.Title
                         as="h3"
-                        className="text-2xl font-Bomb leading-6 text-white tracking-wider"
+                        className="text-[40px] mt-2 font-Bomb leading-6 text-white tracking-wide"
                       >
                         {title}
                       </Dialog.Title>
-                      
-                      
-                      
-                      <div className=" grid place-items-center">
-                        <div className="">
-                          <ModalContent title={title}/>
+                      {clicked ? (
+                        <div className=" transition-all ease-in duration-200">
+                          <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" className="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                            </svg>
+                          </div>
+                          <div className=" grid place-items-center "><ModalContent title={title}/></div>
+                          <div className="mt-4 space-x-4">
+                            <button
+                              type="button"
+                              className="inline-flex text-white rounded-lg tracking-wide font-Bomb justify-center p-2 bg-primary-pink-300 capitalize shadow hover:duration-300 shadow-black/60"
+                              onClick={closeModal}
+                            >
+                              Invite Friend!
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="mt-4">
-                      
-                      
-                      <button
-                        type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        onClick={closeModal}
-                      >
-                        Invite!
-                      </button>
-                      </div>
+                        ) : (
+                          <div className=" text-black flex justify-center items-center space-x-[50px] my-10">
+
+                            <button onClick={handleFriendOpponent} className=" w-[200px] h-[200px] bg-amber-100 ">
+                              Choose Friend
+                            </button>
+                            <p className=" font-Bomb text-[50px] text-white ">OR</p>
+                            <button onClick={handleRandomlyOpponent} className=" w-[200px] h-[200px] bg-amber-100 ">
+                              Choose Randomly
+                            </button>
+                          </div>
+                        )}
+
+
+                      {/* <div className=" grid place-items-center "><ModalContent title={title}/></div> */}
+
                     </Dialog.Panel>
                   </Transition.Child>
                 </div>

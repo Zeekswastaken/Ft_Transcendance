@@ -1,11 +1,10 @@
 "use client"
 
-
-
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/outline'
-import { type } from 'os'
+import { setOpponentAvatar } from "@/redux/features/avatarSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 type People = {
   id : number
@@ -14,6 +13,12 @@ type People = {
 }
 
 const people = [
+  {
+    id: 0,
+    name: 'Choose Friend',
+    avatar:
+      'https://unsplash.com/photos/dLij9K4ObYY',
+  },
   {
     id: 1,
     name: 'Wade Cooper',
@@ -81,19 +86,23 @@ function classNames(...classes: string[]) {
 }
 
 export default function SelectFriend() {
-    // const [selectedAvatar, setSelectedAvatar] = useState("");
-    const [selected, setSelected] = useState(people[1])
+  const dispatch = useAppDispatch();
+  const [selected, setSelected] = useState(people[1])
+  useEffect(() => {
+    dispatch(setOpponentAvatar(selected.avatar));
+  }, [dispatch, selected.avatar]);
     
     return (
       <Listbox value={selected} onChange={setSelected}>
         {({ open }) => (
           <>
             <div className=" relative">
-              <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              <Listbox.Button className="relative w-full bg-[#a34b83] rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none  sm:text-sm">
                 <span className="flex items-center">
-                  <img src={selected.avatar} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
+                  <img src={selected.avatar} alt="" className="flex-shrink-0 h-8 w-8 rounded-full" />
                   {/* {setSelectedAvatar(selected.avatar)} */}
-                  <span className="ml-3 block truncate">{selected.name}</span>
+                  <span className="ml-3 text-lg font-normal text-white block truncate">{selected.name}</span>
+                  <img src="/drop.svg" className=" right-2 absolute" width={18} height={18} alt="" />
                 </span>
                 {/* <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"> */}
                   {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
