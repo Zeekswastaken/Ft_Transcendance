@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const DiscriptionCard = () => {
   return (
-    <header className=" drop-shadow-[6px_5px_0_rgba(0,0,00.25)] bg-[url('/girl.png')] mt-[200px] flex mx-[100px] bg-cover bg-center h-[350px] rounded-[34px]">
+    <header className="  bg-[url('/girl.png')] mt-[200px] flex mx-[100px] bg-cover bg-center h-[350px] rounded-[34px]">
       <div className='  mt-20 mx-10'>
         <div className=' font-Glitch  '>
           <h1 className=' text-white text-[40px]'>Welcome to <span className=" text-[40px] text-primary-pink-300">*Something*</span></h1>
@@ -29,7 +29,6 @@ const DiscriptionCard = () => {
           experience!
         </p>
       </div> */}
-
     </header>
     // <section className=' drop-shadow-[6px_5px_0_rgba(0,0,00.25)] relative mt-[200px] min-w-[500px] flex lg:max-w-[1400px] items-center' >
     //   <div className=' flex px-16 py-1 '>

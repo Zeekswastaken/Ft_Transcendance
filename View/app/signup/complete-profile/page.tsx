@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, FormEvent } from "react"
+import React, { useEffect, useState, FormEvent, useRef } from "react"
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, {  ReactDatePickerProps } from 'react-datepicker';
@@ -10,20 +10,37 @@ import Cookies from 'js-cookie'
 
 const completProfile = () => {
   const cookie = getCookie("accessToken");
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log("avatar_URL = " + avatar_URL);
-    console.log("Token = " + cookie);
-    e.preventDefault();
-    await axios.post("http://10.11.3.3:3000/upload", {
-      // birthDay,
-      avatar_URL,
-      // gender,
-      // cookie
-    }).then(res => {console.log(res)}).catch(err => {console.log(err)})
-  }
   const [birthDay, setBirthDay] = useState<Date | null>(null);
-  const [avatar_URL, setAvatar_URL] = useState<File | null>(null);
   const [gender, setGender] = useState("");
+  // const [avatar_URL, setAvatar_URL] = useState<File>();
+  const avatar = useRef<File | undefined>(undefined);
+
+
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    // console.log("avatar_URL = " + avatar_URL);
+    const avatar_URL = new FormData();
+    avatar_URL.append("file", avatar.current as File);
+    console.log(avatar_URL);
+
+    e.preventDefault();
+    await axios.put("http://10.11.3.3:3000/auth/modify-data", {
+
+      birthDay: birthDay,
+      gender: gender,
+      cookie: cookie,
+      avatar_URL: avatar_URL,
+    }, {headers: {
+      "Content-Type": "application/json"
+    }}).then(res => {}).catch(err => {});
+    // await axios.post("http://10.11.3.3:3000/upload", 
+
+    //   // birthDay,
+    //   formData,
+    //   // gender,
+    //   // cookie
+    // ).then(res => {}).catch(err => {})
+  }
 
 
   // const [birthDay, setBirthDay] = useState("");
@@ -32,14 +49,29 @@ const completProfile = () => {
     
   };
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files![0];
-    if (!file) return;
-    // if (file.size > 1024 * 1024) return toast.error("Image size too large");
-    // if (file.type !== "image/jpeg" && file.type !== "image/png")
-    //   return toast.error("Image format is incorrect");
-    const formData = new FormData();
-    formData.append("picture", e.target.files![0]);
-    setAvatar_URL(file);
+    if (e.target.files) {
+      avatar.current = e.target.files[0];
+    }
+    // setAvatar_URL(e.target.files?.[0]);
+    // const formData = new FormData();
+    // formData.append("avatar", e.target.files);
+    // const file = e.target.files![0];
+    // if (!file) return;
+    // // if (file.size > 1024 * 1024) return;
+    // console.log("formData  " +  file);
+    // // if (file.type !== "image/jpeg" && file.type !== "image/png")
+    // // return
+    // const formData = new FormData();
+    // formData.append("avatar", e.target.files![0]);
+    // setAvatar_URL(formData);
+    // const avataFile = formData;
+
+    // const reader = new FileReader();
+    // reader.onload = () => {
+    //   setAvatar_URL(reader.result as any)
+    // }
+    // reader.readAsDataURL(file);
+    // setAvatar_URL(formData);
   };
   // console.log(gender);
   return (
@@ -55,7 +87,7 @@ const completProfile = () => {
                 <img src="/profileEx.png" alt="profile" width={130} height={130} />
                 <img className=" absolute mt-[58px]" src="/camera.svg" alt="icon" width={25} height={20} />
               </label>
-              <input onChange={handleImageChange} className="hidden" id="uploadImage" accept="image/*" type="file" /> 
+              <input onChange={handleImageChange} className="hidden" id="uploadImage" accept="image/*" type="file" name="avatar" /> 
             </div>
             <p className=" font-Heading tracking-wider mt-4">Upload Image</p>
             {/* <div className=" "> */}
