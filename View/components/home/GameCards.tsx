@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, Fragment, ReactNode, FormEvent } from "react";
+import React, { useState, Fragment, ReactNode, FormEvent } from "react";
 import ModalContent from "../tools/Modal";
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from "next/navigation";
@@ -88,40 +88,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
                       >
                         {title}
                       </Dialog.Title>
-                      {clicked ? (
-                        <div className=" transition-all ease-in duration-200">
-                          <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" className="w-6 h-6">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
-                            </svg>
-                          </div>
-                          <div className=" grid place-items-center "><ModalContent title={title}/></div>
-                          <div className="mt-4 space-x-4">
-                            <button
-                              type="button"
-                              className="inline-flex text-white rounded-lg tracking-wide font-Bomb justify-center p-2 bg-primary-pink-300 capitalize shadow hover:duration-300 shadow-black/60"
-                              onClick={closeModal}
-                            >
-                              Invite Friend!
-                            </button>
-                          </div>
-                        </div>
-                        ) : (
-                          <div className=" text-black flex justify-center items-center space-x-[50px] my-10">
-
-                            <button onClick={handleFriendOpponent} className=" w-[200px] h-[200px] bg-amber-100 ">
-                              Choose Friend
-                            </button>
-                            <p className=" font-Bomb text-[50px] text-white ">OR</p>
-                            <button onClick={handleRandomlyOpponent} className=" w-[200px] h-[200px] bg-amber-100 ">
-                              Choose Randomly
-                            </button>
-                          </div>
-                        )}
-
-
-                      {/* <div className=" grid place-items-center "><ModalContent title={title}/></div> */}
-
+                      <div className=" grid place-items-center "><ModalContent title={title}/></div>
                     </Dialog.Panel>
                   </Transition.Child>
                 </div>

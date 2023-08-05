@@ -3310,6 +3310,9 @@ details.collapse summary::-webkit-details-marker {
 .top-1\/2 {
   top: 50%;
 }
+.top-10 {
+  top: 2.5rem;
+}
 .-z-10 {
   z-index: -10;
 }
@@ -3493,6 +3496,12 @@ details.collapse summary::-webkit-details-marker {
 }
 .mt-\[58px\] {
   margin-top: 58px;
+}
+.ml-10 {
+  margin-left: 2.5rem;
+}
+.mt-0 {
+  margin-top: 0px;
 }
 .block {
   display: block;
