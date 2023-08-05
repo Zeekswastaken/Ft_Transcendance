@@ -5,38 +5,22 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, {  ReactDatePickerProps } from 'react-datepicker';
 import axios from "axios";
 import { getCookie } from 'cookies-next';
-// import { cookies } from 'next/headers'
-// import { NextResponse, NextRequest } from 'next/server'
-// import { Cookies } from '';
 import Cookies from 'js-cookie'
-import { Avatar } from "flowbite-react";
-// import Datepicker from 'flowbite-datepicker/Datepicker';
 
 
 const completProfile = () => {
-  // const cookie = request.cookies.get('myCookieName')?.value;
-  
-  // console.log("cookie = " +  cookie);
-  // useEffect(() => {
-  //   const cookie = cookies().get("accessToken");
-  //   console.log("cookie = " + cookie);
-  // }, []);
-  const cookie = Cookies.get('accessToken');
-  // console.log("theCookie " + cookie);
+  const cookie = getCookie("accessToken");
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     console.log("avatar_URL = " + avatar_URL);
+    console.log("Token = " + cookie);
     e.preventDefault();
-    // const image = "/Users/fbouanan/Desktop/team/View/public/avatars/avatar1.png";
-    // const gender = "female";
-    await axios.put("http://10.11.4.5:3000/auth/modify-data", {
-      birthDay,
+    await axios.post("http://10.11.3.3:3000/upload", {
+      // birthDay,
       avatar_URL,
-      gender,
-      cookie
+      // gender,
+      // cookie
     }).then(res => {console.log(res)}).catch(err => {console.log(err)})
   }
-
-  // const [birthDay, setBirthDay] = useState(new Date());
   const [birthDay, setBirthDay] = useState<Date | null>(null);
   const [avatar_URL, setAvatar_URL] = useState<File | null>(null);
   const [gender, setGender] = useState("");
@@ -50,7 +34,6 @@ const completProfile = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     if (!file) return;
-    
     // if (file.size > 1024 * 1024) return toast.error("Image size too large");
     // if (file.type !== "image/jpeg" && file.type !== "image/png")
     //   return toast.error("Image format is incorrect");
