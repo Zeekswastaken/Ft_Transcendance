@@ -13,7 +13,7 @@ exports.fortytwo_Strategy = void 0;
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const passport_42_1 = require("passport-42");
-let fortytwo_Strategy = class fortytwo_Strategy extends (0, passport_1.PassportStrategy)(passport_42_1.Strategy, '42') {
+let fortytwo_Strategy = exports.fortytwo_Strategy = class fortytwo_Strategy extends (0, passport_1.PassportStrategy)(passport_42_1.Strategy, '42') {
     constructor() {
         super({
             clientID: 'u-s4t2ud-97201b0b9664120cef3e2130f4f15b0f1993c65c776a8593967c46214ef534d6',
@@ -31,9 +31,8 @@ let fortytwo_Strategy = class fortytwo_Strategy extends (0, passport_1.PassportS
         return user;
     }
 };
-fortytwo_Strategy = __decorate([
+exports.fortytwo_Strategy = fortytwo_Strategy = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [])
 ], fortytwo_Strategy);
-exports.fortytwo_Strategy = fortytwo_Strategy;
 //# sourceMappingURL=42.strategy.js.map

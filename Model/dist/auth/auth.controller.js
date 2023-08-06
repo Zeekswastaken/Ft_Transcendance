@@ -20,7 +20,7 @@ const use_Dto_1 = require("../Dto/use.Dto");
 const local_startegy_1 = require("./local.startegy");
 const passport_1 = require("@nestjs/passport");
 const jwt_service_1 = require("./jwt.service");
-let AuthController = class AuthController {
+let AuthController = exports.AuthController = class AuthController {
     constructor(authservice, localStrategy, userservice, jwtservice) {
         this.authservice = authservice;
         this.localStrategy = localStrategy;
@@ -105,12 +105,11 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "log_out", null);
-AuthController = __decorate([
+exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService, local_startegy_1.LocalStrategy, user_service_1.UserService, jwt_service_1.JWToken])
 ], AuthController);
-exports.AuthController = AuthController;
-let googleController = class googleController {
+let googleController = exports.googleController = class googleController {
     constructor(authservice) {
         this.authservice = authservice;
     }
@@ -168,12 +167,11 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], googleController.prototype, "googleloginredirect", null);
-googleController = __decorate([
+exports.googleController = googleController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], googleController);
-exports.googleController = googleController;
-let fortytwo_Controller = class fortytwo_Controller {
+let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controller {
     constructor(authservice) {
         this.authservice = authservice;
     }
@@ -228,9 +226,8 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], fortytwo_Controller.prototype, "fortytwo_loginredirect", null);
-fortytwo_Controller = __decorate([
+exports.fortytwo_Controller = fortytwo_Controller = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], fortytwo_Controller);
-exports.fortytwo_Controller = fortytwo_Controller;
 //# sourceMappingURL=auth.controller.js.map

@@ -13,7 +13,7 @@ exports.JWToken = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const jsonwebtoken_1 = require("jsonwebtoken");
-let JWToken = class JWToken {
+let JWToken = exports.JWToken = class JWToken {
     constructor(jwtService) {
         this.jwtService = jwtService;
         this.secret_key = '0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6';
@@ -65,9 +65,8 @@ let JWToken = class JWToken {
         }
     }
 };
-JWToken = __decorate([
+exports.JWToken = JWToken = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_1.JwtService])
 ], JWToken);
-exports.JWToken = JWToken;
 //# sourceMappingURL=jwt.service.js.map

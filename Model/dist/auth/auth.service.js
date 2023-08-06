@@ -14,7 +14,7 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
 const jwt_service_1 = require("./jwt.service");
 const passwordChecker_1 = require("../utils/passwordChecker");
-let AuthService = class AuthService {
+let AuthService = exports.AuthService = class AuthService {
     constructor(userservice, jwtoken) {
         this.userservice = userservice;
         this.jwtoken = jwtoken;
@@ -66,9 +66,8 @@ let AuthService = class AuthService {
         return await this.jwtoken.verify(token);
     }
 };
-AuthService = __decorate([
+exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_service_1.UserService, jwt_service_1.JWToken])
 ], AuthService);
-exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

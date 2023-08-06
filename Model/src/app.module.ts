@@ -9,14 +9,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { UserService } from './user/user.service';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { UploadController} from './file-upload/upload.controller';
+import { ChatModule } from './chat/chat.module';
+
 
 
 @Module({
   imports: [AuthModule,UserModule,FileUploadModule,JwtModule.register({
     secret:"0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6", 
     signOptions: { expiresIn: '1m' }, 
-  }), FileUploadModule],
+  }), FileUploadModule, ChatModule],
   controllers: [AppController, UploadController],
-  providers: [AppService,TokenGuard,JWToken,UserService,],
+  providers: [AppService,TokenGuard,JWToken,UserService, ],
 })
 export class AppModule {}

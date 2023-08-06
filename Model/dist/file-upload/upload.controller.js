@@ -16,7 +16,7 @@ exports.UploadController = void 0;
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_config_1 = require("./multer-config");
-let UploadController = class UploadController {
+let UploadController = exports.UploadController = class UploadController {
     async uploadFile(file) {
         console.log(file.buffer);
         return { filename: file.filename, originalName: file.originalname };
@@ -30,8 +30,7 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UploadController.prototype, "uploadFile", null);
-UploadController = __decorate([
+exports.UploadController = UploadController = __decorate([
     (0, common_1.Controller)('upload')
 ], UploadController);
-exports.UploadController = UploadController;
 //# sourceMappingURL=upload.controller.js.map

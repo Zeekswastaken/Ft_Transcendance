@@ -12,9 +12,9 @@ const user_service_1 = require("./user.service");
 const user_controller_1 = require("./user.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entities_1 = require("../DB_tables/user.entities");
-let UserModule = class UserModule {
+let UserModule = exports.UserModule = class UserModule {
 };
-UserModule = __decorate([
+exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forRoot({
@@ -34,5 +34,4 @@ UserModule = __decorate([
         controllers: [user_controller_1.UserController],
     })
 ], UserModule);
-exports.UserModule = UserModule;
 //# sourceMappingURL=user.module.js.map

@@ -11,9 +11,9 @@ const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const upload_controller_1 = require("./upload.controller");
 const multer_config_1 = require("./multer-config");
-let FileUploadModule = class FileUploadModule {
+let FileUploadModule = exports.FileUploadModule = class FileUploadModule {
 };
-FileUploadModule = __decorate([
+exports.FileUploadModule = FileUploadModule = __decorate([
     (0, common_1.Module)({
         imports: [
             platform_express_1.MulterModule.register(multer_config_1.multerConfig),
@@ -21,5 +21,4 @@ FileUploadModule = __decorate([
         controllers: [upload_controller_1.UploadController],
     })
 ], FileUploadModule);
-exports.FileUploadModule = FileUploadModule;
 //# sourceMappingURL=file-upload.module.js.map

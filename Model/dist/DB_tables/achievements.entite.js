@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Achievement = void 0;
 const typeorm_1 = require("typeorm");
-let Achievement = class Achievement {
+let Achievement = exports.Achievement = class Achievement {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
@@ -25,8 +25,7 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Achievement.prototype, "name", void 0);
-Achievement = __decorate([
+exports.Achievement = Achievement = __decorate([
     (0, typeorm_1.Entity)()
 ], Achievement);
-exports.Achievement = Achievement;
 //# sourceMappingURL=achievements.entite.js.map

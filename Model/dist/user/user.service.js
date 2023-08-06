@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entities_1 = require("../DB_tables/user.entities");
-let UserService = class UserService {
+let UserService = exports.UserService = class UserService {
     constructor(userRepo) {
         this.userRepo = userRepo;
     }
@@ -36,10 +36,9 @@ let UserService = class UserService {
         return user;
     }
 };
-UserService = __decorate([
+exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entities_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], UserService);
-exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

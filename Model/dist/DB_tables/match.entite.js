@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Match = void 0;
 const typeorm_1 = require("typeorm");
-let Match = class Match {
+let Match = exports.Match = class Match {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
@@ -29,8 +29,7 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], Match.prototype, "Date", void 0);
-Match = __decorate([
+exports.Match = Match = __decorate([
     (0, typeorm_1.Entity)()
 ], Match);
-exports.Match = Match;
 //# sourceMappingURL=match.entite.js.map
