@@ -6,7 +6,7 @@ export class Channel {
     id: number;
     @Column()
     Name: string;
-    @Column()
+    @Column({nullable: true})
     Type:String;
     @Column({nullable: true})
     Password:String;
