@@ -4,7 +4,11 @@ import { Message } from './message.entity';
 export declare class ChannelMembership {
     Userid: number;
     Channelid: number;
-    Type: String;
+    Type: string;
+    isMuted: boolean;
+    isBanned: boolean;
+    muteEndDate: Date;
+    banEndDate: Date;
     channel: Channel;
     user: User;
     messages: Message[];

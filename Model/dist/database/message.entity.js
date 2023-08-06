@@ -23,7 +23,7 @@ __decorate([
     __metadata("design:type", String)
 ], Message.prototype, "text", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ default: () => "CURRENT_TIMESTAMP" }),
     __metadata("design:type", Date)
 ], Message.prototype, "Created_at", void 0);
 __decorate([

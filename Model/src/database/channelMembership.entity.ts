@@ -14,9 +14,9 @@ export class ChannelMembership {
     isMuted:boolean
     @Column({default: false})
     isBanned:boolean
-    @Column({default: false})
+    @Column({type: 'timestamp', default: null, nullable: true })
     muteEndDate:Date
-    @Column({default: false})
+    @Column({type: 'timestamp', default: null, nullable: true })
     banEndDate:Date
     @ManyToOne(() => Channel, channel => channel.memberships)
     @JoinColumn({ name: 'Channelid', referencedColumnName: 'id'})

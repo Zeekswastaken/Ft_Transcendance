@@ -9,7 +9,7 @@ export class Message {
   @Column()
   text: string;
 
-  @Column()
+  @Column({ default: () => "CURRENT_TIMESTAMP" }) //CHANGE IT LATER
   Created_at: Date;
 
   @ManyToOne(() => ChannelMembership, membership => membership.messages)

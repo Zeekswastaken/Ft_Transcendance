@@ -29,6 +29,22 @@ __decorate([
     __metadata("design:type", String)
 ], ChannelMembership.prototype, "Type", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], ChannelMembership.prototype, "isMuted", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], ChannelMembership.prototype, "isBanned", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp', default: null, nullable: true }),
+    __metadata("design:type", Date)
+], ChannelMembership.prototype, "muteEndDate", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp', default: null, nullable: true }),
+    __metadata("design:type", Date)
+], ChannelMembership.prototype, "banEndDate", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => channel_entity_1.Channel, channel => channel.memberships),
     (0, typeorm_1.JoinColumn)({ name: 'Channelid', referencedColumnName: 'id' }),
     __metadata("design:type", channel_entity_1.Channel)

@@ -1,14 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Not, FindOneOptions } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { Channel } from '../database/channel.entity';
 import { CreateChannelDto } from './dto/createchannel.dto';
 import { ChannelMembership } from '../database/channelMembership.entity';
 import { User } from '../database/user.entity';
 import * as bcrypt from 'bcrypt';
-import { find } from 'rxjs';
-import { channel } from 'diagnostics_channel';
-import e from 'express';
+console.log("HEETEe");
 
 @Injectable()
 export class ChannelService {
@@ -19,13 +17,21 @@ export class ChannelService {
         private readonly channelMembershipRepository: Repository<ChannelMembership>,
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
-    ){}
-
+    ){
+        console.log('ChannelRepository:', channelRepository);
+        console.log('ChannelMembershipRepository:', channelMembershipRepository);
+        console.log('UserRepository:', userRepository);}
     async createChannel(createChannelDto: CreateChannelDto, owner: User)
     {
+        console.log('--------> ', createChannelDto.Name);
+        console.log('--------> ', createChannelDto.Type);
+        console.log('--------> ', createChannelDto.Password);
+
         const channel = new Channel();
+        if (createChannelDto.Type == null)
+            createChannelDto.Type = "public";
         if (createChannelDto.Name == undefined)
-            throw new HttpException("Channel name not specified", HttpStatus.FORBIDDEN);
+            throw new HttpException("Channel name or Type not specified", HttpStatus.FORBIDDEN);
         channel.Name = createChannelDto.Name;
         channel.Type = createChannelDto.type;
         const checkChannel = await this.channelRepository.findOne({ where: { Name: createChannelDto.Name } });    
@@ -211,11 +217,20 @@ export class ChannelService {
             throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
 
         
-        const user2 = await this.channelMembershipRepository.findOne( { where: {Userid: userID, Type: 'member'}});
-        if (user2)
-            throw new HttpException("This User doesn't have the rights to perform this action", HttpStatus.FORBIDDEN);
+         const ismuted = await this.channelMembershipRepository.findOne( { where: {user: {id: userID},
+            channel: {id: channelID},
+            isMuted: true}});
+        if (!ismuted)
+            throw new HttpException("This User isn't muted", HttpStatus.FORBIDDEN);
         
-        const membership = await this.channelMembershipRepository.findOne()
+        const membership = await this.channelMembershipRepository.findOne({where:
+        {
+            user: {id: userID},
+            channel: {id: channelID},
+            isMuted : true
+        }});
+        membership.isMuted = false
+        return await this.channelMembershipRepository.save(membership);
     }
 
     async getAllChannels(): Promise<Channel[]> 

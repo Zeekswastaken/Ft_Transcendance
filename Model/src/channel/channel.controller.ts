@@ -15,11 +15,10 @@ export class ChannelController {
         return this.channelService.createChannel(CreateChannelDto, user);
     }
 
-    @Get('allchannels')
+    @Get('all')
     getAllChannels()
     {
         return this.channelService.getAllChannels();
     }
-
     
 }
