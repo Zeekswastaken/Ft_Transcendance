@@ -14,7 +14,7 @@ import { UserModule } from './user/user.module';
 import { Channel} from './database/channel.entity';
 import { ChannelMembership} from './database/channelMembership.entity';
 import { User} from './database/user.entity';
-import { ChannelController} from './channel/channel.controller';
+import { ChannelController} from './channel/channel.gateway';
 import { ChannelModule } from './channel/channel.module';
 import { ChannelService } from './channel/channel.service';
 @Module({

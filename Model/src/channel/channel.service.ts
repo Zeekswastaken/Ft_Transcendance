@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Not } from 'typeorm';
 import { Channel } from '../database/channel.entity';
-import { CreateChannelDto } from './dto/createchannel.dto';
+import { createChannelDto } from './dto/createchannel.dto';
 import { ChannelMembership } from '../database/channelMembership.entity';
 import { User } from '../database/user.entity';
 import * as bcrypt from 'bcrypt';
@@ -21,7 +21,7 @@ export class ChannelService {
         console.log('ChannelRepository:', channelRepository);
         console.log('ChannelMembershipRepository:', channelMembershipRepository);
         console.log('UserRepository:', userRepository);}
-    async createChannel(createChannelDto: CreateChannelDto, owner: User)
+    async createChannel(createChannelDto: createChannelDto, owner: number)
     {
         console.log('--------> ', createChannelDto.Name);
         console.log('--------> ', createChannelDto.Type);
@@ -51,7 +51,7 @@ export class ChannelService {
         const savedChannel = await this.channelRepository.save(channel);
         
         const membership = new ChannelMembership();
-        membership.Userid = owner.id;
+        membership.Userid = owner;
         membership.Channelid = savedChannel.id
         membership.Type = "owner";
 
