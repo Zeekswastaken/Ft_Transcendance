@@ -1,5 +1,3 @@
-// import Link from "next/link";
-import Image from "next/image";
 import Nav from "./tools/Nav";
 import ProfileDropDown from "./tools/ProfileDropDown";
 import NotificationDropDown from "./tools/NotificationDropDown";
@@ -8,10 +6,11 @@ const Navbar = () => {
 	return (
 		// Desktop Navigation
 		// <div className=" ">
-			<nav className="  hidden flex-row px-4 w-full absolute items-center justify-between sm:flex xl:max-w-[1400px]">
+			<nav className="  hidden  px-6 w-full absolute items-center justify-between sm:flex xl:max-w-[1400px]">
 				<div className=" flex justify-center ml-5">
-					<a href="/chat">
-						<Image src="/favicon.ico" width={50} height={50} alt="icon" className="flex mx-4 ml-0"/>
+					<a href="/" className="flex">
+						<p className=" font-Glitch text-pink-200 text-3xl text-justify pr-2 pt-1"> Pong</p>
+						{/* <img src="/favicon.ico" width={50} height={50} alt="icon" className=" mx-4 ml-0"/> */}
 					</a>
 					<form className=" pt-[7px]">
 						<div className="relative ">

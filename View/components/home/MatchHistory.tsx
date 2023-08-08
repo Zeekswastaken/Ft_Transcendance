@@ -1,4 +1,4 @@
-import Image from "next/image"
+"use client"
 
 type TableDataRow = {
 	opponent: string
@@ -43,8 +43,12 @@ const Friend = ( { avatar, name, state} : TableDataFreind ) => {
 					<div className="flex-shrink-0">
 						<img className="w-14 h-14 rounded-full" src={avatar} alt="avatar"/>
 					</div>
-					<div className=" flex-1 min-w-0">
-						<p className="   truncate ">{name}</p>
+					<div className=" dropdown dropdown-hover flex-1 min-w-0">
+						<p tabIndex={0} className=" hover:text-pink-300 duration-300 cursor-pointer truncate ">{name}</p>
+						<ul tabIndex={0} className=" text-black dropdown-content z-[1] menu p-2 shadow bg-purple-300 rounded-box w-40">
+							<li><a>Item</a></li>
+							<li><a>Item</a></li>
+						</ul>
 					</div>
 					<div className= {`inline-flex items-center tracking-wider text-lg ${onOrOffColor}`}>
 						{state}

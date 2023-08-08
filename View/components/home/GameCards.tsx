@@ -16,22 +16,9 @@ type Cards = {
 const Card = ( {title, description, buttonText, image, span} : Cards ) => {
 
   let backGround;
-  if (title === "One Vs One") backGround = "bg-[url('/artwork.jpeg')]"; else if (title === "One Vs Bot") backGround = "bg-[url('/robot.jpg')]"; else backGround = "";
+  if (title === "One Vs One") backGround = "bg-[url('/artwork.jpeg')]"; else if (title === "One Vs Bot") backGround = "bg-[url('/robot.jpg')] "; else backGround = "";
   
   const [clicked, setClicked] = useState(false);
-  const router = useRouter();
-  const handleRandomlyOpponent= (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    router.push("/game");
-    
-  }
-  const handleFriendOpponent = (e: React.MouseEvent<HTMLElement>) => {
-    setClicked(true);
-  }
-  const changeState = (state:boolean) => {
-    setClicked(state);
-  }
-
   const targetWord = span;
   const index = description.indexOf(targetWord);
   const firstPart = description.slice(0, index);
@@ -70,7 +57,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="fixed inset-0 bg-black bg-opacity-50" />
+                <div className="fixed inset-0 bg-black bg-opacity-[0.7]" />
               </Transition.Child>
 
               <div className="fixed inset-0 overflow-y-auto">
@@ -84,13 +71,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95"
                   >
-                    <Dialog.Panel className={`w-full max-w-3xl transform  rounded-2xl ${backGround} bg-cover bg-center p-6 text-center align-middle shadow-xl transition-all`}>
-                      {/* <Dialog.Title
-                        as="h3"
-                        className="text-[40px] mt-2 font-Bomb leading-6 text-white tracking-wide"
-                      >
-                        {title}
-                      </Dialog.Title> */}
+                    <Dialog.Panel className={`w-full max-w-3xl transform mx-5 grid place-content-center rounded-2xl ${backGround} bg-cover bg-center p-6 text-center align-middle shadow-2xl transition-all shadow-primary-pink-300`}>
                       <div className=" grid place-items-center "><ModalContent title={title}/></div>
                     </Dialog.Panel>
                   </Transition.Child>

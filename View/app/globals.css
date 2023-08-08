@@ -160,3 +160,31 @@
 		background-color: #a9a9a9;
 		margin-right: 90px;
 	  }
+
+	  /* ----------------------- */
+	  .swiper {
+		width: 250px;
+		height: 350px;
+	  }
+	  
+	  /* .swiper-slide {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 18px;
+		font-size: 22px;
+		font-weight: bold;
+		color: #fff;
+	  }  */
+	  
+	   /* .swiper-slide:nth-child(1n) {
+		background-color: rgb(206, 17, 17);
+	  }
+	  
+	  .swiper-slide:nth-child(2n) {
+		background-color: rgb(0, 140, 255);
+	  }
+	  
+	  .swiper-slide:nth-child(3n) {
+		background-color: rgb(10, 184, 111);
+	  } */
