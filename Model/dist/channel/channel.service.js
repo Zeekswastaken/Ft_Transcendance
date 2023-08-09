@@ -52,7 +52,7 @@ let ChannelService = exports.ChannelService = class ChannelService {
             throw new common_1.HttpException('Password required', common_1.HttpStatus.FORBIDDEN);
         const savedChannel = await this.channelRepository.save(channel);
         const membership = new channelMembership_entity_1.ChannelMembership();
-        membership.Userid = owner.id;
+        membership.Userid = owner;
         membership.Channelid = savedChannel.id;
         membership.Type = "owner";
         await this.channelMembershipRepository.save(membership);

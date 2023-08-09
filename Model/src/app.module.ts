@@ -14,9 +14,14 @@ import { UserModule } from './user/user.module';
 import { Channel} from './database/channel.entity';
 import { ChannelMembership} from './database/channelMembership.entity';
 import { User} from './database/user.entity';
-import { ChannelController} from './channel/channel.gateway';
 import { ChannelModule } from './channel/channel.module';
 import { ChannelService } from './channel/channel.service';
+import { Stats } from './database/stats.entity';
+import { Match } from './database/match.entity';
+import { GameInvite } from './database/gameInvite.entity';
+import { BlockedUser } from './database/blockedUser.entity';
+import { UserFriends } from './database/userFriends.entity';
+import { Achievements } from './database/achievements.entity';
 @Module({
   imports: [
     MessagesModule,
@@ -27,7 +32,7 @@ import { ChannelService } from './channel/channel.service';
       username: 'zeeks',
       password: 'zeee',
       database: 'mynestdb',
-      entities: [Message, Channel, User, ChannelMembership],
+      entities: [Message, Channel, User, ChannelMembership, Stats, Match, GameInvite, BlockedUser, UserFriends, Achievements],
       logging: true,
       synchronize: true,
     }),
@@ -36,7 +41,7 @@ import { ChannelService } from './channel/channel.service';
       signOptions: { expiresIn: '1h' }, 
     })
   ],
-  controllers: [AppController, UserController, ChannelController],
+  controllers: [AppController, UserController],
   providers: [AppService,TokenGuard ,ChannelService , UserService, JWToken],
 })
 export class AppModule {}

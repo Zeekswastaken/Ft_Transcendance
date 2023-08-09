@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { Channel } from '../database/channel.entity';
-import { CreateChannelDto } from './dto/createchannel.dto';
+import { createChannelDto } from './dto/createchannel.dto';
 import { ChannelMembership } from '../database/channelMembership.entity';
 import { User } from '../database/user.entity';
 export declare class ChannelService {
@@ -8,7 +8,7 @@ export declare class ChannelService {
     private readonly channelMembershipRepository;
     private readonly userRepository;
     constructor(channelRepository: Repository<Channel>, channelMembershipRepository: Repository<ChannelMembership>, userRepository: Repository<User>);
-    createChannel(createChannelDto: CreateChannelDto, owner: User): Promise<Channel>;
+    createChannel(createChannelDto: createChannelDto, owner: number): Promise<Channel>;
     assignAdmin(channelID: number, userId: number, initiatorId: number): Promise<ChannelMembership>;
     removeadmin(channelID: number, userID: number, initiatorID: number): Promise<ChannelMembership>;
     joinChannel(channelID: number, userID: number): Promise<ChannelMembership>;

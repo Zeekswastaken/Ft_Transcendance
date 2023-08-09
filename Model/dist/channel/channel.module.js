@@ -11,7 +11,6 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const channel_entity_1 = require("../database/channel.entity");
 const channelMembership_entity_1 = require("../database/channelMembership.entity");
-const channel_controller_1 = require("./channel.controller");
 const channel_service_1 = require("./channel.service");
 const user_entity_1 = require("../database/user.entity");
 let ChannelModule = exports.ChannelModule = class ChannelModule {
@@ -20,7 +19,7 @@ exports.ChannelModule = ChannelModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([channel_entity_1.Channel, channelMembership_entity_1.ChannelMembership, user_entity_1.User])],
         exports: [typeorm_1.TypeOrmModule],
-        controllers: [channel_controller_1.ChannelController],
+        controllers: [],
         providers: [channel_service_1.ChannelService],
     })
 ], ChannelModule);

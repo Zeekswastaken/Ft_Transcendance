@@ -8,11 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var User_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const channelMembership_entity_1 = require("./channelMembership.entity");
-let User = exports.User = class User {
+const stats_entity_1 = require("./stats.entity");
+const gameInvite_entity_1 = require("./gameInvite.entity");
+const match_entity_1 = require("./match.entity");
+const blockedUser_entity_1 = require("./blockedUser.entity");
+let User = exports.User = User_1 = class User {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
@@ -46,7 +51,41 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => channelMembership_entity_1.ChannelMembership, membership => membership.user),
     __metadata("design:type", Array)
 ], User.prototype, "memberships", void 0);
-exports.User = User = __decorate([
+__decorate([
+    (0, typeorm_1.ManyToMany)(() => User_1, user => user.friends),
+    (0, typeorm_1.JoinTable)({ name: 'userFriends' }),
+    __metadata("design:type", Array)
+], User.prototype, "friends", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => stats_entity_1.Stats, stats => stats.user),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", stats_entity_1.Stats)
+], User.prototype, "stats", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => gameInvite_entity_1.GameInvite, invite => invite.sender, { cascade: true, onDelete: 'CASCADE' }),
+    __metadata("design:type", Array)
+], User.prototype, "sentInvites", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => gameInvite_entity_1.GameInvite, invite => invite.receiver, { cascade: true, onDelete: 'CASCADE' }),
+    __metadata("design:type", Array)
+], User.prototype, "receivedInvites", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => match_entity_1.Match, (matchHisory) => matchHisory.player1, { cascade: true, onDelete: 'CASCADE' }),
+    __metadata("design:type", Array)
+], User.prototype, "player1", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => match_entity_1.Match, (matchHisory) => matchHisory.player2, { cascade: true, onDelete: 'CASCADE' }),
+    __metadata("design:type", Array)
+], User.prototype, "player2", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => blockedUser_entity_1.BlockedUser, blockedUser => blockedUser.blockedBy),
+    __metadata("design:type", Array)
+], User.prototype, "blockedUsers", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => blockedUser_entity_1.BlockedUser, blockedUser => blockedUser.blockedUser),
+    __metadata("design:type", Array)
+], User.prototype, "usersBlocked", void 0);
+exports.User = User = User_1 = __decorate([
     (0, typeorm_1.Entity)()
 ], User);
 //# sourceMappingURL=user.entity.js.map

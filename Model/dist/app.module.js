@@ -23,9 +23,14 @@ const user_module_1 = require("./user/user.module");
 const channel_entity_1 = require("./database/channel.entity");
 const channelMembership_entity_1 = require("./database/channelMembership.entity");
 const user_entity_1 = require("./database/user.entity");
-const channel_controller_1 = require("./channel/channel.controller");
 const channel_module_1 = require("./channel/channel.module");
 const channel_service_1 = require("./channel/channel.service");
+const stats_entity_1 = require("./database/stats.entity");
+const match_entity_1 = require("./database/match.entity");
+const gameInvite_entity_1 = require("./database/gameInvite.entity");
+const blockedUser_entity_1 = require("./database/blockedUser.entity");
+const userFriends_entity_1 = require("./database/userFriends.entity");
+const achievements_entity_1 = require("./database/achievements.entity");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -39,7 +44,7 @@ exports.AppModule = AppModule = __decorate([
                 username: 'zeeks',
                 password: 'zeee',
                 database: 'mynestdb',
-                entities: [message_entity_1.Message, channel_entity_1.Channel, user_entity_1.User, channelMembership_entity_1.ChannelMembership],
+                entities: [message_entity_1.Message, channel_entity_1.Channel, user_entity_1.User, channelMembership_entity_1.ChannelMembership, stats_entity_1.Stats, match_entity_1.Match, gameInvite_entity_1.GameInvite, blockedUser_entity_1.BlockedUser, userFriends_entity_1.UserFriends, achievements_entity_1.Achievements],
                 logging: true,
                 synchronize: true,
             }),
@@ -48,7 +53,7 @@ exports.AppModule = AppModule = __decorate([
                 signOptions: { expiresIn: '1h' },
             })
         ],
-        controllers: [app_controller_1.AppController, user_controller_1.UserController, channel_controller_1.ChannelController],
+        controllers: [app_controller_1.AppController, user_controller_1.UserController],
         providers: [app_service_1.AppService, guards_1.TokenGuard, channel_service_1.ChannelService, user_service_1.UserService, jwt_service_1.JWToken],
     })
 ], AppModule);

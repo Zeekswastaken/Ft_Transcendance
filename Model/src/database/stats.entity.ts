@@ -1,5 +1,6 @@
-import {Entity, PrimaryColumn, Column, PrimaryGeneratedColumn, Collection, ManyToMany, OneToMany, ManyToOne, JoinColumn} from "typeorm";
-
+import {Entity, PrimaryColumn, Column, PrimaryGeneratedColumn, Collection, ManyToMany, OneToMany, ManyToOne, OneToOne,JoinColumn} from "typeorm";
+import {User} from './user.entity'
+import { Achievements } from "./achievements.entity";
 @Entity()
 export class Stats{
     @PrimaryGeneratedColumn()
@@ -16,5 +17,9 @@ export class Stats{
     Winrate:Number;
     // @Column()
     // Achievement;
-    
+    @OneToOne(() => User, user => user.stats)
+    @JoinColumn()
+    user: User;
+    @OneToMany(() => Achievements, achievements => achievements.stats)
+    achievements: Achievements[];
 }

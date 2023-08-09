@@ -21,6 +21,7 @@ export class ChannelGateway {
   async create(@MessageBody() createChannelDto: createChannelDto, @ConnectedSocket() client: Socket) {
     try{
     // console.log("====> ", client.id);
+      console.log("it kinda worked");
       const token = client.handshake.query.token;
       const decodedToken = this.jwtService.verify(token.toString());
       const userid = decodedToken.sub;

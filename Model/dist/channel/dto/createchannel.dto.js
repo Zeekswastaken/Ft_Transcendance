@@ -9,25 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateChannelDto = void 0;
+exports.createChannelDto = void 0;
 const Channel_entity_1 = require("../../database/Channel.entity");
 const class_validator_1 = require("class-validator");
-class CreateChannelDto extends Channel_entity_1.Channel {
+class createChannelDto extends Channel_entity_1.Channel {
 }
-exports.CreateChannelDto = CreateChannelDto;
+exports.createChannelDto = createChannelDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateChannelDto.prototype, "name", void 0);
+], createChannelDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateChannelDto.prototype, "type", void 0);
+], createChannelDto.prototype, "type", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateChannelDto.prototype, "password", void 0);
+], createChannelDto.prototype, "password", void 0);
 //# sourceMappingURL=createchannel.dto.js.map

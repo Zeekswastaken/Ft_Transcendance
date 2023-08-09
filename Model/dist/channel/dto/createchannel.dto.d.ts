@@ -1,5 +1,5 @@
 import { Channel } from "../../database/Channel.entity";
-export declare class CreateChannelDto extends Channel {
+export declare class createChannelDto extends Channel {
     name: string;
     type: String;
     password?: String;
