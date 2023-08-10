@@ -37,10 +37,22 @@
 		font-family: 'Headinglight', sans-serif;
 	}
   }
-/* .Bomb {
-	@apply 
-} */
 
+  @layer utilities {
+    @variants responsive {
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+    }
+  }
+  
 .glass {
 	/* background: rgba(255, 255, 255, 0.22);
 	border-radius: 16px;

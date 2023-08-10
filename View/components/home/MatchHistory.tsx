@@ -37,15 +37,15 @@ const Friend = ( { avatar, name, state} : TableDataFreind ) => {
 
 	const onOrOffColor = state === "online" ? "text-[#22C55E]" : "text-[#FF4747]";
 	return (
-		<ul className=" hover:bg-primary-pink-200/[0.4] transition-all duration-500 hover:rounded-3xl hover:drop-shadow-2xl pt-4 lg:pt-6  divide-y divide-gray-200 dark:divide-gray-700 tracking-widest text-[24px] text-white font-Headinglight">
+		<ul className=" hover:bg-primary-pink-200/[0.6] transition-all duration-500 hover:rounded-3xl hover:drop-shadow-2xl pt-4 lg:pt-6  divide-y divide-gray-200 dark:divide-gray-700 tracking-widest text-[24px] text-white font-Headinglight">
 			<li className="pb-3 sm:pb-4 mx-10 ">
 				<div className="flex items-center space-x-6">
 					<div className="flex-shrink-0">
 						<img className="w-14 h-14 rounded-full" src={avatar} alt="avatar"/>
 					</div>
-					<div className=" dropdown dropdown-hover flex-1 min-w-0">
+					<div className=" dropdown flex-1 min-w-0">
 						<p tabIndex={0} className=" hover:text-pink-300 duration-300 cursor-pointer truncate ">{name}</p>
-						<ul tabIndex={0} className=" text-black dropdown-content z-[1] menu p-2 shadow bg-purple-300 rounded-box w-40">
+						<ul tabIndex={0} className=" text-black dropdown-content z-50 menu p-2 shadow bg-purple-300 rounded-box w-40">
 							<li><a>Item</a></li>
 							<li><a>Item</a></li>
 						</ul>
@@ -81,7 +81,7 @@ const MatchHistory = () => {
 					</tbody>
 				</table>
 			</div>
-			<div className=" glass mt-10 lg:mt-0 lg:ml-[100px] overflow-auto max-h-[522px] ">
+			<div className=" glass no-scrollbar mt-10 lg:mt-0 lg:ml-[100px] overflow-auto max-h-[522px] ">
 				< Friend avatar="/avatars/avatar1.png" name="Hawkins" state="online"/>
 				< Friend avatar="/avatars/avatar2.png" name="Sofia" state="offline"/>
 				< Friend avatar="/avatars/avatar3.png" name="Samia" state="online"/>
