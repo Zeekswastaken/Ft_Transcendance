@@ -5,7 +5,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, {  ReactDatePickerProps } from 'react-datepicker';
 import axios from "axios";
 import { getCookie } from 'cookies-next';
-import Cookies from 'js-cookie'
 
 
 const completProfile = () => {

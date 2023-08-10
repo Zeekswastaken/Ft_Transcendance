@@ -41,8 +41,8 @@ const OneVsOne:React.FC<Props> = ({ title }) => {
       <h3 className="text-[40px] mt-2 font-Bomb leading-6 text-white tracking-wide"> {title} </h3>
       {clicked ? (
         <div className="">
-            <svg onClick={e => changeState(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" className=" cursor-pointer ase-in duration-20 ml-10 w-6 h-6  absolute left-10 top-8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+            <svg onClick={e => changeState(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className=" cursor-pointer ase-in duration-20 ml-10 w-6 h-6  absolute left-10 top-8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
             </svg>
             <div className=' flex items-center justify-between my-10 space-x-6'>
               <img className=' rounded-xl' src="/Spectate.png" height={120} width={120} alt="" />
