@@ -2,6 +2,7 @@
 import React from 'react'
 
 import FindGroup from './FindGroup';
+import CreatGroup from './CreatGroup';
 import GroupButton from './component/Button';
 import GroupFrom from './component/GroupForm';
 
@@ -9,9 +10,21 @@ import GroupFrom from './component/GroupForm';
 const page = () => {
 
   const [group, setGroup] = React.useState(true);
+  const [search, setSearch] = React.useState('');
+
+  const handleOnChangeSearch = (entredSearch :any) => {
+      setSearch(entredSearch.target.value);
+  }
+
+  const handleOnClickSearch = (e: any) => {
+    e.preventDefault();
+    setSearch('');
+}
+
   const handleClick = () => {
     setGroup(!group);
   };
+
 
   const groupsInfo = [
     {
@@ -32,6 +45,42 @@ const page = () => {
       members: 3,
       type: "Protected"
     },
+    {
+      name : "Fringilla Fusce Elit",
+      image: "https://placekitten.com/g/200/200",
+      members: 20,
+      type: "Protected"
+    },
+    {
+      name : "Alkawakkib",
+      image: "https://placekitten.com/g/200/200",
+      members: 12,
+      type: "Public"
+    },
+    {
+      name : "Argontina",
+      image: "https://placekitten.com/g/200/200",
+      members: 3,
+      type: "Protected"
+    },
+    {
+      name : "Vamos",
+      image: "https://placekitten.com/g/200/200",
+      members: 20,
+      type: "Protected"
+    },
+    {
+      name : "Mostagraciass",
+      image: "https://placekitten.com/g/200/200",
+      members: 12,
+      type: "Public"
+    },
+    {
+      name : "Suuuu",
+      image: "https://placekitten.com/g/200/200",
+      members: 3,
+      type: "Protected"
+    },
   ];
 
   interface GroupInfoStatesProps {
@@ -40,7 +89,6 @@ const page = () => {
     members: number;
     type: string;
   }
-
 
   const addGroupsInfo = (groupInfo: GroupInfoStatesProps) =>
   {
@@ -58,12 +106,15 @@ const page = () => {
                   <GroupButton name='Creact Group' bt_state={!group} onClick={handleClick}></GroupButton>
               </div>
               <div>
-                {group ? <GroupFrom /> : <div></div>}
+                {group ? <GroupFrom handleOnChangeSearch={handleOnChangeSearch} 
+                                    handleOnClickSearch={handleOnClickSearch} 
+                                    search={search}/> 
+                        : <div></div>}
               </div>
           </div>
         </div>
 
-        {group ?  <FindGroup groupsInfos={groupsInfo}/> : <div></div>}
+        {group ? <FindGroup groupsInfos={groupsInfo} search={search}/> : <CreatGroup />}
     </div>
   )
 }

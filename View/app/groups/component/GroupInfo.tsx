@@ -1,4 +1,4 @@
-import React from 'react'
+ import React from 'react'
 
 
 interface GroupsStateprops {
@@ -31,7 +31,9 @@ const GroupInfos = ({name, image, members, type}: GroupsStateprops) => {
                     <h6>{type}</h6>
                 </div>
                 <div>
-                    <button className='py-[5px] px-[20px] text-[1.1rem] bg-[#532051] rounded-[25px] font-Heading drop-shadow-[0_5px_5px_rgba(0,0,0,1)] tracking-[1px]'>Join Groups</button>
+                    <button className='py-[5px] px-[20px] text-[1.1rem] bg-[#532051] opacity-75 hover:opacity-100 rounded-[25px] font-Heading drop-shadow-[0_5px_5px_rgba(0,0,0,1)] tracking-[1px]'>
+                        Join Groups
+                    </button>
                 </div>
            </div>
         </div>

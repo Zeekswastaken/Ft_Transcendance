@@ -1,5 +1,7 @@
-import GroupInfos from "./component/GroupInfo";
+"use client"
+import React from 'react'
 
+import GroupInfos from "./component/GroupInfo";
 
 interface GroupInfoStatesProps {
     name: string;
@@ -8,17 +10,26 @@ interface GroupInfoStatesProps {
     type: string;
 }
 
-  interface GroupInfosStatesProps
-  {
+interface GroupInfosStatesProps
+{
     groupsInfos: GroupInfoStatesProps[]
-  }
+    search: string;
+}
 
-const FindGroup = ({groupsInfos}: GroupInfosStatesProps) => {
+const FindGroup = ({groupsInfos, search}: GroupInfosStatesProps) => {
     return (
-        <div className='rounded-xl h-[800px] bg-[#A1216C] px-[3rem] pt-[3rem] mb-[100px] overflow-auto'>               
+        <div className=' rounded-xl h-[800px] bg-[#A1216C] px-[3rem] pt-[3rem] mb-[100px] overflow-auto'>               
             <div>
                 {
-                    groupsInfos.map((group) => (
+                    groupsInfos.filter((group) => {
+                        console.log(group.name);
+                        console.log(search);
+                        return (
+                            search.toLocaleLowerCase() === '' 
+                                ? group 
+                                : group.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+                        );
+                    }).map((group) => (
                         <GroupInfos name={group.name} 
                                     image={group.image} 
                                     members={group.members} 

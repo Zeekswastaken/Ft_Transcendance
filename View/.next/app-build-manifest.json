@@ -16,16 +16,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/groups/page.js"
     ],
-    "/chat/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/chat/page.js"
-    ],
-    "/leaderboard/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/leaderboard/page.js"
-    ],
     "/game/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

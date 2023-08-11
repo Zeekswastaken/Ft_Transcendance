@@ -1,4 +1,4 @@
-// File: /Users/hazaouya/Desktop/Ft_Transcendance/View/app/groups/page.tsx
+// File: /Users/hazaouya/Desktop/Ft_Transcendence/View/app/groups/page.tsx
 import * as entry from '../../../../app/groups/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
