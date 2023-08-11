@@ -1,6 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
+import { Providers } from "@/redux/provider";
+import { useRouter } from 'next/navigation';
 
 // interface avatar{setAvatar: string;}
 
@@ -14,12 +16,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+<<<<<<< HEAD
   let checkAuth ="f";
+=======
+  // const router = useRouter()
+  let checkAuth ="true";
+>>>>>>> fb7da711b484e74446c6154c227f4452a1a97219
   return (
     <html lang="en">
-      <body className=" bg-[url('/30.png')] bg-cover bg-center bg-no-repeat flex justify-center ">
+      <body className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat flex justify-center ">
         {checkAuth === "true" ? <Navbar /> : "" }
-        {children}
+        <Providers>
+          {children}
+        </Providers>
         {/* <Footer /> */}
       </body>
     </html>

@@ -1,5 +1,3 @@
-// import Link from "next/link";
-import Image from "next/image";
 import Nav from "./tools/Nav";
 import ProfileDropDown from "./tools/ProfileDropDown";
 import NotificationDropDown from "./tools/NotificationDropDown";
@@ -8,38 +6,32 @@ const Navbar = () => {
 	return (
 		// Desktop Navigation
 		// <div className=" ">
-			<nav className="  hidden flex-row px-4 w-full absolute items-center justify-between sm:flex xl:max-w-[1400px]">
-				<div className=" flex justify-center ml-5">
-					<a href="/chat">
-						<Image src="/favicon.ico" width={50} height={50} alt="icon" className="flex mx-4 ml-0"/>
+			<nav className=" hidden absolute place-content-center  items-center my-[55px] h-auto lg:flex w-[75%] justify-between space-x-5">
+				<div className=" w-auto flex justify-between">
+					<a href="/" className="flex">
+						<p className=" font-Glitch text-pink-200 text-4xl text-justify pr-5 pt-1">Pong</p>
 					</a>
 					<form className=" pt-[7px]">
 						<div className="relative ">
 						<span className="absolute inset-y-0 left-2 flex items-center ">
 							<button type="submit" className="p-1 focus:outline-none focus:shadow-outline">
-							<Image src="/searchIcon.svg" width={20} height={20} alt="search" className=""/>
+							<img src="/searchIcon.svg" width={20} height={20} alt="search" className=""/>
 							</button>
 						</span>
-						<input type="search" name="q" className=" border-transparent focus:border-transparent focus:ring-0 w-[150px] py-2 text-sm text-[#6E4778] placeholder-[#6E4778] bg-[#411742]  rounded-xl pl-10 focus:outline-none focus:bg-primary-dark-500 focus:text-primary-white-200" placeholder="Search..." />
+						<input type="search" name="q" className=" border-transparent focus:border-transparent focus:ring-0 w-[170px] py-2 text-sm text-[#6E4778] placeholder-[#6E4778] bg-[#411742]  rounded-xl pl-10 focus:outline-none focus:bg-primary-dark-500 focus:text-primary-white-200" placeholder="Search..." />
 						</div>
 					</form>
 				</div>
-				<div className="bg-primary-dark-300 drop-shadow-[6px_5px_0_rgba(0,0,00.25)] opacity-70 rounded-3xl my-[55px] mx-4  w-[400px] min-w-[150px] ">
+				<div className=" bg-primary-dark-300 drop-shadow-[6px_5px_0_rgba(0,0,00.25)] opacity-80 rounded-3xl w-[400px]">
 					<Nav />
 				</div>
-				<div className=" flex justify-between space-x-7 mx-5">
-					{/* <button type="button" title="notification">
-						<Image src="/notification.svg" alt="notification" width={40} height={40}/>
-					</button> */}
+				<div className=" flex justify-between space-x-7">
 					<div className=" z-50">
 						<NotificationDropDown />
 					</div>
 					<div className=" z-50">
 						<ProfileDropDown />
 					</div>
-					{/* <button type="button" title="profile">
-						<Image src="/avatars/avatar1.png" width={60} height={60} alt="Profile"/>
-					</button> */}
 				</div>  
 			</nav>
 		// </div>

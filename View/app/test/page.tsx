@@ -1,144 +1,53 @@
 "use client"
 
-import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/24/outline'
+import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react';
+// import ionicon from 'ionicons';
 
-const people = [
-  {
-    id: 1,
-    name: 'Wade Cooper',
-    avatar:
-      'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 2,
-    name: 'Arlene Mccoy',
-    avatar:
-      'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 3,
-    name: 'Devon Webb',
-    avatar:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80',
-  },
-  {
-    id: 4,
-    name: 'Tom Cook',
-    avatar:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 5,
-    name: 'Tanya Fox',
-    avatar:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 6,
-    name: 'Hellen Schmidt',
-    avatar:
-      'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 7,
-    name: 'Caroline Schultz',
-    avatar:
-      'https://images.unsplash.com/photo-1568409938619-12e139227838?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 8,
-    name: 'Mason Heaney',
-    avatar:
-      'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 9,
-    name: 'Claudie Smitham',
-    avatar:
-      'https://images.unsplash.com/photo-1584486520270-19eca1efcce5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 10,
-    name: 'Emil Schaefer',
-    avatar:
-      'https://images.unsplash.com/photo-1561505457-3bcad021f8ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-]
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/effect-cards';
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
+// import { EffectCards } from 'swiper/modules';
+import { EffectCoverflow, Pagination, EffectCards } from 'swiper/modules';
 
-export default function Example() {
-  const [selected, setSelected] = useState(people[3])
-
+const page = () => {
   return (
-      <Listbox value={selected} onChange={setSelected}>
-        {({ open }) => (
-          <>
-            <Listbox.Label className="block text-sm font-medium text-gray-700">Assigned to</Listbox.Label>
-            <div className="mt-1 relative">
-              <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <span className="flex items-center">
-                  <img src={selected.avatar} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
-                  <span className="ml-3 block truncate">{selected.name}</span>
-                </span>
-                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
-                </span>
-              </Listbox.Button>
+<div className="py-2" x-data="{ show: true }">
+                <span className="px-1 text-sm text-gray-600">Password</span>
+                <div className="relative">
+                  <input placeholder="" : type="show ? 'password' : 'text'" className="text-md block px-3 py-2 rounded-lg w-full 
+                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md
+                focus:placeholder-gray-500
+                focus:bg-white 
+                focus:border-gray-600  
+                focus:outline-none">
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
 
-              <Transition
-                show={open}
-                as={Fragment}
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                  {people.map((person) => (
-                    <Listbox.Option
-                      key={person.id}
-                      className={({ active }) =>
-                        classNames(
-                          active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                          'cursor-default select-none relative py-2 pl-3 pr-9'
-                        )
-                      }
-                      value={person}
-                    >
-                      {({ selected, active }) => (
-                        <>
-                          <div className="flex items-center">
-                            <img src={person.avatar} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
-                            <span
-                              className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
-                            >
-                              {person.name}
-                            </span>
-                          </div>
+                    <svg className="h-6 text-gray-700" fill="none" @click="show = !show"
+                      : className="{'hidden' : !show, 'block':show }" xmlns="http://www.w3.org/2000/svg"
+                      viewbox="0 0 576 512">
+                      <path fill="currentColor"
+                        d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
+                      </path>
+                    </svg>
 
-                          {selected ? (
-                            <span
-                              className={classNames(
-                                active ? 'text-white' : 'text-indigo-600',
-                                'absolute inset-y-0 right-0 flex items-center pr-4'
-                              )}
-                            >
-                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                            </span>
-                          ) : null}
-                        </>
-                      )}
-                    </Listbox.Option>
-                  ))}
-                </Listbox.Options>
-              </Transition>
-            </div>
-          </>
-        )}
-      </Listbox>
+                    <svg className="h-6 text-gray-700" fill="none" @click="show = !show"
+                      :className="{'block': !show, 'hidden':show }" xmlns="http://www.w3.org/2000/svg"
+                      viewbox="0 0 640 512">
+                      <path fill="currentColor"
+                        d="M320 400c-75.85 0-137.25-58.71-142.9-133.11L72.2 185.82c-13.79 17.3-26.48 35.59-36.72 55.59a32.35 32.35 0 0 0 0 29.19C89.71 376.41 197.07 448 320 448c26.91 0 52.87-4 77.89-10.46L346 397.39a144.13 144.13 0 0 1-26 2.61zm313.82 58.1l-110.55-85.44a331.25 331.25 0 0 0 81.25-102.07 32.35 32.35 0 0 0 0-29.19C550.29 135.59 442.93 64 320 64a308.15 308.15 0 0 0-147.32 37.7L45.46 3.37A16 16 0 0 0 23 6.18L3.37 31.45A16 16 0 0 0 6.18 53.9l588.36 454.73a16 16 0 0 0 22.46-2.81l19.64-25.27a16 16 0 0 0-2.82-22.45zm-183.72-142l-39.3-30.38A94.75 94.75 0 0 0 416 256a94.76 94.76 0 0 0-121.31-92.21A47.65 47.65 0 0 1 304 192a46.64 46.64 0 0 1-1.54 10l-73.61-56.89A142.31 142.31 0 0 1 320 112a143.92 143.92 0 0 1 144 144c0 21.63-5.29 41.79-13.9 60.11z">
+                      </path>
+                    </svg>
+
+                  </div>
+                </div>
+              </div>
   )
 }
+export default page
+
+
+
