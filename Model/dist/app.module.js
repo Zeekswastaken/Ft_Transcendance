@@ -19,6 +19,7 @@ const user_service_1 = require("./user/user.service");
 const file_upload_module_1 = require("./file-upload/file-upload.module");
 const upload_controller_1 = require("./file-upload/upload.controller");
 const chat_module_1 = require("./chat/chat.module");
+const profile_module_1 = require("./profile/profile.module");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -26,7 +27,7 @@ exports.AppModule = AppModule = __decorate([
         imports: [auth_module_1.AuthModule, user_module_1.UserModule, file_upload_module_1.FileUploadModule, jwt_1.JwtModule.register({
                 secret: "0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
                 signOptions: { expiresIn: '1m' },
-            }), file_upload_module_1.FileUploadModule, chat_module_1.ChatModule],
+            }), file_upload_module_1.FileUploadModule, chat_module_1.ChatModule, profile_module_1.ProfileModule],
         controllers: [app_controller_1.AppController, upload_controller_1.UploadController],
         providers: [app_service_1.AppService, guards_1.TokenGuard, jwt_service_1.JWToken, user_service_1.UserService,],
     })

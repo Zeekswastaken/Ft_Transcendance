@@ -35,3 +35,10 @@ export declare class TO_update {
     birthDay: Date;
     constructor();
 }
+export declare class update {
+    username: String;
+    password: String;
+    Bio: String;
+    privacy: Boolean;
+    constructor();
+}

@@ -19,6 +19,14 @@ __decorate([
 ], Match.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Match.prototype, "UserId", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Match.prototype, "opponent_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Match.prototype, "type", void 0);
 __decorate([

@@ -20,7 +20,7 @@ export class AuthController {
     constructor(private readonly authservice:AuthService,private readonly localStrategy:LocalStrategy,private readonly userservice:UserService,private readonly jwtservice:JWToken){}
 
     @Put('modify-data')
-    async modyfiy(@Body() Body,@Res() res:Response){
+    async modyfiy(@Body() Body,@Res() res){
         console.log(Body);
         const decode = await this.jwtservice.decoded(Body.cookie);
         delete Body.cookie;
@@ -55,7 +55,7 @@ export class AuthController {
     }
 
     @Post('login')
-    async checking(@Body() Body:UserDto,@Res() res:Response){
+    async checking(@Body() Body:UserDto,@Res() res){
 
         // console.log(Body);
         if (!Body.username)
@@ -76,7 +76,7 @@ export class AuthController {
         }
     }
     @Get('Sign-Out')
-    async log_out(@Body() Body,@Res() res:Response){
+    async log_out(@Body() Body,@Res() res){
         // const decode = await this.jwtservice.decoded(Body.cookie);
         res.clearCookie('accessToken');
         res.status(200)
@@ -97,7 +97,7 @@ export class googleController{
 
     @UseGuards(AuthGuard('google'))
     @Get('from-google')
-    async googleloginredirect(@Req() req, @Res() res:Response){
+    async googleloginredirect(@Req() req, @Res() res){
         console.log("CallBack");
         const user = await req.user;
         console.log(user);
@@ -155,7 +155,7 @@ export class fortytwo_Controller{
 
     @Get('from-42')
     @UseGuards(AuthGuard('42'))
-    async fortytwo_loginredirect(@Req() req, @Res() res:Response ){
+    async fortytwo_loginredirect(@Req() req, @Res() res ){
         console.log("CallBack");
         const user = await req.user;
         if (await this.authservice.create_Oauth(user) == true)

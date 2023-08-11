@@ -2,7 +2,9 @@ export declare class User {
     id: Number;
     username: String;
     birthDay: Date;
-    gender: String;
     password: String;
+    gender: String;
+    privacy: Boolean;
+    Bio: String;
     avatar_URL: String;
 }

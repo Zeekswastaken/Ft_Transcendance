@@ -60,6 +60,15 @@ export class TO_update{
        // this.avatar_URL='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU';
     }
 }
+export  class update{
+    username:String;
+    password:String;
+    Bio:String;
+    privacy:Boolean;
+    constructor(){
+        this.privacy = true;
+    }
+}
 // export class UserDtosave {
 //     username:String;
 //     email:String;
