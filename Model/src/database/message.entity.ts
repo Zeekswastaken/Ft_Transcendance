@@ -13,6 +13,6 @@ export class Message {
   Created_at: Date;
 
   @ManyToOne(() => ChannelMembership, membership => membership.messages)
-  @JoinColumn({ name: 'Membership_id' })
+  @JoinColumn({ name: 'Membership_id', referencedColumnName: 'id' })
   membership: ChannelMembership;
 }

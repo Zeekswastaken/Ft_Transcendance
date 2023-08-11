@@ -24,6 +24,7 @@ export class AuthController {
     }
     @Post('signup')
     async create(@Body() Body:UserDto,@Res() res:Response){
+        console.log("FEFEFEFEFEF");
         if(await this.authservice.check_and_create(Body)  != null)
         {
             res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');

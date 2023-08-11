@@ -19,6 +19,10 @@ let ChannelMembership = exports.ChannelMembership = class ChannelMembership {
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
+], ChannelMembership.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
 ], ChannelMembership.prototype, "Userid", void 0);
 __decorate([
     (0, typeorm_1.Column)(),

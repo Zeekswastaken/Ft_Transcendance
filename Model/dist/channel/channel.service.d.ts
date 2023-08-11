@@ -11,7 +11,8 @@ export declare class ChannelService {
     createChannel(createChannelDto: createChannelDto, owner: number): Promise<Channel>;
     assignAdmin(channelID: number, userId: number, initiatorId: number): Promise<ChannelMembership>;
     removeadmin(channelID: number, userID: number, initiatorID: number): Promise<ChannelMembership>;
-    joinChannel(channelID: number, userID: number): Promise<ChannelMembership>;
+    joinChannel(channelID: number, userID: number, Pass: String): Promise<ChannelMembership>;
+    LeaveChannel(channelID: number, userID: number): Promise<Boolean>;
     muteUser(channelID: number, userID: number, amount: number): Promise<ChannelMembership>;
     banUser(channelID: number, userID: number, amount: number): Promise<ChannelMembership>;
     unmuteUser(channelID: number, userID: number): Promise<ChannelMembership>;

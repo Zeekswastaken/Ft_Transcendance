@@ -9,4 +9,13 @@ export declare class ChannelGateway {
     constructor(channelService: ChannelService, jwtService: JwtService);
     create(createChannelDto: createChannelDto, client: Socket): Promise<import("../database/channel.entity").Channel>;
     findAll(): Promise<import("../database/channel.entity").Channel[]>;
+    Join(data: {
+        channelID: number;
+        userID: number;
+        Pass: string;
+    }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
+    Leave(data: {
+        channelID: number;
+        userID: number;
+    }): Promise<Boolean>;
 }

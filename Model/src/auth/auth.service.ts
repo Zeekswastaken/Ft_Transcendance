@@ -11,6 +11,7 @@ import { JWToken } from './jwt.service';
 export class AuthService {
     constructor(private readonly userservice:UserService,private readonly jwtoken:JWToken){}
     singin(@Res() res:Response){
+        
         res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
     }
     singup(@Res() res:Response){

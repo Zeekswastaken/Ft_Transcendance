@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
     origin: '*',
   },
 })
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard())
 export class ChannelGateway {
   @WebSocketServer()
   server: Server;
@@ -20,11 +20,12 @@ export class ChannelGateway {
   @SubscribeMessage('createChannel')
   async create(@MessageBody() createChannelDto: createChannelDto, @ConnectedSocket() client: Socket) {
     try{
+      const userid = 1;
     // console.log("====> ", client.id);
-      console.log("it kinda worked");
-      const token = client.handshake.query.token;
-      const decodedToken = this.jwtService.verify(token.toString());
-      const userid = decodedToken.sub;
+      // console.log("it kinda worked");
+      // const token = client.handshake.query.token;
+      // const decodedToken = this.jwtService.verify(token.toString());
+      // const userid = decodedToken.sub;
       const channel = await this.channelService.createChannel(createChannelDto, userid);
       this.server.emit('channel', channel);
       return channel;
@@ -39,4 +40,33 @@ export class ChannelGateway {
   async findAll() {
     return await this.channelService.getAllChannels();
   }
+
+  @SubscribeMessage('JoinChannel')
+  async Join(@MessageBody() data: { channelID: number, userID: number, Pass: string }){
+    try {
+      const channelID = data.channelID; 
+      const userID = data.userID;
+      const Pass = data.Pass;
+    const userid = 2;
+    return await this.channelService.joinChannel(channelID, userID, Pass);
+    }catch (error) {
+      console.error('Error joining channel: ', error.message);
+      throw error;
+    }
+  }
+
+  @SubscribeMessage('LeaveChannel')
+  async Leave(@MessageBody() data: { channelID: number, userID: number})
+  {
+    try {
+      const channelID = data.channelID; 
+      const userID = data.userID;
+    const userid = 2;
+    return await this.channelService.LeaveChannel(channelID, userID);
+    }catch (error) {
+      console.error('Error joining channel: ', error.message);
+      throw error;
+    }
+  }
+  
 }

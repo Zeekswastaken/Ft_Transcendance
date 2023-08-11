@@ -30,6 +30,7 @@ let AuthController = exports.AuthController = class AuthController {
         this.authservice.singup(res);
     }
     async create(Body, res) {
+        console.log("FEFEFEFEFEF");
         if (await this.authservice.check_and_create(Body) != null) {
             res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
         }

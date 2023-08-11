@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", String)
 ], Channel.prototype, "Password", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => channelMembership_entity_1.ChannelMembership, ChannelMembership => ChannelMembership.Channelid),
+    (0, typeorm_1.OneToMany)(() => channelMembership_entity_1.ChannelMembership, ChannelMembership => ChannelMembership.Channelid, { cascade: true, onDelete: 'CASCADE' }),
     __metadata("design:type", Array)
 ], Channel.prototype, "memberships", void 0);
 exports.Channel = Channel = __decorate([

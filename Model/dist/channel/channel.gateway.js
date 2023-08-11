@@ -17,8 +17,6 @@ const websockets_1 = require("@nestjs/websockets");
 const channel_service_1 = require("./channel.service");
 const createChannel_dto_1 = require("./dto/createChannel.dto");
 const socket_io_1 = require("socket.io");
-const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
 let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
     constructor(channelService, jwtService) {
@@ -27,10 +25,7 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
     }
     async create(createChannelDto, client) {
         try {
-            console.log("it kinda worked");
-            const token = client.handshake.query.token;
-            const decodedToken = this.jwtService.verify(token.toString());
-            const userid = decodedToken.sub;
+            const userid = 1;
             const channel = await this.channelService.createChannel(createChannelDto, userid);
             this.server.emit('channel', channel);
             return channel;
@@ -42,6 +37,31 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
     }
     async findAll() {
         return await this.channelService.getAllChannels();
+    }
+    async Join(data) {
+        try {
+            const channelID = data.channelID;
+            const userID = data.userID;
+            const Pass = data.Pass;
+            const userid = 2;
+            return await this.channelService.joinChannel(channelID, userID, Pass);
+        }
+        catch (error) {
+            console.error('Error joining channel: ', error.message);
+            throw error;
+        }
+    }
+    async Leave(data) {
+        try {
+            const channelID = data.channelID;
+            const userID = data.userID;
+            const userid = 2;
+            return await this.channelService.LeaveChannel(channelID, userID);
+        }
+        catch (error) {
+            console.error('Error joining channel: ', error.message);
+            throw error;
+        }
     }
 };
 __decorate([
@@ -62,13 +82,26 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ChannelGateway.prototype, "findAll", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('JoinChannel'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChannelGateway.prototype, "Join", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('LeaveChannel'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChannelGateway.prototype, "Leave", null);
 exports.ChannelGateway = ChannelGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {
             origin: '*',
         },
     }),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
     __metadata("design:paramtypes", [channel_service_1.ChannelService,
         jwt_1.JwtService])
 ], ChannelGateway);

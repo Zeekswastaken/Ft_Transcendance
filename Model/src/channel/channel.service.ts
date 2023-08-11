@@ -33,16 +33,16 @@ export class ChannelService {
         if (createChannelDto.Name == undefined)
             throw new HttpException("Channel name or Type not specified", HttpStatus.FORBIDDEN);
         channel.Name = createChannelDto.Name;
-        channel.Type = createChannelDto.type;
+        channel.Type = createChannelDto.Type;
         const checkChannel = await this.channelRepository.findOne({ where: { Name: createChannelDto.Name } });    
         if (checkChannel)
             throw new HttpException("Channel already exists with the same name", HttpStatus.FORBIDDEN);
-        if (createChannelDto.type === "protected" && createChannelDto.Password)
+        if (createChannelDto.Type === "protected" && createChannelDto.Password)
         {
             const hashedPass = await this.hashPassword(createChannelDto.Password);
             channel.Password = hashedPass;
         }
-        if (createChannelDto.type === "protected" && !createChannelDto.Password)
+        if (createChannelDto.Type === "protected" && !createChannelDto.Password)
             throw new HttpException('Password required', HttpStatus.FORBIDDEN); 
         // if (createChannelDto.type === "private")
         // {
@@ -116,7 +116,7 @@ export class ChannelService {
        return await this.channelMembershipRepository.save(updatedmembership);
     }
 
-    async joinChannel(channelID: number, userID: number): Promise<ChannelMembership>
+    async joinChannel(channelID: number, userID: number, Pass: String): Promise<ChannelMembership>
     {
         const channel = await this.channelRepository.findOne({where: {id : channelID}});
         const user = await this.userRepository.findOne({where: {id: userID}});
@@ -128,11 +128,32 @@ export class ChannelService {
         );
         if (membership)
             throw new HttpException("The User is already in the chat", HttpStatus.FORBIDDEN);
+        if (channel.Type == "protected")
+        {
+            if (!this.checkPassword(channelID, Pass))
+                throw new HttpException("Password is incorrect", HttpStatus.FORBIDDEN);
+        }
         const newmembership = new ChannelMembership();
         newmembership.Userid = user.id;
         newmembership.Channelid = channel.id
         newmembership.Type = "member";
         return await this.channelMembershipRepository.save(newmembership);
+    }
+
+    async LeaveChannel(channelID: number, userID: number): Promise<Boolean>
+    {
+        const channel = await this.channelRepository.findOne({where: {id : channelID}});
+        const user = await this.userRepository.findOne({where: {id: userID}});
+        if (!channel || !user)
+            throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
+        const membership = await this.channelMembershipRepository.findOne({ where: {
+            user: {id: user.id}
+            , channel:{id:channel.id}}}
+        );
+        if (!membership)
+        throw new HttpException("The User hasn't joined the channel", HttpStatus.FORBIDDEN);
+        await this.channelMembershipRepository.delete(membership.id);
+        return true
     }
 
     async muteUser(channelID: number, userID: number, amount: number): Promise<ChannelMembership>

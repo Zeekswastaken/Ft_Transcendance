@@ -12,15 +12,20 @@ const typeorm_1 = require("@nestjs/typeorm");
 const channel_entity_1 = require("../database/channel.entity");
 const channelMembership_entity_1 = require("../database/channelMembership.entity");
 const channel_service_1 = require("./channel.service");
+const channel_gateway_1 = require("./channel.gateway");
 const user_entity_1 = require("../database/user.entity");
+const jwt_1 = require("@nestjs/jwt");
 let ChannelModule = exports.ChannelModule = class ChannelModule {
 };
 exports.ChannelModule = ChannelModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([channel_entity_1.Channel, channelMembership_entity_1.ChannelMembership, user_entity_1.User])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([channel_entity_1.Channel, channelMembership_entity_1.ChannelMembership, user_entity_1.User]), jwt_1.JwtModule.register({
+                secret: "0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
+                signOptions: { expiresIn: '1h' },
+            })],
         exports: [typeorm_1.TypeOrmModule],
         controllers: [],
-        providers: [channel_service_1.ChannelService],
+        providers: [channel_gateway_1.ChannelGateway, channel_service_1.ChannelService],
     })
 ], ChannelModule);
 //# sourceMappingURL=channel.module.js.map
