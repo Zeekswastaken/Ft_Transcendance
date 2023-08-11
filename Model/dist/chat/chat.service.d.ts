@@ -1,8 +1,9 @@
-/// <reference types="node" />
+import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
-import { Server } from 'http';
 export declare class ChatService {
-    findAll(server: Server): void;
+    create(createChatDto: CreateChatDto): string;
+    findAll(): string;
+    findOne(id: number): string;
     update(id: number, updateChatDto: UpdateChatDto): string;
     remove(id: number): string;
 }

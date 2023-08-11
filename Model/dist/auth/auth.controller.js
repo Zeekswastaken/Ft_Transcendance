@@ -33,8 +33,9 @@ let AuthController = exports.AuthController = class AuthController {
         delete Body.cookie;
         const id = decode.id;
         await this.userservice.update(Body, id);
-        var user = await this.userservice.findById(id);
+        const user = await this.userservice.findById(id);
         if (user) {
+            console.log(user);
             console.log("HOLOALDJN");
             const cookie_token = await this.authservice.generateToken_2(user);
             console.log(await this.jwtservice.decoded(cookie_token));
@@ -46,7 +47,8 @@ let AuthController = exports.AuthController = class AuthController {
     async create(Body, res) {
         const ret = await this.authservice.check_and_create(Body);
         if (ret == true) {
-            const cookie_token = await this.authservice.generatOken(Body);
+            const cookie_token = await this.authservice.generateToken_2(Body);
+            console.log(await this.jwtservice.decoded(cookie_token));
             res.send(cookie_token);
         }
         else
@@ -121,7 +123,7 @@ let googleController = exports.googleController = class googleController {
         const user = await req.user;
         console.log(user);
         if (await this.authservice.create_Oauth(user) == true) {
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
             });
@@ -136,7 +138,7 @@ let googleController = exports.googleController = class googleController {
         }
         else {
             console.log('error');
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
             });
@@ -182,7 +184,7 @@ let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controlle
         console.log("CallBack");
         const user = await req.user;
         if (await this.authservice.create_Oauth(user) == true) {
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true, secure: false
             });
@@ -194,7 +196,7 @@ let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controlle
             return user_data;
         }
         else {
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true, secure: false
             });

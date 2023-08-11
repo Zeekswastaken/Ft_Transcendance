@@ -15,15 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const chat_service_1 = require("./chat.service");
+const create_chat_dto_1 = require("./dto/create-chat.dto");
 const update_chat_dto_1 = require("./dto/update-chat.dto");
-const http_1 = require("http");
 let ChatGateway = exports.ChatGateway = class ChatGateway {
     constructor(chatService) {
         this.chatService = chatService;
     }
-    findAll(client, Body) {
-        console.log(Body);
-        return this.chatService.findAll(this.server);
+    create(createChatDto) {
+        return this.chatService.create(createChatDto);
+    }
+    findAll() {
+        return this.chatService.findAll();
+    }
+    findOne(id) {
+        return this.chatService.findOne(id);
     }
     update(updateChatDto) {
         return this.chatService.update(updateChatDto.id, updateChatDto);
@@ -33,15 +38,25 @@ let ChatGateway = exports.ChatGateway = class ChatGateway {
     }
 };
 __decorate([
-    (0, websockets_1.WebSocketServer)(),
-    __metadata("design:type", http_1.Server)
-], ChatGateway.prototype, "server", void 0);
+    (0, websockets_1.SubscribeMessage)('createChat'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_chat_dto_1.CreateChatDto]),
+    __metadata("design:returntype", void 0)
+], ChatGateway.prototype, "create", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('findAllChat'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ChatGateway.prototype, "findAll", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('findOneChat'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], ChatGateway.prototype, "findOne", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('updateChat'),
     __param(0, (0, websockets_1.MessageBody)()),

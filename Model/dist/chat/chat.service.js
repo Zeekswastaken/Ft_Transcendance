@@ -9,8 +9,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatService = void 0;
 const common_1 = require("@nestjs/common");
 let ChatService = exports.ChatService = class ChatService {
-    findAll(server) {
-        server.emit(null, 'Welcome to our server');
+    create(createChatDto) {
+        return 'This action adds a new chat';
+    }
+    findAll() {
+        return `This action returns all chat`;
+    }
+    findOne(id) {
+        return `This action returns a #${id} chat`;
     }
     update(id, updateChatDto) {
         return `This action updates a #${id} chat`;

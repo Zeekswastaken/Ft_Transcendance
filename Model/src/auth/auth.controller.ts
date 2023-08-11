@@ -26,10 +26,11 @@ export class AuthController {
         delete Body.cookie;
         const id = decode.id as number;
         await this.userservice.update(Body,id);
-        var user= await this.userservice.findById(id);
+        const user = await this.userservice.findById(id);
+
         if (user)
         {
-            //console.log(user);
+            console.log(user);
             console.log("HOLOALDJN");
             const cookie_token = await this.authservice.generateToken_2(user);
             console.log(await this.jwtservice.decoded(cookie_token));
@@ -45,7 +46,8 @@ export class AuthController {
         const ret = await this.authservice.check_and_create(Body);
         if(ret == true)
         {
-            const cookie_token = await this.authservice.generatOken(Body);
+            const cookie_token = await this.authservice.generateToken_2(Body);
+            console.log(await this.jwtservice.decoded(cookie_token));
             res.send(cookie_token);
         }
         else
@@ -103,7 +105,7 @@ export class googleController{
         console.log(user);
         if (await this.authservice.create_Oauth(user) == true)
         {
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
 
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
@@ -122,7 +124,7 @@ export class googleController{
         }
         else{
             console.log('error');
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
               });
@@ -160,7 +162,7 @@ export class fortytwo_Controller{
         const user = await req.user;
         if (await this.authservice.create_Oauth(user) == true)
         {
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,secure:false
               });
@@ -174,7 +176,7 @@ export class fortytwo_Controller{
             return user_data;
         }
         else{
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,secure:false
               });

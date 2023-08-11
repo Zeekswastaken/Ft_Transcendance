@@ -1,4 +1,4 @@
-// File: /Users/orbiay/Desktop/Ft_Transcendance/View/app/signup/complete-profile/page.tsx
+// File: /Users/orbiay/Desktop/Ft_Transcendence/View/app/signup/complete-profile/page.tsx
 import * as entry from '../../../../../app/signup/complete-profile/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

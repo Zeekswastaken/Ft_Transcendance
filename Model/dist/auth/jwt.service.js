@@ -22,7 +22,7 @@ let JWToken = exports.JWToken = class JWToken {
         return this.jwtService.sign(user);
     }
     async generateToken_2(user) {
-        const obj = { username: user.username, gender: user.gender, birthday: user.birthDay, avatar_URL: user.avatar_URL };
+        const obj = { id: user.id, username: user.username, gender: user.gender, birthday: user.birthDay, avatar_URL: user.avatar_URL };
         return this.jwtService.sign(obj);
     }
     async verify(token) {

@@ -1,4 +1,4 @@
-// File: /Users/orbiay/Desktop/Ft_Transcendance/View/app/signup/layout.tsx
+// File: /Users/orbiay/Desktop/Ft_Transcendence/View/app/signup/layout.tsx
 import * as entry from '../../../../app/signup/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

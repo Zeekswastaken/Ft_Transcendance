@@ -12,7 +12,7 @@ export class UserService {
     async save(Body:UserDto ){
         await this.userRepo.save(Body);
     }
-    async update(Body:Partial<User>,id:any){
+    async update(Body:Partial<User>,id:number){
        // console.log("\n\n\n\n\body after == "+ Body);
             await this.userRepo.update(id,Body);
     }

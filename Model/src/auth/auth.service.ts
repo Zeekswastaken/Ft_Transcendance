@@ -59,11 +59,11 @@ export class AuthService {
         else
             return false;
     }
-    async generatOken(user:jwtDTO){
+    async generatOken(user:Partial<User>){
         console.log(user);
         return await this.jwtoken.generateToken(user);
     }
-    async generateToken_2(user:jwtDTO)
+    async generateToken_2(user:Partial<User>)
     {
         return await this.jwtoken.generateToken_2(user);
     }

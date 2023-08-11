@@ -6,5 +6,5 @@ export declare class ProfileController {
     private readonly jwt;
     constructor(userservice: UserService, jwt: JWToken);
     display(username: String, res: any): Promise<void>;
-    update(Body: update, res: any, username: String): Promise<void>;
+    update(Body: update, res: any, id: number): Promise<void>;
 }

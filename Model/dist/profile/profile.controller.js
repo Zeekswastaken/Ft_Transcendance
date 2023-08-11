@@ -26,12 +26,12 @@ let ProfileController = exports.ProfileController = class ProfileController {
         const user = await this.userservice.findByName(username);
         res.send(user);
     }
-    async update(Body, res, username) {
+    async update(Body, res, id) {
         if (Body) {
-            await this.userservice.update(Body, username);
-            const user = await this.userservice.findByName(username);
-            const coockie = this.jwt.generateToken_2(user);
-            res.send({ message: 'success', coockie: coockie });
+            await this.userservice.update(Body, id);
+            const user = await this.userservice.findByName(id);
+            const cookie = this.jwt.generateToken_2(user);
+            res.send({ message: 'success', cookie: cookie });
         }
         else {
             res.send({ message: 'error' });
@@ -47,12 +47,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProfileController.prototype, "display", null);
 __decorate([
-    (0, common_1.Put)('update/:username'),
+    (0, common_1.Put)('update/:id'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Res)()),
-    __param(2, (0, common_1.Param)('username')),
+    __param(2, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [use_Dto_1.update, Object, String]),
+    __metadata("design:paramtypes", [use_Dto_1.update, Object, Number]),
     __metadata("design:returntype", Promise)
 ], ProfileController.prototype, "update", null);
 exports.ProfileController = ProfileController = __decorate([
