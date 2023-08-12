@@ -40,11 +40,11 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
     }
     async Join(data) {
         try {
-            const channelID = data.channelID;
+            const channelID = 1;
             const userID = data.userID;
             const Pass = data.Pass;
             const userid = 2;
-            return await this.channelService.joinChannel(channelID, userID, Pass);
+            return await this.channelService.joinChannel(channelID, userid, Pass);
         }
         catch (error) {
             console.error('Error joining channel: ', error.message);

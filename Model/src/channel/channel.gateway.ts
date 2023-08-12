@@ -44,11 +44,11 @@ export class ChannelGateway {
   @SubscribeMessage('JoinChannel')
   async Join(@MessageBody() data: { channelID: number, userID: number, Pass: string }){
     try {
-      const channelID = data.channelID; 
+      const channelID = 1; 
       const userID = data.userID;
       const Pass = data.Pass;
     const userid = 2;
-    return await this.channelService.joinChannel(channelID, userID, Pass);
+    return await this.channelService.joinChannel(channelID, userid, Pass);
     }catch (error) {
       console.error('Error joining channel: ', error.message);
       throw error;

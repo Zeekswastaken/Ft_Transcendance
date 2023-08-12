@@ -10,9 +10,10 @@ import { JWToken } from './jwt.service';
 @Injectable()
 export class AuthService {
     constructor(private readonly userservice:UserService,private readonly jwtoken:JWToken){}
-    singin(@Res() res:Response){
-        
-        res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
+    async singin(@Res() res:Response){
+        console.log(this.userservice.findByemail(1));
+        //res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
+        res.send(await this.userservice.findByemail(1));
     }
     singup(@Res() res:Response){
         res.sendFile('/Users/orbiay/Desktop/App2/app/views/signup.html');

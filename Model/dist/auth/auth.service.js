@@ -21,8 +21,9 @@ let AuthService = exports.AuthService = class AuthService {
         this.userservice = userservice;
         this.jwtoken = jwtoken;
     }
-    singin(res) {
-        res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
+    async singin(res) {
+        console.log(this.userservice.findByemail(1));
+        res.send(await this.userservice.findByemail(1));
     }
     singup(res) {
         res.sendFile('/Users/orbiay/Desktop/App2/app/views/signup.html');
@@ -70,7 +71,7 @@ __decorate([
     __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AuthService.prototype, "singin", null);
 __decorate([
     __param(0, (0, common_1.Res)()),

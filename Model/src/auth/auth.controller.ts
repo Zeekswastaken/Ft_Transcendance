@@ -5,7 +5,7 @@ import { LocalStrategy } from './local.startegy';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { TokenGuard } from './guards';
-import { error } from 'console';
+import { Console, error } from 'console';
 
 
 
@@ -16,6 +16,7 @@ export class AuthController {
    // @UseGuards(TokenGuard)
     singin(@Res() res:Response){
         this.authservice.singin(res);
+        console.log()
     }
     @Get('signup')
     //@UseGuards(TokenGuard)

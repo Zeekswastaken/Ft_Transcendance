@@ -109,10 +109,12 @@ let ChannelService = exports.ChannelService = class ChannelService {
         return await this.channelMembershipRepository.save(updatedmembership);
     }
     async joinChannel(channelID, userID, Pass) {
+        console.log("-88888-------> ", userID);
         const channel = await this.channelRepository.findOne({ where: { id: channelID } });
         const user = await this.userRepository.findOne({ where: { id: userID } });
         if (!channel || !user)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
+        console.log("--------> ", user.id);
         const membership = await this.channelMembershipRepository.findOne({ where: {
                 user: { id: user.id },
                 channel: { id: channel.id }

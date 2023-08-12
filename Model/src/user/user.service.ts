@@ -10,9 +10,9 @@ export class UserService {
     async save(Body:UserDto){
         await this.userRepo.save(Body);
     }
-    async findByemail(email:any): Promise<User>
+    async findByemail(id:any): Promise<User>
     {
-       const user =  await this.userRepo.findOne({where :{ email: email}});
+       const user = await  this.userRepo.findOne({where:{id}, relations: ['memberships'] });
        return user;
     }
 }

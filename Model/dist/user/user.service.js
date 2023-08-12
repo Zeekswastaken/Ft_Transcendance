@@ -24,8 +24,8 @@ let UserService = exports.UserService = class UserService {
     async save(Body) {
         await this.userRepo.save(Body);
     }
-    async findByemail(email) {
-        const user = await this.userRepo.findOne({ where: { email: email } });
+    async findByemail(id) {
+        const user = await this.userRepo.findOne({ where: { id }, relations: ['memberships'] });
         return user;
     }
 };

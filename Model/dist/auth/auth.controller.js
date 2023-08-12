@@ -25,6 +25,7 @@ let AuthController = exports.AuthController = class AuthController {
     }
     singin(res) {
         this.authservice.singin(res);
+        console.log();
     }
     singup(res) {
         this.authservice.singup(res);
