@@ -22,7 +22,7 @@ const progress: CSS.Properties = {
 const LevelReached: React.FC<Props> = ({ styles, title }) => {
   return (
     <div
-      className={` glass ${styles}`}
+      className={` glass  h-[350px] ${styles}`}
     >
       <div>
         <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
@@ -49,7 +49,7 @@ const CardStats:React.FC<Props> = ( {styles, title, number} ) => {
 const WinRate: React.FC<Props> = ({ styles, title }) => {
   return (
     <div
-      className={` glass   ${styles}`}
+      className={` glass ${styles}`}
     >
       <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
         <div className="  grid auto-cols-min my-10 grid-cols-1 2xl:grid-cols-4 gap-5 2xl:w-full px-6">
@@ -108,12 +108,7 @@ const Achievments: React.FC<Props> = ({ styles, title }) => {
   );
 }
 
-
-// type User = {
-//   params: { username: string };
-// };
-
-const Profile= ( ) => {
+const Profile = () => {
   return (
     <div className=" grid grid-rows-2 gap-y-10 h-auto">
       <div className=" grid grid-cols-1 2xl:grid-cols-3 gap-6 xl:gap-x-6">

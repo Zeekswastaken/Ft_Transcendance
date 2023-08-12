@@ -114,9 +114,9 @@ export default function RootLayout({
                 </div>
               </div>
               <div className=" grid place-items-center">
-                <div className="  bg-[#734475]/[0.5] drop-shadow-[6px_5px_0_rgba(0,0,00.35)] overflow-hidden whitespace-wrap mt-5 w-[75%] h-auto rounded-xl">
+                <div className="  bg-[#411941]/[0.8]  shadow-xl overflow-hidden whitespace-wrap mt-5 w-[75%] h-auto rounded-xl">
                   {/* max 180 character */}
-                  <p className="  drop-shadow-none text-white font-Heading text-xl leading-9 tracking-normal p-5 ">
+                  <p className=" shadow-none text-white font-Heading text-xl leading-9 tracking-normal p-5 ">
                     Sed ut perspiciatis gdffs nbv adfgx bbfgg fg dhx s fggsgv b
                     sfbvn kfjv;fknv;klnbjb; nbkcmv/l n nklj; v
                     mjsdkfovppkz,cl'ds ddsds ds unde omnis iste natus error sit
@@ -124,7 +124,7 @@ export default function RootLayout({
                   </p>
                 </div>
                 {isPrivate ? (
-                  <div className=" bg-[#734475]/[0.5] drop-shadow-[6px_5px_0_rgba(0,0,00.35)] overflow-hidden whitespace-wrap mt-10 w-[75%] rounded-xl mb-10">
+                  <div className=" bg-[#411941]/[0.8]  shadow-xl overflow-hidden whitespace-wrap mt-10 w-[75%] rounded-xl mb-10">
                     <div className=" grid place-items-center items-center  h-[200px]">
                       <img
                         src="/eye.png"
@@ -135,7 +135,7 @@ export default function RootLayout({
                     </div>
                   </div>
                 ) : (
-                  <div className=" bg-[#734475]/[0.5] drop-shadow-[6px_5px_0_rgba(0,0,00.35)] overflow-hidden whitespace-wrap mt-10 w-[75%] rounded-xl">
+                  <div className=" bg-[#411941]/[0.8]  shadow-xl mb-5 overflow-hidden whitespace-wrap mt-10 w-[75%] rounded-xl">
                     <div className=" px-14 pt-4 cursor-pointer">
                       <Link href={`/users/${User}`}>
                         <ProfileTabs
