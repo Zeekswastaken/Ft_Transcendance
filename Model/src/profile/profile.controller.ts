@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Res } from '@nestjs/common';
 import { profile } from 'console';
+import { User } from 'src/DB_tables/user.entities';
 import { update } from 'src/Dto/use.Dto';
 import { JWToken } from 'src/auth/jwt.service';
 import { UserService } from 'src/user/user.service';
@@ -11,15 +12,19 @@ export class ProfileController {
     @Get(':username')
     async display(@Param('username') username:String,@Res() res){
         const user = await this.userservice.findByName(username);
+        delete user.password;
         res.send(user);
     }
     @Put('update/:id')
-    async update(@Body() Body:update,@Res() res,@Param('id') id:number){
+    async update(@Body() Body:Partial<User>,@Res() res,@Param('id') id:number){
         if (Body)
         {
             await this.userservice.update(Body,id);
-            const user = await this.userservice.findByName(id); 
-            const cookie = this.jwt.generateToken_2(user);
+            const user = await this.userservice.findById(id); 
+            console.log(user);
+            const cookie = await this.jwt.generateToken_2(user);
+            
+            console.log(await this.jwt.decoded(cookie));
             res.send({message:'success',cookie:cookie});
         }
         else {

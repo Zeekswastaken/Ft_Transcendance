@@ -9,7 +9,6 @@ export declare class AuthService {
     check_and_create(body: UserDto): Promise<String | boolean>;
     validate_by_email(username: String, password: String): Promise<User | null>;
     create_Oauth(body: UserDto): Promise<boolean>;
-    generatOken(user: Partial<User>): Promise<string>;
-    generateToken_2(user: Partial<User>): Promise<string>;
+    generateToken_2(user: Partial<User>): Promise<String>;
     isValid(token: String): Promise<boolean>;
 }

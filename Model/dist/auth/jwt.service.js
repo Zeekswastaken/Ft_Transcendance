@@ -18,12 +18,9 @@ let JWToken = exports.JWToken = class JWToken {
         this.jwtService = jwtService;
         this.secret_key = '0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6';
     }
-    async generateToken(user) {
-        return this.jwtService.sign(user);
-    }
     async generateToken_2(user) {
         const obj = { id: user.id, username: user.username, gender: user.gender, birthday: user.birthDay, avatar_URL: user.avatar_URL };
-        return this.jwtService.sign(obj);
+        return this.jwtService.sign(obj, { secret: '0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' });
     }
     async verify(token) {
         try {

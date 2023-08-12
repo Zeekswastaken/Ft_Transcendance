@@ -16,12 +16,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-<<<<<<< HEAD
-  let checkAuth ="f";
-=======
   // const router = useRouter()
   let checkAuth ="true";
->>>>>>> fb7da711b484e74446c6154c227f4452a1a97219
   return (
     <html lang="en">
       <body className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat flex justify-center ">

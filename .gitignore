@@ -1,2 +1,4 @@
 Model/node_modules/
 View/node_modules/
+node_modules/
+Model/pgdata/

@@ -4,8 +4,7 @@ export declare class JWToken {
     private readonly jwtService;
     constructor(jwtService: JwtService);
     private secret_key;
-    generateToken(user: Partial<User>): Promise<string>;
-    generateToken_2(user: Partial<User>): Promise<string>;
+    generateToken_2(user: Partial<User>): Promise<String>;
     verify(token: any): Promise<boolean>;
     decoded(token: any): Promise<null | User>;
 }

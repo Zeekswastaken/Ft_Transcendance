@@ -20,7 +20,7 @@ export declare class googleController {
     googlelogin(): void;
     googleloginredirect(req: any, res: any): Promise<{
         status: number;
-        token: string;
+        token: String;
         user: any;
         message: string;
     }>;
@@ -30,7 +30,7 @@ export declare class fortytwo_Controller {
     constructor(authservice: AuthService);
     googlelogin(req: any, res: any): void;
     fortytwo_loginredirect(req: any, res: any): Promise<{
-        token: string;
+        token: String;
         user: any;
         message: string;
     }>;

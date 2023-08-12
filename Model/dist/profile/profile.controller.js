@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProfileController = void 0;
 const common_1 = require("@nestjs/common");
-const use_Dto_1 = require("../Dto/use.Dto");
 const jwt_service_1 = require("../auth/jwt.service");
 const user_service_1 = require("../user/user.service");
 let ProfileController = exports.ProfileController = class ProfileController {
@@ -24,13 +23,16 @@ let ProfileController = exports.ProfileController = class ProfileController {
     }
     async display(username, res) {
         const user = await this.userservice.findByName(username);
+        delete user.password;
         res.send(user);
     }
     async update(Body, res, id) {
         if (Body) {
             await this.userservice.update(Body, id);
-            const user = await this.userservice.findByName(id);
-            const cookie = this.jwt.generateToken_2(user);
+            const user = await this.userservice.findById(id);
+            console.log(user);
+            const cookie = await this.jwt.generateToken_2(user);
+            console.log(await this.jwt.decoded(cookie));
             res.send({ message: 'success', cookie: cookie });
         }
         else {
@@ -52,7 +54,7 @@ __decorate([
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [use_Dto_1.update, Object, Number]),
+    __metadata("design:paramtypes", [Object, Object, Number]),
     __metadata("design:returntype", Promise)
 ], ProfileController.prototype, "update", null);
 exports.ProfileController = ProfileController = __decorate([

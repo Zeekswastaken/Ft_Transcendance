@@ -55,10 +55,6 @@ let AuthService = exports.AuthService = class AuthService {
         else
             return false;
     }
-    async generatOken(user) {
-        console.log(user);
-        return await this.jwtoken.generateToken(user);
-    }
     async generateToken_2(user) {
         return await this.jwtoken.generateToken_2(user);
     }
