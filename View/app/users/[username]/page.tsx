@@ -1,6 +1,7 @@
 import ProfileSvgs from "@/components/tools/ProfileSvgs";
 import React from "react";
 import CSS from "csstype";
+import Row from "@/components/tools/Row";
 
 interface Props {
   styles: string;
@@ -8,7 +9,7 @@ interface Props {
   number: string;
 }
 
-const percentage:string = "90%";
+const percentage:string = "70%";
 
 const progress: CSS.Properties = {
   width: '200px',
@@ -21,11 +22,14 @@ const progress: CSS.Properties = {
 const LevelReached: React.FC<Props> = ({ styles, title }) => {
   return (
     <div
-      className={` glass h-[350px] ${styles}`}
+      className={` glass ${styles}`}
     >
-      <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
-      <div style={progress} className=" flex place-content-center content-center absolute mx-10">
-        <p className=" mt-[40%] font-Bomb text-3xl ">{percentage}</p>
+      <div>
+        <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
+        <p>level</p>
+        <div style={progress} className=" flex place-content-center content-center absolute mx-10">
+          <p className=" mt-[40%] font-Bomb text-3xl ">{percentage}</p>
+        </div>
       </div>
     </div>
   );
@@ -35,7 +39,7 @@ const CardStats:React.FC<Props> = ( {styles, title, number} ) => {
   return (
     <div className="  bg-[#471D49] flex items-center place-content-center drop-shadow-[6px_5px_0_rgba(0,0,00.15)] hover:bg-[#5b315d] hover:opacity-90 duration-300  rounded-3xl">
     <div className=" ">
-      <p className=" break-all text-center font-Bomb text-[40px] mt-5 text-[#D4D4D4]">{title}</p>
+      <p className=" break-all text-center font-Bomb text-[34px] mt-5 text-[#D4D4D4]">{title}</p>
       <p className={` break-all text-center font-Bomb mb-2 text-4xl  ${styles} `}>{number}</p>
     </div>  
   </div>
@@ -66,12 +70,27 @@ const WinRate: React.FC<Props> = ({ styles, title }) => {
 const MatchHistory: React.FC<Props> = ({ styles, title }) => {
   return (
     <div
-      className={` glass h-[350px] whitespace-wrap overflow-hidden ${styles}`}
+      className={` glass no-scrollbar h-[350px] whitespace-wrap overflow-auto ${styles}`}
     >
       <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
-      <div>
-        d
-      </div>
+      <div className=" relative text-white px-8 ">
+				<table className="table overflow-auto w-full text-sm text-left border-separate space-y-10">
+					<thead className="  text-2xl uppercase font-Bomb">
+						<tr className=" text-white/90">
+							<th className="p-3">opponent</th>
+							<th className="p-3">score</th>
+							<th className="p-3">date</th>
+						</tr>
+					</thead>
+					<tbody className=" font-bold overflow-auto text-xl">
+						<Row opponent="Hawkins" score="2-5" date="May 30, 2023" result="lost" avatar="/avatars/avatar1.png" />
+						<Row opponent="Gloria" score="5-2" date="May 30, 2023" result="win" avatar="/avatars/avatar2.png" />
+						<Row opponent="Colleen" score="6-3" date="May 30, 2023" result="win" avatar="/avatars/avatar3.png" />
+						<Row opponent="Karim" score="2-5" date="May 30, 2023" result="lost" avatar="/avatars/avatar4.png" />
+						<Row opponent="Samir" score="6-3" date="May 30, 2023" result="win" avatar="/avatars/avatar5.png" />
+					</tbody>
+				</table>
+			</div>
     </div>
   );
 }
@@ -102,8 +121,8 @@ const Profile= ( ) => {
         <WinRate title="Win Rate" styles="xl:col-span-2" number="" />
       </div>
       <div className=" grid grid-cols-1 2xl:grid-cols-3 gap-6 xl:gap-x-6">
-        <MatchHistory title="Match History" styles="" number="" />
-        <Achievments title="Achievments" styles="xl:col-span-2" number="" />
+        <Achievments title="Achievments" styles="" number="" />
+        <MatchHistory title="Match History" styles="xl:col-span-2" number="" />
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 "use client"
 
+// import Row from "../tools/Row";
+
 type TableDataRow = {
 	opponent: string
 	score: string
@@ -95,7 +97,6 @@ const MatchHistory = () => {
 		)
 }
 
-export default MatchHistory
-
+export  default {MatchHistory, Row}
 
 
