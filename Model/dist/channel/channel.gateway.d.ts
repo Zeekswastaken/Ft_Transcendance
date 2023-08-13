@@ -18,4 +18,14 @@ export declare class ChannelGateway {
         channelID: number;
         userID: number;
     }): Promise<Boolean>;
+    assignAd(data: {
+        channelID: number;
+        userID: number;
+        initiatorID: number;
+    }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
+    removeAd(data: {
+        channelID: number;
+        userID: number;
+        initiatorID: number;
+    }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
 }

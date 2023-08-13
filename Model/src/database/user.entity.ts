@@ -20,7 +20,7 @@ export class User{
   password: String;
   @Column({default:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU'})
   avatar_URL: String;
-  @OneToMany(() => ChannelMembership, membership => membership.user)
+  @OneToMany(() => ChannelMembership, membership => membership.user, { cascade: true, onDelete: 'CASCADE' })
   memberships: ChannelMembership[];
   @ManyToMany(() => User, user => user.friends)
   @JoinTable({ name: 'userFriends' })

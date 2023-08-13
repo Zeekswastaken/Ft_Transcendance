@@ -40,7 +40,7 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
     }
     async Join(data) {
         try {
-            const channelID = 1;
+            const channelID = 4;
             const userID = data.userID;
             const Pass = data.Pass;
             const userid = 2;
@@ -55,8 +55,43 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
         try {
             const channelID = data.channelID;
             const userID = data.userID;
+            console.log("--------> ", data.channelID);
+            console.log("--------> ", data.userID);
             const userid = 2;
-            return await this.channelService.LeaveChannel(channelID, userID);
+            const channelid = 2;
+            return await this.channelService.LeaveChannel(channelid, userid);
+        }
+        catch (error) {
+            console.error('Error joining channel: ', error.message);
+            throw error;
+        }
+    }
+    async assignAd(data) {
+        try {
+            const channelID = data.channelID;
+            const userID = data.userID;
+            console.log("--------> ", data.channelID);
+            console.log("--------> ", data.userID);
+            const userid = 2;
+            const channelid = 4;
+            const initiatorid = 1;
+            return await this.channelService.assignAdmin(channelid, userid, initiatorid);
+        }
+        catch (error) {
+            console.error('Error joining channel: ', error.message);
+            throw error;
+        }
+    }
+    async removeAd(data) {
+        try {
+            const channelID = data.channelID;
+            const userID = data.userID;
+            console.log("--------> ", data.channelID);
+            console.log("--------> ", data.userID);
+            const userid = 2;
+            const channelid = 4;
+            const initiatorid = 1;
+            return await this.channelService.removeAdmin(channelid, userid, initiatorid);
         }
         catch (error) {
             console.error('Error joining channel: ', error.message);
@@ -96,6 +131,20 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ChannelGateway.prototype, "Leave", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('assignAdmin'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChannelGateway.prototype, "assignAd", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('removeAdmin'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChannelGateway.prototype, "removeAd", null);
 exports.ChannelGateway = ChannelGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {

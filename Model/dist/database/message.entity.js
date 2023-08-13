@@ -28,7 +28,8 @@ __decorate([
 ], Message.prototype, "Created_at", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => channelMembership_entity_1.ChannelMembership, membership => membership.messages),
-    (0, typeorm_1.JoinColumn)({ name: 'Membership_id', referencedColumnName: 'id' }),
+    (0, typeorm_1.JoinColumn)({ name: 'Userid', referencedColumnName: 'Userid', }),
+    (0, typeorm_1.JoinColumn)({ name: 'Channelid', referencedColumnName: 'Channelid' }),
     __metadata("design:type", channelMembership_entity_1.ChannelMembership)
 ], Message.prototype, "membership", void 0);
 exports.Message = Message = __decorate([

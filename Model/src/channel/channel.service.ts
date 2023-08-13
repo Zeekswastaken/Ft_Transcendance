@@ -61,36 +61,44 @@ export class ChannelService {
 
     async assignAdmin(channelID: number, userId: number, initiatorId: number): Promise<ChannelMembership>
     {
+        
         const initiator = await this.userRepository.findOne({where: { id: initiatorId}});
+        console.log("-------8888-> ");
         const channel = await this.channelRepository.findOne({ where: {id: channelID}});
+        console.log("-------8899988-> ");
         const user = await this.userRepository.findOne({where: {id: userId}});
         if (!channel || !user || !initiator)
-            throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
+        throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
         
+        console.log("-------88101010188-> ");
         const membership = await this.channelMembershipRepository.findOne( { where:  {
             user: {id: user.id}
             , channel:{id: channel.id}
             , Type: 'admin'}});
-        if (membership)
+            console.log("-------88111111188-> ");
+            if (membership)
             throw new HttpException("The user is already an admin", HttpStatus.FORBIDDEN);
-        
+            
             const membership_init = await this.channelMembershipRepository.findOne( { where : {
-            user: {id: user.id}
-            , channel:{id: channel.id}
-            , Type: 'owner'
-        }});
-        if (!membership_init)
+                user: {id: initiatorId}
+                , channel:{id: channel.id}
+                , Type: 'owner'
+            }});
+            if (!membership_init)
             throw new HttpException("The user can only assign someone as admin if he's the owner of this channel", HttpStatus.FORBIDDEN);
-        
-        const adminmembership = await this.channelMembershipRepository.findOne( {where: {
-            user: {id: user.id}
-            , channel:{id: channel.id}}
-        });
-        adminmembership.Type = 'admin';
+            
+            const adminmembership = await this.channelMembershipRepository.findOne( {where: {
+                user: {id: user.id}
+                , channel:{id: channel.id}}
+            });
+            if (!adminmembership)
+            throw new HttpException("The user hasn't joined this channel", HttpStatus.FORBIDDEN);
+            adminmembership.Type = 'admin';
+            console.log("-------8888-> ", adminmembership.Type);
         return await this.channelMembershipRepository.save(adminmembership);
     }
 
-    async removeadmin(channelID: number, userID: number, initiatorID: number): Promise<ChannelMembership>
+    async removeAdmin(channelID: number, userID: number, initiatorID: number): Promise<ChannelMembership>
     {
         const initiator = await this.userRepository.findOne({where: { id: initiatorID}});
         const channel = await this.channelRepository.findOne({ where: {id : channelID}});
@@ -154,6 +162,14 @@ export class ChannelService {
         );
         if (!membership)
         throw new HttpException("The User hasn't joined the channel", HttpStatus.FORBIDDEN);
+        if (membership.Type == "owner")
+        {
+            const adminmem = await this.channelMembershipRepository.findOne({
+                where: { Type: 'admin', Channelid: channel.id },
+            });
+            adminmem.Type = "owner";
+            await this.channelMembershipRepository.save(adminmem);
+        }
         await this.channelMembershipRepository.delete(membership.id);
         return true
     }

@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, Unique } from 'typeorm';
 import { Channel } from './channel.entity';
 import { User } from './user.entity';
 import { Message } from './message.entity';
 
 @Entity()
+@Unique(["Channelid", "Userid"])
 export class ChannelMembership {
   @PrimaryGeneratedColumn()
   id: number;

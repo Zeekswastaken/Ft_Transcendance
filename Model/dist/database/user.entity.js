@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "avatar_URL", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => channelMembership_entity_1.ChannelMembership, membership => membership.user),
+    (0, typeorm_1.OneToMany)(() => channelMembership_entity_1.ChannelMembership, membership => membership.user, { cascade: true, onDelete: 'CASCADE' }),
     __metadata("design:type", Array)
 ], User.prototype, "memberships", void 0);
 __decorate([

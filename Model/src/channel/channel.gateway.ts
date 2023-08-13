@@ -21,7 +21,7 @@ export class ChannelGateway {
   async create(@MessageBody() createChannelDto: createChannelDto, @ConnectedSocket() client: Socket) {
     try{
       const userid = 1;
-    // console.log("====> ", client.id);
+    // console.log("====> ", client.id);xxxxx
       // console.log("it kinda worked");
       // const token = client.handshake.query.token;
       // const decodedToken = this.jwtService.verify(token.toString());
@@ -44,7 +44,7 @@ export class ChannelGateway {
   @SubscribeMessage('JoinChannel')
   async Join(@MessageBody() data: { channelID: number, userID: number, Pass: string }){
     try {
-      const channelID = 1; 
+      const channelID = 4; 
       const userID = data.userID;
       const Pass = data.Pass;
     const userid = 2;
@@ -61,12 +61,50 @@ export class ChannelGateway {
     try {
       const channelID = data.channelID; 
       const userID = data.userID;
+      console.log("--------> ", data.channelID);
+      console.log("--------> ", data.userID);
     const userid = 2;
-    return await this.channelService.LeaveChannel(channelID, userID);
+    const channelid = 2;
+    return await this.channelService.LeaveChannel(channelid, userid);
     }catch (error) {
       console.error('Error joining channel: ', error.message);
       throw error;
     }
   }
   
+  @SubscribeMessage('assignAdmin')
+  async assignAd(@MessageBody() data: { channelID: number, userID: number, initiatorID: number})
+  {
+    try {
+      const channelID = data.channelID; 
+      const userID = data.userID;
+      console.log("--------> ", data.channelID);
+      console.log("--------> ", data.userID);
+    const userid = 2;
+    const channelid = 4;
+    const initiatorid = 1;
+    return await this.channelService.assignAdmin(channelid, userid, initiatorid);
+    }catch (error) {
+      console.error('Error joining channel: ', error.message);
+      throw error;
+    }
+  }
+
+  @SubscribeMessage('removeAdmin')
+  async removeAd(@MessageBody() data: { channelID: number, userID: number, initiatorID: number})
+  {
+    try {
+      const channelID = data.channelID; 
+      const userID = data.userID;
+      console.log("--------> ", data.channelID);
+      console.log("--------> ", data.userID);
+    const userid = 2;
+    const channelid = 4;
+    const initiatorid = 1;
+    return await this.channelService.removeAdmin(channelid, userid, initiatorid);
+    }catch (error) {
+      console.error('Error joining channel: ', error.message);
+      throw error;
+    }
+  }  
 }
