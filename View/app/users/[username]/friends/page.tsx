@@ -5,7 +5,7 @@ import React, { useState } from "react";
 const FriendCard = () => {
   return (
     <div className=" bg-[#3A0E3B] drop-shadow-[6px_5px_0_rgba(0,0,00.15)] rounded-2xl px-2 2xl:px-6 py-3">
-      <div className=" flex justify-between items-center">
+      <div className=" flex justify-between space-x-2 items-center">
         <div className=" flex space-x-5">
           <img
             src="/Spectate.png"
@@ -19,7 +19,7 @@ const FriendCard = () => {
             <p className=" text-[#B4B4B4] text-xs">3 mutual freinds</p>
           </div>
         </div>
-        <div className=" dropdown dropdown-end pr-2 cursor-pointer ">
+        <div className=" dropdown dropdown-end  cursor-pointer ">
             <svg
             tabIndex={0}
               xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ const FriendCard = () => {
                 fill="white"
               />
             </svg>
-          <ul tabIndex={0} className=" text-white  dropdown-content mt-2 p-1 shadow bg-[#472B4E] rounded-2xl w-24">
+          <ul tabIndex={0} className=" text-white  dropdown-content mt-2 p-2 shadow bg-[#472B4E] rounded-xl w-24">
 							<li className=" font-Heading tracking-wide text-center hover:bg-[#321B38] hover:rounded-xl"><a>View Profile</a></li>
 							<li className=" font-Heading tracking-wide text-center hover:bg-[#321B38] hover:rounded-xl"><a>Block</a></li>
 					</ul>
@@ -88,6 +88,7 @@ const Friends = () => {
     setBlocked(true);
     setFriends(false);
   };
+  
   return (
     <div className=" border-2 border-primary-pink-300 rounded-[20px]">
       <div className=" glass w-full h-auto  ">
@@ -95,8 +96,8 @@ const Friends = () => {
           <h1 className="  text-white font-Bomb text-4xl break-all">
             friend list
           </h1>
-          <div className=" overflow-auto no-scrollbar my-10 bg-[#2F0331] h-[600px] rounded-3xl">
-            <div className="pt-16 pl-20 2xl:pl-40">
+          <div className=" overflow-auto no-scrollbar my-8 bg-[#2F0331] h-[500px] rounded-3xl">
+            <div className="pt-16 pl-10 2xl:pl-20">
               <div className=" flex space-x-3 text-white font-Heading text-2xl tracking-wide">
                 <div className={friendButtonStyle}>
                   <button onClick={handleFriendClickedTab}>Friends</button>
@@ -107,11 +108,11 @@ const Friends = () => {
               </div>
             </div>
             {friends && !blocked ? (
-              <div className=" mx-20 2xl:mx-40 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+              <div className=" mx-20 2xl:mx-20 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
                 <FriendCard />
               </div>
             ) : (
-              <div className=" mx-20 2xl:mx-40 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+              <div className=" mx-20 2xl:mx-20 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
                 <BlockedCard />
                 <BlockedCard />
                 <BlockedCard />

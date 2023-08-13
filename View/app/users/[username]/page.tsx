@@ -5,32 +5,35 @@ import Row from "@/components/tools/Row";
 
 interface Props {
   styles: string;
-  title: string;
+  title: string; 
   number: string;
 }
 
 const percentage:string = "70%";
+const level:string = "5";
 
 const progress: CSS.Properties = {
   width: '200px',
   height: '200px',
   borderRadius: '50%',
   // background: `conic-gradient(#FF1382 ${percentage}, #91145D 0)`,
-  background: `radial-gradient(closest-side, #FFFFFF 79%, transparent 80% 100%), conic-gradient(#FF1382 ${percentage}, #91145D 0)`,
+  background: `radial-gradient(closest-side, #474572 79%, transparent 80% 100%), conic-gradient(#FF1382 ${percentage}, #91145D 0)`,
 }
 
 const LevelReached: React.FC<Props> = ({ styles, title }) => {
   return (
     <div
-      className={` glass  h-[350px] ${styles}`}
+      className={` glass overflow-auto no-scrollbar h-[350px] ${styles}`}
     >
-      <div>
         <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
-        <p>level</p>
-        <div style={progress} className=" flex place-content-center content-center absolute mx-10">
-          <p className=" mt-[40%] font-Bomb text-3xl ">{percentage}</p>
+        <div className=" flex place-content-center items-end">
+          <div className=" order-2 text-white font-Bomb text-3xl tracking-wider">
+            <p>level {level}</p>
+          </div>
+          <div style={progress} className=" flex place-content-center items-center">
+            <p className=" font-Bomb text-4xl text-white ">{percentage}</p>
+          </div>
         </div>
-      </div>
     </div>
   );
 }
@@ -117,7 +120,7 @@ const Profile = () => {
       </div>
       <div className=" grid grid-cols-1 2xl:grid-cols-3 gap-6 xl:gap-x-6">
         <Achievments title="Achievments" styles="" number="" />
-        <MatchHistory title="Match History" styles="xl:col-span-2" number="" />
+        <MatchHistory title="Match History" styles="xl:col-span-2 order-2 " number="" />
       </div>
     </div>
   );

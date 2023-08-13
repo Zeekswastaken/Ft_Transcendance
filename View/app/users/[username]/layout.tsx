@@ -81,8 +81,8 @@ export default function RootLayout({
 
   return (
     <div className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat">
-      <div className=" mt-[220px]  mx-5 lg:mx-20">
-        <div className=" grid  grid-cols-1 2xl:grid-cols-3 mb-10">
+      <div className=" mt-[220px] mx-0 lg:mx-20">
+        <div className=" grid grid-cols-1 2xl:grid-cols-3 mb-10">
           {isPrivate ? (
             <div className=" 2xl:order-1 order-2 col-span-2  p-20">
               <div className=" flex items-center place-content-center glass w-full h-[200px] 2xl:h-full">
@@ -175,13 +175,13 @@ export default function RootLayout({
                 )}
                 { currentUsername !== User && !isFriend ? (
                   <div className=" mt-20">
-                   <SetButtonText styles=" text-white font-Bomb text-2xl px-5 pt-2 pb-1 rounded-2xl bg-[#6E4778] hover:text-gray-100 hover:bg-[#8d549c] shadow-inner duration-300" initialText="Add Friend" newText="Cancel Friend Request" />
+                   <SetButtonText styles=" text-white font-Bomb text-2xl px-5 pt-3 pb-2 rounded-2xl bg-[#6E4778] hover:text-gray-100 hover:bg-[#8d549c] shadow-inner duration-300" initialText="Add Friend" newText="Cancel Friend Request" />
                   </div>
                 ) : ("")}
                 { currentUsername !== User && isFriend ? (
                   <div className=" mt-20 flex space-x-5">
                     <SetButtonText styles="text-white font-Bomb text-xl px-5 pt-2 pb-1 rounded-2xl bg-[#6E4778] hover:text-gray-100 hover:bg-[#8d549c] shadow-inner duration-300 w-[135px]" initialText="Friends" newText="ADD Friend" />
-                    <button className=" text-white font-Bomb text-xl px-5 pt-2 pb-1 rounded-2xl bg-[#AF0D63] hover:text-gray-100 hover:bg-[#cd237e] shadow-inner duration-300 w-[135px]">
+                    <button className=" text-white font-Bomb text-xl px-5 pt-3 pb-2 rounded-2xl bg-[#AF0D63] hover:text-gray-100 hover:bg-[#cd237e] shadow-inner duration-300 w-[135px]">
                       Message
                     </button>
                   </div>

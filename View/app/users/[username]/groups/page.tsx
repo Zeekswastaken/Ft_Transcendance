@@ -8,12 +8,7 @@ const GroupCard = () => {
         Vestibulum
       </p>
       <div className=" flex justify-between mt-2 items-center">
-        <div className=" flex  mx-4 ">
-          <div className=" relative rounded-full bg-[url('/avatars/avatar1.png')] bg-cover bg-center w-9 h-9 "></div>
-          <div className=" relative rounded-full bg-[url('/avatars/avatar2.png')] bg-cover bg-center w-9 h-9 "></div>
-          <div className=" relative rounded-full bg-[url('/avatars/avatar3.png')] bg-cover bg-center w-9 h-9 "></div>
-        </div>
-        <div className=" flex space-x-2 mx-2">
+        <div className=" flex space-x-2 mx-4">
           <div className=" bg-primary-pink-300 text-base rounded-lg font-Heading tracking-wider text-white py-1 px-3 ">
             <button>Chat</button>
           </div>
@@ -21,6 +16,11 @@ const GroupCard = () => {
             <button>Joind</button>
           </div>
         
+        </div>
+        <div className=" flex   ">
+          <div className="  rounded-full bg-[url('/avatars/avatar1.png')] bg-cover bg-center w-9 h-9 "></div>
+          <div className="  rounded-full bg-[url('/avatars/avatar2.png')] bg-cover bg-center w-9 h-9 "></div>
+          <div className="  rounded-full bg-[url('/avatars/avatar3.png')] bg-cover bg-center w-9 h-9 "></div>
         </div>
       </div>
     </div>
@@ -31,13 +31,13 @@ const Groups = () => {
   return (
     <div className=" border-2 border-primary-pink-300 rounded-[20px]">
       <div className=" glass w-full h-auto  ">
-        <div className=" px-20 2xl:px-40 pt-20 pb-12">
+        <div className=" px-20 2xl:px-20 pt-20 pb-12">
           <h1 className="  text-white font-Bomb text-4xl break-all">
             friend list
           </h1>
           <div className=" overflow-auto no-scrollbar my-10 bg-[#2F0331] h-[600px] rounded-3xl">
-            <div className="pt-6 pl-20 2xl:pl-40"></div>
-            <div className=" mx-20 2xl:mx-40 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+            {/* <div className="pt-6 pl-20 2xl:pl-28"></div> */}
+            <div className=" mx-4 2xl:mx-10 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
               <GroupCard />
               <GroupCard />
             </div>

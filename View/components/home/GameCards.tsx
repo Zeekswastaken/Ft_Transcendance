@@ -16,7 +16,7 @@ type Cards = {
 const Card = ( {title, description, buttonText, image, span} : Cards ) => {
 
   let backGround;
-  if (title === "One Vs One") backGround = "bg-[url('/artwork.jpeg')]"; else if (title === "One Vs Bot") backGround = "bg-[url('/robot.jpg')] "; else backGround = "";
+  if (title === "One Vs One") backGround = "bg-[url('/artwork.jpeg')] backdrop-blur-md rounded-xl"; else if (title === "One Vs Bot") backGround = "bg-[url('/robot.jpg')] "; else backGround = "";
   
   const [clicked, setClicked] = useState(false);
   const targetWord = span;

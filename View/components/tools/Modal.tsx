@@ -37,7 +37,7 @@ const OneVsOne:React.FC<Props> = ({ title }) => {
 
   const avatar = useAppSelector((state) => state.avatarReducer.value);
   return (
-    <div className=" w-auto place-content-center">
+    <div className=" w-auto place-content-center ">
       <h3 className="text-[40px] mt-2 font-Bomb leading-6 text-white tracking-wide"> {title} </h3>
       {clicked ? (
         <div className="">
@@ -63,12 +63,12 @@ const OneVsOne:React.FC<Props> = ({ title }) => {
         ) : (
           <div className=" flex justify-between items-center space-x-[50px] my-10 ">
 
-            <button onClick={handleFriendOpponent} className=" drop-shadow-xl w-[200px] h-[200px] bg-gradient-to-b from-primary-pink-300 to-[#0d0d0d] hover:to-white hover:from-50% rounded-2xl">
+            <button onClick={handleFriendOpponent} className=" duration-300 hover:drop-shadow-[6px_5px_0_rgba(0,0,00.15)] hover:brightness-100 brightness-90 w-[200px] h-[200px] bg-[url('/playWithFriend.jpg')]  bg-cover bg-center rounded-2xl">
               <p className=' text-white text-3xl font-Bomb'> Choose Friend </p>
             </button>
-            <p className=" font-Bomb text-[50px] text-white ">OR</p>
-            <button onClick={handleRandomlyOpponent} className="  w-[200px] hover:from-50% h-[200px] duration-300 bg-gradient-to-b  from-primary-pink-300 to-[#0d0d0d] hover:to-white text-white rounded-2xl  ">
-              <p className='  text-3xl font-Bomb'> Choose Randomly </p>
+            <p className=" font-Bomb text-[50px] text-primary-pink-400 ">OR</p>
+            <button onClick={handleRandomlyOpponent} className=" duration-300 hover:drop-shadow-[6px_5px_0_rgba(0,0,00.15)] hover:brightness-100 brightness-90 w-[200px] hover:from-50% h-[200px] bg-[url('/playwithRandom.jpg')] bg-cover bg-center rounded-2xl  ">
+              <p className=' text-white text-3xl font-Bomb'> Choose Randomly </p>
             </button>
           </div>
         )}
