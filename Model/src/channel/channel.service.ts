@@ -7,6 +7,7 @@ import { ChannelMembership } from '../database/channelMembership.entity';
 import { User } from '../database/user.entity';
 import * as bcrypt from 'bcrypt';
 import { Equal } from 'typeorm';
+import { channel } from 'diagnostics_channel';
 
 console.log("HEETEe");
 
@@ -332,4 +333,34 @@ export class ChannelService {
         const saltOrRounds = 10; // The Number of salt rounds (recommended: 10 or higher)
         return await bcrypt.hash(password, saltOrRounds);
       }
+
+      private async validateInvitationLink(invitationLink: string): Promise<boolean> {
+        const splitLink = invitationLink.split('-');
+        //Check if link structure is valid
+        if (splitLink.length !== 3)
+            return false;
+        const [channelID, timestamp, randomData] = splitLink;
+        const time = Date.now();
+        const linkTime = +timestamp;
+        const Threshold = 90 * 60 * 1000;
+        //Check if the timestamp is expired/not valid
+        if (isNaN(linkTime) || time - linkTime > Threshold)
+            return false;
+        //Check if the channel Id is actually in the database or not
+            const checkChannel = await this.channelRepository.findOne({where:{ id: Equal(+channelID)}});
+        if (!checkChannel)
+            return false;
+        return true;
+      }
+
+    generateInvitationLink(channelID: number): string {
+    const timestamp = Date.now().toString();
+    const randomData = Math.random().toString(36).substring(7);
+    const token = `${channelID}-${timestamp}-${randomData}`;
+
+    //Construct the full invitation link URL
+    const invitationLink = `https://localhost.com:3099/join-channel?token=${token}`;
+
+    return invitationLink;
+  }
 }
