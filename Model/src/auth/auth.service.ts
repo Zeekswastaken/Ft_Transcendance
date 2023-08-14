@@ -2,7 +2,7 @@ import { Injectable, Res } from '@nestjs/common';
 import { promises } from 'dns';
 import { Response } from 'express';
 import { UserDto, jwtDTO } from 'src/Dto/use.Dto';
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 import { UserService } from 'src/user/user.service';
 import { JWToken } from './jwt.service';
 import { checkPasswordStrength } from 'src/utils/passwordChecker';

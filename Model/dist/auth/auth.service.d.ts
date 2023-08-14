@@ -1,5 +1,5 @@
 import { UserDto } from 'src/Dto/use.Dto';
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 import { UserService } from 'src/user/user.service';
 import { JWToken } from './jwt.service';
 export declare class AuthService {

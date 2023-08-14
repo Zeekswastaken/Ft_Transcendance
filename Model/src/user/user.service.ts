@@ -3,7 +3,7 @@ import { TokenExpiredError } from 'jsonwebtoken';
 import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../DB_tables/user.entities';
+import { User } from '../database/user.entity';
 import { UserDto ,MoreInfos, TO_update} from '../Dto/use.Dto';
 
 @Injectable()

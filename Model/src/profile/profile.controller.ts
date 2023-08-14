@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Res } from '@nestjs/common';
 import { profile } from 'console';
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 import { update } from 'src/Dto/use.Dto';
 import { JWToken } from 'src/auth/jwt.service';
 import { UserService } from 'src/user/user.service';

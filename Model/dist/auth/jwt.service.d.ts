@@ -1,5 +1,5 @@
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 export declare class JWToken {
     private readonly jwtService;
     constructor(jwtService: JwtService);

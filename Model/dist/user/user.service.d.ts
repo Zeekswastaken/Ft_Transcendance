@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { User } from '../DB_tables/user.entities';
+import { User } from '../database/user.entity';
 import { UserDto } from '../Dto/use.Dto';
 export declare class UserService {
     private readonly userRepo;

@@ -1,4 +1,4 @@
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 import { JWToken } from 'src/auth/jwt.service';
 import { UserService } from 'src/user/user.service';
 export declare class ProfileController {

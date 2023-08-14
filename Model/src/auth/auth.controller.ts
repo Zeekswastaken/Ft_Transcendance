@@ -1,5 +1,3 @@
-
-
 import { UserService } from './../user/user.service';
 import { Body, Controller, Get, Post, Req, Res, UseGuards,Put } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -11,7 +9,7 @@ import { TokenGuard } from './guards';
 import { error } from 'console';
 import { JWToken } from './jwt.service';
 import { BSON } from 'typeorm';
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 
 
 

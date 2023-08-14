@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService, JwtVerifyOptions } from '@nestjs/jwt';
 import { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken';
 import {jwtDTO } from 'src/Dto/use.Dto';
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 
 @Injectable()
 export class JWToken{
