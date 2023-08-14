@@ -10,22 +10,42 @@ export declare class ChannelGateway {
     create(createChannelDto: createChannelDto, client: Socket): Promise<import("../database/channel.entity").Channel>;
     findAll(): Promise<import("../database/channel.entity").Channel[]>;
     Join(data: {
-        channelID: number;
-        userID: number;
+        channelID: Number;
+        userID: Number;
         Pass: string;
     }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
     Leave(data: {
-        channelID: number;
-        userID: number;
+        channelID: Number;
+        userID: Number;
     }): Promise<Boolean>;
     assignAd(data: {
-        channelID: number;
-        userID: number;
-        initiatorID: number;
+        channelID: Number;
+        userID: Number;
+        initiatorID: Number;
     }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
     removeAd(data: {
-        channelID: number;
-        userID: number;
-        initiatorID: number;
+        channelID: Number;
+        userID: Number;
+        initiatorID: Number;
+    }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
+    mute(data: {
+        channelID: Number;
+        userID: Number;
+        initiatorID: Number;
+        amount: number;
+    }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
+    unmute(data: {
+        channelID: Number;
+        userID: Number;
+    }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
+    ban(data: {
+        channelID: Number;
+        userID: Number;
+        initiatorID: Number;
+        amount: number;
+    }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
+    unban(data: {
+        channelID: Number;
+        userID: Number;
     }): Promise<import("../database/channelMembership.entity").ChannelMembership>;
 }

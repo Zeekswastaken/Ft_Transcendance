@@ -5,37 +5,38 @@ import { UserDto, jwtDTO } from 'src/Dto/use.Dto';
 import { User } from 'src/database/user.entity';
 import { UserService } from 'src/user/user.service';
 import { JWToken } from './jwt.service';
-
+import { checkPasswordStrength } from 'src/utils/passwordChecker';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly userservice:UserService,private readonly jwtoken:JWToken){}
-    async singin(@Res() res:Response){
-        console.log(this.userservice.findByemail(1));
-        //res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
-        res.send(await this.userservice.findByemail(1));
-    }
-    singup(@Res() res:Response){
-        res.sendFile('/Users/orbiay/Desktop/App2/app/views/signup.html');
-    }
-    async check_and_create(body:UserDto):Promise<boolean>{
-
-        if (body.password == body.confirmpassword)
+    // singin(@Res() res:Response){
+    //     res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
+    // }
+    // singup(@Res() res:Response){
+    //     res.sendFile('/Users/orbiay/Desktop/App2/app/views/signup.html');
+    // }
+    async check_and_create(body:UserDto):Promise<String | boolean>{
+        if (!body.username)
+            return 'empty';
+        if (checkPasswordStrength(body.password) == 'Weak')
+            return 'weak';
+        if (body.password == body.repassword)
         {
-            if (await this.userservice.findByemail(body.email) == null)
+            if (await this.userservice.findByName(body.username) == null)
             {
                 await this.userservice.save(body);
                 return true;
             }
             else 
-                return false;
+                return 'exists';
         }
         else
-            return false;
+            return 'notMatch';
     }
-    async validate_by_email(email:String,password:String) :Promise<User | null>
+    async validate_by_email(username:String,password:String) :Promise<User | null>
     {
-        const user = await this.userservice.findByemail(email);
+        const user = await this.userservice.findByName(username);
         if (user && password == user.password && user.password && user.password != 'Oauth' )
         {
             console.log(user);
@@ -49,7 +50,7 @@ export class AuthService {
     }
     async create_Oauth(body:UserDto):Promise<boolean>
     {
-       const user = await this.userservice.findByemail(body.email);
+       const user = await this.userservice.findByName(body.username);
        if (!user)
        {
             await this.userservice.save(body);
@@ -58,8 +59,13 @@ export class AuthService {
         else
             return false;
     }
-    async generatOken(user:jwtDTO){
-        return await this.jwtoken.generateToken(user);
+    // async generatOken(user:Partial<User>){
+    //     console.log(user);
+    //     return await this.jwtoken.generateToken(user);
+    // }
+    async generateToken_2(user:Partial<User>)
+    {
+        return await this.jwtoken.generateToken_2(user);
     }
     async isValid(token:String)
     {

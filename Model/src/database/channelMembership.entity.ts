@@ -7,13 +7,13 @@ import { Message } from './message.entity';
 @Unique(["Channelid", "Userid"])
 export class ChannelMembership {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: Number;
 
   @Column()
-  Userid: number;
+  Userid: Number;
 
   @Column()
-  Channelid: number;
+  Channelid: Number;
 
   @Column()
   Type: string;

@@ -10,7 +10,6 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const messages_module_1 = require("./messages/messages.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const message_entity_1 = require("./database/message.entity");
 const guards_1 = require("./auth/guards");
@@ -31,19 +30,19 @@ const gameInvite_entity_1 = require("./database/gameInvite.entity");
 const blockedUser_entity_1 = require("./database/blockedUser.entity");
 const userFriends_entity_1 = require("./database/userFriends.entity");
 const achievements_entity_1 = require("./database/achievements.entity");
+const chat_gateway_1 = require("./chat/chat.gateway");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            messages_module_1.MessagesModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 host: 'localhost',
                 port: 5432,
-                username: 'zeeks',
-                password: 'zeee',
-                database: 'mynestdb',
+                username: 'admin',
+                password: 'pass',
+                database: 'mydb',
                 entities: [message_entity_1.Message, channel_entity_1.Channel, user_entity_1.User, channelMembership_entity_1.ChannelMembership, stats_entity_1.Stats, match_entity_1.Match, gameInvite_entity_1.GameInvite, blockedUser_entity_1.BlockedUser, userFriends_entity_1.UserFriends, achievements_entity_1.Achievements],
                 logging: true,
                 synchronize: true,
@@ -54,7 +53,7 @@ exports.AppModule = AppModule = __decorate([
             })
         ],
         controllers: [app_controller_1.AppController, user_controller_1.UserController],
-        providers: [app_service_1.AppService, guards_1.TokenGuard, channel_service_1.ChannelService, user_service_1.UserService, jwt_service_1.JWToken],
+        providers: [app_service_1.AppService, guards_1.TokenGuard, jwt_service_1.JWToken, user_service_1.UserService, channel_service_1.ChannelService, chat_gateway_1.ChatGateway],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

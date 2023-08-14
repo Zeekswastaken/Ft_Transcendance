@@ -31,7 +31,7 @@ let AppController = exports.AppController = class AppController {
         if (status.status == 'authorized') {
             console.log(query.avatar_URL);
             const decoded = await this.jwt.decoded(status.token);
-            const user = await this.userservice.findByemail((decoded).email);
+            const user = await this.userservice.findByName((decoded).username);
             console.log('user == ' + JSON.stringify(user));
             res.render('profile', { user });
         }
@@ -40,7 +40,7 @@ let AppController = exports.AppController = class AppController {
     }
 };
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('hamza'),
     (0, common_1.UseGuards)(guards_1.TokenGuard),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Req)()),

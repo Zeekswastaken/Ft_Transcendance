@@ -4,12 +4,13 @@ import { GameInvite } from "./gameInvite.entity";
 import { Match } from "./match.entity";
 import { BlockedUser } from "./blockedUser.entity";
 export declare class User {
-    id: number;
+    id: Number;
     username: String;
-    birthday: Date;
-    email: String;
-    gender: String;
+    birthDay: Date;
     password: String;
+    gender: String;
+    privacy: Boolean;
+    Bio: String;
     avatar_URL: String;
     memberships: ChannelMembership[];
     friends: User[];

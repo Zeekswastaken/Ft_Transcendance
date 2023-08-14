@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MessagesModule } from './messages/messages.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Message } from './database/message.entity';
 import { TokenGuard } from './auth/guards';
@@ -22,16 +21,17 @@ import { GameInvite } from './database/gameInvite.entity';
 import { BlockedUser } from './database/blockedUser.entity';
 import { UserFriends } from './database/userFriends.entity';
 import { Achievements } from './database/achievements.entity';
+import { ChatGateway } from './chat/chat.gateway';
+
 @Module({
   imports: [
-    MessagesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost', // Use the service name defined in your Docker Compose file
       port: 5432,
-      username: 'zeeks',
-      password: 'zeee',
-      database: 'mynestdb',
+      username: 'admin',
+      password: 'pass',
+      database: 'mydb',
       entities: [Message, Channel, User, ChannelMembership, Stats, Match, GameInvite, BlockedUser, UserFriends, Achievements],
       logging: true,
       synchronize: true,
@@ -42,6 +42,7 @@ import { Achievements } from './database/achievements.entity';
     })
   ],
   controllers: [AppController, UserController],
-  providers: [AppService,TokenGuard ,ChannelService , UserService, JWToken],
+  providers: [AppService,TokenGuard,JWToken,UserService,ChannelService, ChatGateway],
 })
 export class AppModule {}
+

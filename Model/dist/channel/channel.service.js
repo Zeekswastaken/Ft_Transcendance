@@ -20,6 +20,7 @@ const channel_entity_1 = require("../database/channel.entity");
 const channelMembership_entity_1 = require("../database/channelMembership.entity");
 const user_entity_1 = require("../database/user.entity");
 const bcrypt = require("bcrypt");
+const typeorm_3 = require("typeorm");
 console.log("HEETEe");
 let ChannelService = exports.ChannelService = class ChannelService {
     constructor(channelRepository, channelMembershipRepository, userRepository) {
@@ -59,32 +60,32 @@ let ChannelService = exports.ChannelService = class ChannelService {
         return savedChannel;
     }
     async assignAdmin(channelID, userId, initiatorId) {
-        const initiator = await this.userRepository.findOne({ where: { id: initiatorId } });
+        const initiator = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(initiatorId) } });
         console.log("-------8888-> ");
-        const channel = await this.channelRepository.findOne({ where: { id: channelID } });
+        const channel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
         console.log("-------8899988-> ");
-        const user = await this.userRepository.findOne({ where: { id: userId } });
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userId) } });
         if (!channel || !user || !initiator)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
         console.log("-------88101010188-> ");
         const membership = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: user.id },
-                channel: { id: channel.id },
+                user: { id: (0, typeorm_3.Equal)(user.id) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) },
                 Type: 'admin'
             } });
         console.log("-------88111111188-> ");
         if (membership)
             throw new common_1.HttpException("The user is already an admin", common_1.HttpStatus.FORBIDDEN);
         const membership_init = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: initiatorId },
-                channel: { id: channel.id },
+                user: { id: (0, typeorm_3.Equal)(initiatorId) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) },
                 Type: 'owner'
             } });
         if (!membership_init)
             throw new common_1.HttpException("The user can only assign someone as admin if he's the owner of this channel", common_1.HttpStatus.FORBIDDEN);
         const adminmembership = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: user.id },
-                channel: { id: channel.id }
+                user: { id: (0, typeorm_3.Equal)(user.id) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) }
             }
         });
         if (!adminmembership)
@@ -94,20 +95,20 @@ let ChannelService = exports.ChannelService = class ChannelService {
         return await this.channelMembershipRepository.save(adminmembership);
     }
     async removeAdmin(channelID, userID, initiatorID) {
-        const initiator = await this.userRepository.findOne({ where: { id: initiatorID } });
-        const channel = await this.channelRepository.findOne({ where: { id: channelID } });
-        const user = await this.userRepository.findOne({ where: { id: userID } });
+        const initiator = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(initiatorID) } });
+        const channel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userID) } });
         if (!channel || !user || !initiator)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
         const ownermembership = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: initiator.id },
-                channel: { id: channel.id },
+                user: { id: (0, typeorm_3.Equal)(initiator.id) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) },
                 Type: 'owner'
             } });
         if (!ownermembership)
             throw new common_1.HttpException("The initiator should be an owner for this action to go through", common_1.HttpStatus.FORBIDDEN);
-        const updatedmembership = await this.channelMembershipRepository.findOne({ where: { user: { id: user.id },
-                channel: { id: channel.id },
+        const updatedmembership = await this.channelMembershipRepository.findOne({ where: { user: { id: (0, typeorm_3.Equal)(user.id) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) },
                 Type: 'admin'
             } });
         if (!updatedmembership)
@@ -117,14 +118,14 @@ let ChannelService = exports.ChannelService = class ChannelService {
     }
     async joinChannel(channelID, userID, Pass) {
         console.log("-88888-------> ", userID);
-        const channel = await this.channelRepository.findOne({ where: { id: channelID } });
-        const user = await this.userRepository.findOne({ where: { id: userID } });
+        const channel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userID) } });
         if (!channel || !user)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
         console.log("--------> ", user.id);
         const membership = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: user.id },
-                channel: { id: channel.id }
+                user: { id: (0, typeorm_3.Equal)(user.id) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) }
             } });
         if (membership)
             throw new common_1.HttpException("The User is already in the chat", common_1.HttpStatus.FORBIDDEN);
@@ -139,44 +140,45 @@ let ChannelService = exports.ChannelService = class ChannelService {
         return await this.channelMembershipRepository.save(newmembership);
     }
     async LeaveChannel(channelID, userID) {
-        const channel = await this.channelRepository.findOne({ where: { id: channelID } });
-        const user = await this.userRepository.findOne({ where: { id: userID } });
+        const channel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userID) } });
         if (!channel || !user)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: user.id },
-                channel: { id: channel.id }
+                user: { id: (0, typeorm_3.Equal)(user.id) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) }
             } });
         if (!membership)
             throw new common_1.HttpException("The User hasn't joined the channel", common_1.HttpStatus.FORBIDDEN);
         if (membership.Type == "owner") {
             const adminmem = await this.channelMembershipRepository.findOne({
-                where: { Type: 'admin', Channelid: channel.id },
+                where: { Type: 'admin', Channelid: (0, typeorm_3.Equal)(channel.id) },
             });
             adminmem.Type = "owner";
             await this.channelMembershipRepository.save(adminmem);
         }
-        await this.channelMembershipRepository.delete(membership.id);
+        await this.channelMembershipRepository.delete(membership.id.valueOf());
         return true;
     }
-    async muteUser(channelID, userID, amount) {
-        const channel = await this.channelRepository.findOne({ where: { id: channelID } });
-        const user = await this.userRepository.findOne({ where: { id: userID } });
-        if (!channel || !user)
+    async muteUser(channelID, userID, initiatorID, amount) {
+        const channel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userID) } });
+        const userinit = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(initiatorID) } });
+        if (!channel || !user || !userinit)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
-        const user2 = await this.channelMembershipRepository.findOne({ where: { Userid: userID, Type: 'member' } });
+        const user2 = await this.channelMembershipRepository.findOne({ where: { Userid: (0, typeorm_3.Equal)(initiatorID), Type: 'member' } });
         if (user2)
             throw new common_1.HttpException("This User doesn't have the rights to perform this action", common_1.HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({
             where: [
                 {
-                    user: { id: user.id },
-                    channel: { id: channel.id },
+                    user: { id: (0, typeorm_3.Equal)(user.id) },
+                    channel: { id: (0, typeorm_3.Equal)(channel.id) },
                     isMuted: true,
                 },
                 {
-                    user: { id: user.id },
-                    channel: { id: channel.id },
+                    user: { id: (0, typeorm_3.Equal)(user.id) },
+                    channel: { id: (0, typeorm_3.Equal)(channel.id) },
                     isBanned: true,
                 },
             ],
@@ -184,32 +186,35 @@ let ChannelService = exports.ChannelService = class ChannelService {
         if (membership)
             throw new common_1.HttpException("The User might already be Muted/Banned", common_1.HttpStatus.FORBIDDEN);
         const normalmembership = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: user.id },
-                channel: { id: channel.id }, isMuted: false
+                user: { id: (0, typeorm_3.Equal)(user.id) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) }, isMuted: false
             } });
+        if (normalmembership.Type === 'owner')
+            throw new common_1.HttpException("This User can't perform this action on an owner", common_1.HttpStatus.FORBIDDEN);
         normalmembership.isMuted = true;
         normalmembership.muteEndDate = new Date();
         normalmembership.muteEndDate.setMinutes(normalmembership.muteEndDate.getMinutes() + amount);
         return this.channelMembershipRepository.save(normalmembership);
     }
-    async banUser(channelID, userID, amount) {
-        const channel = await this.channelRepository.findOne({ where: { id: channelID } });
-        const user = await this.userRepository.findOne({ where: { id: userID } });
+    async banUser(channelID, userID, initiatorID, amount) {
+        const userinit = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(initiatorID) } });
+        const channel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userID) } });
         if (!channel || !user)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
-        const user2 = await this.channelMembershipRepository.findOne({ where: { Userid: userID, Type: 'member' } });
+        const user2 = await this.channelMembershipRepository.findOne({ where: { Userid: (0, typeorm_3.Equal)(initiatorID), Type: 'member' } });
         if (user2)
             throw new common_1.HttpException("This User doesn't have the rights to perform this action", common_1.HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({
             where: [
                 {
-                    user: { id: user.id },
-                    channel: { id: channel.id },
+                    user: { id: (0, typeorm_3.Equal)(user.id) },
+                    channel: { id: (0, typeorm_3.Equal)(channel.id) },
                     isMuted: true,
                 },
                 {
-                    user: { id: user.id },
-                    channel: { id: channel.id },
+                    user: { id: (0, typeorm_3.Equal)(user.id) },
+                    channel: { id: (0, typeorm_3.Equal)(channel.id) },
                     isBanned: true,
                 },
             ],
@@ -217,30 +222,52 @@ let ChannelService = exports.ChannelService = class ChannelService {
         if (membership)
             throw new common_1.HttpException("The User might already be Muted/Banned", common_1.HttpStatus.FORBIDDEN);
         const normalmembership = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: user.id },
-                channel: { id: channel.id }, isBanned: false
+                user: { id: (0, typeorm_3.Equal)(user.id) },
+                channel: { id: (0, typeorm_3.Equal)(channel.id) }, isBanned: false
             } });
+        if (normalmembership.Type === 'owner')
+            throw new common_1.HttpException("This User can't perform this action on an owner", common_1.HttpStatus.FORBIDDEN);
         normalmembership.isBanned = true;
         normalmembership.banEndDate = new Date();
         normalmembership.banEndDate.setMinutes(normalmembership.muteEndDate.getMinutes() + amount);
         return this.channelMembershipRepository.save(normalmembership);
     }
     async unmuteUser(channelID, userID) {
-        const channel = await this.channelRepository.findOne({ where: { id: channelID } });
-        const user = await this.userRepository.findOne({ where: { id: userID } });
+        const channel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userID) } });
         if (!channel || !user)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
-        const ismuted = await this.channelMembershipRepository.findOne({ where: { user: { id: userID },
-                channel: { id: channelID },
+        const ismuted = await this.channelMembershipRepository.findOne({ where: { user: { id: (0, typeorm_3.Equal)(userID) },
+                channel: { id: (0, typeorm_3.Equal)(channelID) },
                 isMuted: true } });
         if (!ismuted)
             throw new common_1.HttpException("This User isn't muted", common_1.HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({ where: {
-                user: { id: userID },
-                channel: { id: channelID },
+                user: { id: (0, typeorm_3.Equal)(userID) },
+                channel: { id: (0, typeorm_3.Equal)(channelID) },
                 isMuted: true
             } });
         membership.isMuted = false;
+        membership.muteEndDate = undefined;
+        return await this.channelMembershipRepository.save(membership);
+    }
+    async unbanUser(channelID, userID) {
+        const channel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userID) } });
+        if (!channel || !user)
+            throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
+        const isbanned = await this.channelMembershipRepository.findOne({ where: { user: { id: (0, typeorm_3.Equal)(userID) },
+                channel: { id: (0, typeorm_3.Equal)(channelID) },
+                isBanned: true } });
+        if (!isbanned)
+            throw new common_1.HttpException("This User isn't banned", common_1.HttpStatus.FORBIDDEN);
+        const membership = await this.channelMembershipRepository.findOne({ where: {
+                user: { id: (0, typeorm_3.Equal)(userID) },
+                channel: { id: (0, typeorm_3.Equal)(channelID) },
+                isBanned: true
+            } });
+        membership.isBanned = false;
+        membership.banEndDate = undefined;
         return await this.channelMembershipRepository.save(membership);
     }
     async getAllChannels() {
@@ -251,12 +278,12 @@ let ChannelService = exports.ChannelService = class ChannelService {
         });
     }
     async getChannel(channelID) {
-        return this.channelRepository.findOne({ where: { id: channelID } });
+        return this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
     }
     async checkPassword(channelID, password) {
         if (!password)
             return false;
-        const pass = await this.channelRepository.findOne({ where: { id: channelID } });
+        const pass = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(channelID) } });
         return bcrypt.compare(password, pass);
     }
     async hashPassword(password) {

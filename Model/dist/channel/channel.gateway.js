@@ -40,7 +40,7 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
     }
     async Join(data) {
         try {
-            const channelID = 4;
+            const channelID = 1;
             const userID = data.userID;
             const Pass = data.Pass;
             const userid = 2;
@@ -57,12 +57,12 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
             const userID = data.userID;
             console.log("--------> ", data.channelID);
             console.log("--------> ", data.userID);
-            const userid = 2;
-            const channelid = 2;
+            const userid = 1;
+            const channelid = 1;
             return await this.channelService.LeaveChannel(channelid, userid);
         }
         catch (error) {
-            console.error('Error joining channel: ', error.message);
+            console.error('Error leaving channel: ', error.message);
             throw error;
         }
     }
@@ -73,12 +73,12 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
             console.log("--------> ", data.channelID);
             console.log("--------> ", data.userID);
             const userid = 2;
-            const channelid = 4;
+            const channelid = 1;
             const initiatorid = 1;
             return await this.channelService.assignAdmin(channelid, userid, initiatorid);
         }
         catch (error) {
-            console.error('Error joining channel: ', error.message);
+            console.error('Error assigning admin: ', error.message);
             throw error;
         }
     }
@@ -94,7 +94,55 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
             return await this.channelService.removeAdmin(channelid, userid, initiatorid);
         }
         catch (error) {
-            console.error('Error joining channel: ', error.message);
+            console.error('Error removing admin: ', error.message);
+            throw error;
+        }
+    }
+    async mute(data) {
+        try {
+            const channelID = data.channelID;
+            const userID = data.userID;
+            const initiatorID = data.initiatorID;
+            const amount = data.amount;
+            return await this.channelService.muteUser(channelID, userID, initiatorID, amount);
+        }
+        catch (error) {
+            console.error('Error muting user: ', error.message);
+            throw error;
+        }
+    }
+    async unmute(data) {
+        try {
+            const channelID = data.channelID;
+            const userID = data.userID;
+            return await this.channelService.unmuteUser(channelID, userID);
+        }
+        catch (error) {
+            console.error('Error unmuting user: ', error.message);
+            throw error;
+        }
+    }
+    async ban(data) {
+        try {
+            const channelID = data.channelID;
+            const userID = data.userID;
+            const initiatorID = data.initiatorID;
+            const amount = data.amount;
+            return await this.channelService.banUser(channelID, userID, initiatorID, amount);
+        }
+        catch (error) {
+            console.error('Error banning user: ', error.message);
+            throw error;
+        }
+    }
+    async unban(data) {
+        try {
+            const channelID = data.channelID;
+            const userID = data.userID;
+            return await this.channelService.unbanUser(channelID, userID);
+        }
+        catch (error) {
+            console.error('Error unmuting user: ', error.message);
             throw error;
         }
     }
@@ -118,7 +166,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChannelGateway.prototype, "findAll", null);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('JoinChannel'),
+    (0, websockets_1.SubscribeMessage)('joinChannel'),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -145,6 +193,34 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ChannelGateway.prototype, "removeAd", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('muteUser'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChannelGateway.prototype, "mute", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('unmuteUser'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChannelGateway.prototype, "unmute", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('banUser'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChannelGateway.prototype, "ban", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('unbanUser'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChannelGateway.prototype, "unban", null);
 exports.ChannelGateway = ChannelGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {

@@ -3,7 +3,7 @@ import { ChannelMembership} from './channelMembership.entity'
 @Entity()
 export class Channel {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: Number;
     @Column()
     Name: string;
     @Column({nullable: true})

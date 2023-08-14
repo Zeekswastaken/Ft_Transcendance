@@ -1,6 +1,6 @@
 import { ChannelMembership } from './channelMembership.entity';
 export declare class Channel {
-    id: number;
+    id: Number;
     Name: string;
     Type: String;
     Password: String;

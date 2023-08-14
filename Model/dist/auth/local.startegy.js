@@ -19,8 +19,8 @@ let LocalStrategy = exports.LocalStrategy = class LocalStrategy extends (0, pass
         super();
         this.authservice = authservice;
     }
-    async validate(email, password) {
-        const user = await this.authservice.validate_by_email(email, password);
+    async validate(username, password) {
+        const user = await this.authservice.validate_by_email(username, password);
         if (!user) {
             console.log(user);
             return null;

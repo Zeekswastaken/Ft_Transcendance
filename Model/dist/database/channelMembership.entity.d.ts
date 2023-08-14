@@ -2,9 +2,9 @@ import { Channel } from './channel.entity';
 import { User } from './user.entity';
 import { Message } from './message.entity';
 export declare class ChannelMembership {
-    id: number;
-    Userid: number;
-    Channelid: number;
+    id: Number;
+    Userid: Number;
+    Channelid: Number;
     Type: string;
     isMuted: boolean;
     isBanned: boolean;

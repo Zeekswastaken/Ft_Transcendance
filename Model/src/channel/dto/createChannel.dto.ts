@@ -1,9 +1,9 @@
-import { Channel } from "../../database/Channel.entity";
+import { Channel } from "../../database/channel.entity";
 import { IsNotEmpty, IsString, IsOptional} from 'class-validator'
 export class createChannelDto extends Channel{
     @IsNotEmpty()
     @IsString()
-    name: string;
+    name: String;
 
     @IsNotEmpty()
     @IsString()

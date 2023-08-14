@@ -41,10 +41,10 @@ export class ChannelGateway {
     return await this.channelService.getAllChannels();
   }
 
-  @SubscribeMessage('JoinChannel')
-  async Join(@MessageBody() data: { channelID: number, userID: number, Pass: string }){
+  @SubscribeMessage('joinChannel')
+  async Join(@MessageBody() data: { channelID: Number, userID: Number, Pass: string }){
     try {
-      const channelID = 4; 
+      const channelID = 1; 
       const userID = data.userID;
       const Pass = data.Pass;
     const userid = 2;
@@ -56,24 +56,24 @@ export class ChannelGateway {
   }
 
   @SubscribeMessage('LeaveChannel')
-  async Leave(@MessageBody() data: { channelID: number, userID: number})
+  async Leave(@MessageBody() data: { channelID: Number, userID: Number})
   {
     try {
       const channelID = data.channelID; 
       const userID = data.userID;
       console.log("--------> ", data.channelID);
       console.log("--------> ", data.userID);
-    const userid = 2;
-    const channelid = 2;
+    const userid = 1;
+    const channelid = 1;
     return await this.channelService.LeaveChannel(channelid, userid);
     }catch (error) {
-      console.error('Error joining channel: ', error.message);
+      console.error('Error leaving channel: ', error.message);
       throw error;
     }
   }
   
   @SubscribeMessage('assignAdmin')
-  async assignAd(@MessageBody() data: { channelID: number, userID: number, initiatorID: number})
+  async assignAd(@MessageBody() data: { channelID: Number, userID: Number, initiatorID: Number})
   {
     try {
       const channelID = data.channelID; 
@@ -81,17 +81,17 @@ export class ChannelGateway {
       console.log("--------> ", data.channelID);
       console.log("--------> ", data.userID);
     const userid = 2;
-    const channelid = 4;
+    const channelid = 1;
     const initiatorid = 1;
     return await this.channelService.assignAdmin(channelid, userid, initiatorid);
     }catch (error) {
-      console.error('Error joining channel: ', error.message);
+      console.error('Error assigning admin: ', error.message);
       throw error;
     }
   }
 
   @SubscribeMessage('removeAdmin')
-  async removeAd(@MessageBody() data: { channelID: number, userID: number, initiatorID: number})
+  async removeAd(@MessageBody() data: { channelID: Number, userID: Number, initiatorID: Number})
   {
     try {
       const channelID = data.channelID; 
@@ -103,8 +103,69 @@ export class ChannelGateway {
     const initiatorid = 1;
     return await this.channelService.removeAdmin(channelid, userid, initiatorid);
     }catch (error) {
-      console.error('Error joining channel: ', error.message);
+      console.error('Error removing admin: ', error.message);
       throw error;
     }
-  }  
+  }
+
+  @SubscribeMessage('muteUser')
+  async mute(@MessageBody() data: { channelID: Number, userID: Number, initiatorID: Number, amount: number})
+  {
+    try{
+      const channelID = data.channelID; 
+      const userID = data.userID;
+      const initiatorID = data.initiatorID;
+      const amount = data.amount;
+      return await this.channelService.muteUser(channelID, userID, initiatorID, amount)
+    }
+  catch (error) {
+    console.error('Error muting user: ', error.message);
+    throw error;
+    }
+  }
+
+  @SubscribeMessage('unmuteUser')
+  async unmute(@MessageBody() data: { channelID: Number, userID: Number})
+  {
+    try{
+      const channelID = data.channelID; 
+      const userID = data.userID;
+      return await this.channelService.unmuteUser(channelID, userID)
+    }
+  catch (error) {
+    console.error('Error unmuting user: ', error.message);
+    throw error;
+    }
+  }
+
+  @SubscribeMessage('banUser')
+  async ban(@MessageBody() data: { channelID: Number, userID: Number, initiatorID: Number, amount: number})
+  {
+    try{
+      const channelID = data.channelID; 
+      const userID = data.userID;
+      const initiatorID = data.initiatorID;
+      const amount = data.amount;
+      return await this.channelService.banUser(channelID, userID, initiatorID, amount)
+    }
+  catch (error) {
+    console.error('Error banning user: ', error.message);
+    throw error;
+    }
+  }
+
+
+  @SubscribeMessage('unbanUser')
+  async unban(@MessageBody() data: { channelID: Number, userID: Number})
+  {
+    try{
+      const channelID = data.channelID; 
+      const userID = data.userID;
+      return await this.channelService.unbanUser(channelID, userID)
+    }
+  catch (error) {
+    console.error('Error unmuting user: ', error.message);
+    throw error;
+    }
+  }
 }
