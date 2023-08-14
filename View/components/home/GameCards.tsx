@@ -16,7 +16,7 @@ type Cards = {
 const Card = ( {title, description, buttonText, image, span} : Cards ) => {
 
   let backGround;
-  if (title === "One Vs One") backGround = "bg-[url('/artwork.jpeg')] backdrop-blur-md rounded-xl"; else if (title === "One Vs Bot") backGround = "bg-[url('/robot.jpg')] "; else backGround = "";
+  if (title === "One Vs One") backGround = "bg-[url('/artwork.jpeg')] backdrop-blur-md rounded-xl"; else if (title === "One Vs Bot") backGround = "bg-[url('/robot.jpg')] "; else backGround = " bg-[url('/pingpong-pingpong-ani.gif')]";
   
   const [clicked, setClicked] = useState(false);
   const targetWord = span;
@@ -71,7 +71,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95"
                   >
-                    <Dialog.Panel className={`w-full max-w-3xl transform mx-5 grid place-content-center rounded-2xl ${backGround} bg-cover bg-center p-6 text-center align-middle shadow-2xl transition-all shadow-primary-pink-300`}>
+                    <Dialog.Panel className={`w-full max-w-3xl transform mx-5 grid place-content-center  rounded-2xl ${backGround} bg-cover bg-center p-6 text-center align-middle shadow-2xl transition-all shadow-primary-pink-300`}>
                       <div className=" grid place-items-center "><ModalContent title={title}/></div>
                     </Dialog.Panel>
                   </Transition.Child>

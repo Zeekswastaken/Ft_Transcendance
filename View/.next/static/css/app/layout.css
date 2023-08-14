@@ -3637,6 +3637,9 @@ details.collapse summary::-webkit-details-marker {
 .h-96 {
   height: 24rem;
 }
+.h-\[120px\] {
+  height: 120px;
+}
 .h-\[160px\] {
   height: 160px;
 }
@@ -3804,6 +3807,9 @@ details.collapse summary::-webkit-details-marker {
 .w-\[500px\] {
   width: 500px;
 }
+.w-\[50px\] {
+  width: 50px;
+}
 .w-\[75\%\] {
   width: 75%;
 }
@@ -3826,8 +3832,14 @@ details.collapse summary::-webkit-details-marker {
 .min-w-0 {
   min-width: 0px;
 }
+.min-w-\[120px\] {
+  min-width: 120px;
+}
 .min-w-\[300px\] {
   min-width: 300px;
+}
+.min-w-\[380px\] {
+  min-width: 380px;
 }
 .max-w-2xl {
   max-width: 42rem;
@@ -4198,6 +4210,12 @@ details.collapse summary::-webkit-details-marker {
 }
 .rounded-xl {
   border-radius: 0.75rem;
+}
+.rounded-\[2xl\] {
+  border-radius: 2xl;
+}
+.rounded-\[30px\] {
+  border-radius: 30px;
 }
 .rounded-b {
   border-bottom-right-radius: 0.25rem;
@@ -4715,6 +4733,21 @@ details.collapse summary::-webkit-details-marker {
   --tw-bg-opacity: 1;
   background-color: rgb(159 88 10 / var(--tw-bg-opacity));
 }
+.bg-black\/\[1\] {
+  background-color: rgb(0 0 0 / 1);
+}
+.bg-black\/\[0\.2\] {
+  background-color: rgb(0 0 0 / 0.2);
+}
+.bg-primary-pink-300\/\[\] {
+  background-color: rgb(255 19 130 / );
+}
+.bg-primary-pink-300\/\[0\.5\] {
+  background-color: rgb(255 19 130 / 0.5);
+}
+.bg-primary-pink-300\/\[0\.7\] {
+  background-color: rgb(255 19 130 / 0.7);
+}
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -4736,6 +4769,9 @@ details.collapse summary::-webkit-details-marker {
 .bg-\[url\(\'\/avatars\/avatar3\.png\'\)\] {
   background-image: url('/avatars/avatar3.png');
 }
+.bg-\[url\(\'\/cat-ping\.gif\'\)\] {
+  background-image: url('/cat-ping.gif');
+}
 .bg-\[url\(\'\/easy\.jpeg\'\)\] {
   background-image: url('/easy.jpeg');
 }
@@ -4750,6 +4786,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .bg-\[url\(\'\/neon-background2\.jpeg\'\)\] {
   background-image: url('/neon-background2.jpeg');
+}
+.bg-\[url\(\'\/pingpong-pingpong-ani\.gif\'\)\] {
+  background-image: url('/pingpong-pingpong-ani.gif');
 }
 .bg-\[url\(\'\/playWithFriend\.jpg\'\)\] {
   background-image: url('/playWithFriend.jpg');
@@ -4989,6 +5028,10 @@ details.collapse summary::-webkit-details-marker {
   padding-left: 3.5rem;
   padding-right: 3.5rem;
 }
+.px-16 {
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -5186,6 +5229,10 @@ details.collapse summary::-webkit-details-marker {
   font-size: 3rem;
   line-height: 1;
 }
+.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
+}
 .text-\[24px\] {
   font-size: 24px;
 }
@@ -5281,6 +5328,10 @@ details.collapse summary::-webkit-details-marker {
 .text-\[\#22C55E\] {
   --tw-text-opacity: 1;
   color: rgb(34 197 94 / var(--tw-text-opacity));
+}
+.text-\[\#2D0130\] {
+  --tw-text-opacity: 1;
+  color: rgb(45 1 48 / var(--tw-text-opacity));
 }
 .text-\[\#6E4778\] {
   --tw-text-opacity: 1;
@@ -6122,6 +6173,10 @@ details.collapse summary::-webkit-details-marker {
 		list-style: none;
 	  }
 
+	  .gif {
+		background-image: url(https://tenor.com/view/pingpong-pingpong-ani-anime-rally-sports-gif-17683396);
+	  }
+
 	  .placeholder\:text-base::-moz-placeholder {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -6252,6 +6307,10 @@ details.collapse summary::-webkit-details-marker {
   background-color: rgb(91 49 93 / var(--tw-bg-opacity));
 }
 
+	  .hover\:bg-\[\#6E4778\]\/\[0\.8\]:hover {
+  background-color: rgb(110 71 120 / 0.8);
+}
+
 	  .hover\:bg-\[\#8d549c\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(141 84 156 / var(--tw-bg-opacity));
@@ -6345,6 +6404,10 @@ details.collapse summary::-webkit-details-marker {
 
 	  .hover\:bg-primary-pink-300\/\[0\.8\]:hover {
   background-color: rgb(255 19 130 / 0.8);
+}
+
+	  .hover\:bg-primary-pink-300\/\[0\.9\]:hover {
+  background-color: rgb(255 19 130 / 0.9);
 }
 
 	  .hover\:bg-primary-purple-800\/\[0\.8\]:hover {
@@ -6451,6 +6514,12 @@ details.collapse summary::-webkit-details-marker {
   opacity: 0.9;
 }
 
+	  .hover\:shadow:hover {
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 	  .hover\:shadow-black\/60:hover {
   --tw-shadow-color: rgb(0 0 0 / 0.6);
   --tw-shadow: var(--tw-shadow-colored);
@@ -6458,6 +6527,11 @@ details.collapse summary::-webkit-details-marker {
 
 	  .hover\:shadow-green-300:hover {
   --tw-shadow-color: #84E1BC;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+	  .hover\:shadow-green-400:hover {
+  --tw-shadow-color: #31C48D;
   --tw-shadow: var(--tw-shadow-colored);
 }
 
@@ -8097,6 +8171,11 @@ details.collapse summary::-webkit-details-marker {
     inset: 0px;
   }
 
+  .md\:mx-10 {
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+  }
+
   .md\:mx-2 {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
@@ -8191,6 +8270,11 @@ details.collapse summary::-webkit-details-marker {
 
   .md\:p-0 {
     padding: 0px;
+  }
+
+  .md\:px-20 {
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 
   .md\:text-sm {
@@ -8293,11 +8377,6 @@ details.collapse summary::-webkit-details-marker {
     order: 1;
   }
 
-  .\32xl\:mx-10 {
-    margin-left: 2.5rem;
-    margin-right: 2.5rem;
-  }
-
   .\32xl\:mx-20 {
     margin-left: 5rem;
     margin-right: 5rem;
@@ -8321,11 +8400,6 @@ details.collapse summary::-webkit-details-marker {
 
   .\32xl\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .\32xl\:px-20 {
-    padding-left: 5rem;
-    padding-right: 5rem;
   }
 
   .\32xl\:px-40 {

@@ -58,7 +58,7 @@ export default function RootLayout({
   const User = useParams().username;
 
   const token = getCookie("accessToken");
-  const isFriend = true;
+  const isFriend = false;
   const isPrivate = false;
   const currentUsername = "Fouamep";
   const [isClicked, setIsClicked] = React.useState(true);
@@ -167,7 +167,7 @@ export default function RootLayout({
                         <ProfileTabs
                           link={`/users/${User}/groups`}
                           styles=""
-                          title="Groups"
+                          title="Channels"
                         />
                       </Link>
                     </div>

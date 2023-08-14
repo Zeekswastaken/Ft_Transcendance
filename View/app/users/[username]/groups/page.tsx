@@ -9,10 +9,10 @@ const GroupCard = () => {
       </p>
       <div className=" flex justify-between mt-2 items-center">
         <div className=" flex space-x-2 mx-4">
-          <div className=" bg-primary-pink-300 text-base rounded-lg font-Heading tracking-wider text-white py-1 px-3 ">
+          <div className=" bg-primary-pink-300 hover:bg-primary-pink-300/[0.8] duration-300 text-base rounded-lg font-Heading tracking-wider text-white py-1 px-3 ">
             <button>Chat</button>
           </div>
-          <div className=" bg-[#6E4778] text-base rounded-lg font-Heading tracking-wider text-white py-1 px-3">
+          <div className=" bg-[#6E4778] hover:bg-[#6E4778]/[0.8] duration-300 text-base rounded-lg font-Heading tracking-wider text-white py-1 px-3">
             <button>Joind</button>
           </div>
         
@@ -30,14 +30,14 @@ const GroupCard = () => {
 const Groups = () => {
   return (
     <div className=" border-2 border-primary-pink-300 rounded-[20px]">
-      <div className=" glass w-full h-auto  ">
-        <div className=" px-20 2xl:px-20 pt-20 pb-12">
+      <div className=" glass w-full min-w-[380px]  h-auto  ">
+        <div className=" px-10 md:px-20 pt-20 pb-12">
           <h1 className="  text-white font-Bomb text-4xl break-all">
-            friend list
+            Channels
           </h1>
           <div className=" overflow-auto no-scrollbar my-10 bg-[#2F0331] h-[600px] rounded-3xl">
             {/* <div className="pt-6 pl-20 2xl:pl-28"></div> */}
-            <div className=" mx-4 2xl:mx-10 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+            <div className=" mx-4 md:mx-10 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
               <GroupCard />
               <GroupCard />
             </div>
