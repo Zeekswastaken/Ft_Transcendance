@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link";
 import Row from "../tools/Row";
 
 // type TableDataRow = {
@@ -39,18 +40,15 @@ const Friend = ( { avatar, name, state} : TableDataFreind ) => {
 
 	const onOrOffColor = state === "online" ? "text-[#22C55E]" : "text-[#FF4747]";
 	return (
+		<Link href={`/users/${name}`}>
 		<ul className=" hover:bg-primary-pink-200/[0.6] transition-all duration-500 hover:rounded-3xl hover:drop-shadow-2xl pt-4 lg:pt-6  divide-y divide-gray-200 dark:divide-gray-700 tracking-widest text-[24px] text-white font-Headinglight">
 			<li className="pb-3 sm:pb-4 mx-10 ">
 				<div className="flex items-center space-x-6">
-					<div className="flex-shrink-0">
-						<img className="w-14 h-14 rounded-full" src={avatar} alt="avatar"/>
-					</div>
-					<div className=" dropdown flex-1 min-w-0">
-						<p tabIndex={0} className=" hover:text-pink-300 duration-300 cursor-pointer truncate ">{name}</p>
-						<ul tabIndex={0} className=" text-black dropdown-content z-50 menu p-2 shadow bg-purple-300 rounded-box w-40">
-							<li><a>Item</a></li>
-							<li><a>Item</a></li>
-						</ul>
+					{/* <div className="flex"> */}
+					{/* </div> */}
+					<img className="w-14 h-14 rounded-full" src={avatar} alt="avatar"/>
+					<div className=" flex-1 min-w-0">
+							<p className=" hover:text-pink-300 duration-300 cursor-pointer truncat ">{name}</p>
 					</div>
 					<div className= {`inline-flex items-center tracking-wider text-lg ${onOrOffColor}`}>
 						{state}
@@ -58,14 +56,15 @@ const Friend = ( { avatar, name, state} : TableDataFreind ) => {
 				</div>
 			</li>
 		</ul>
+		</Link>	
 	)
 }
 
 const MatchHistory = () => {
 	return (
 		
-		<div className="  my-16 mx-20 grid grid-cols-1 lg:grid-cols-2 lg:max-w-[1400px] ">
-			<div className=" glass  relative text-white px-8 pb-6 pt-3 w-full overflow-auto max-h-[522px]">
+		<div className=" min-w-[440px]  my-16 mx-2 sm:mx-20 grid grid-cols-1 lg:grid-cols-2 lg:max-w-[1400px] ">
+			<div className=" glass  no-scrollbar relative text-white px-8 pb-6 pt-3 w-full overflow-auto max-h-[522px]">
 				<table className="table w-full text-sm text-left border-separate space-y-10">
 					<thead className="  text-2xl uppercase font-Bomb">
 						<tr className=" text-white/90">

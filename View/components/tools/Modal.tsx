@@ -165,7 +165,7 @@ const Spectate:React.FC<Props> = ( {title} ) => {
             <div>
              <p className=' font-Bomb  text-2xl'>{slides[curr].player2}</p>
              <Link href={`/users/${slides[curr].player2}`}>
-              <button className={` rounded-xl ${player2Avatar} bg-cover bg-center min-w-[120px] h-[120px]`} />
+              <button className={` rounded-xl ${player2Avatar} bg-cover bg-center min-w-[120px] h-[120px] hover:shadow hover:shadow-green-400 duration-300`} />
              </Link>
             </div>
           </div>

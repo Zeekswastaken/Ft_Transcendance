@@ -2888,9 +2888,6 @@ details.collapse summary::-webkit-details-marker {
   --tooltip-color: hsl(var(--er));
   --tooltip-text-color: hsl(var(--erc));
 }
-.rounded-box {
-  border-radius: var(--rounded-box, 1rem);
-}
 .glass,
   .glass.btn-active {
   border: none;
@@ -3392,10 +3389,6 @@ details.collapse summary::-webkit-details-marker {
   margin-top: -0.375rem;
   margin-bottom: -0.375rem;
 }
-.mx-0 {
-  margin-left: 0px;
-  margin-right: 0px;
-}
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -3403,6 +3396,10 @@ details.collapse summary::-webkit-details-marker {
 .mx-10 {
   margin-left: 2.5rem;
   margin-right: 2.5rem;
+}
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 .mx-20 {
   margin-left: 5rem;
@@ -3538,9 +3535,6 @@ details.collapse summary::-webkit-details-marker {
 .mt-\[200px\] {
   margin-top: 200px;
 }
-.mt-\[220px\] {
-  margin-top: 220px;
-}
 .mt-\[45px\] {
   margin-top: 45px;
 }
@@ -3549,6 +3543,21 @@ details.collapse summary::-webkit-details-marker {
 }
 .mt-\[58px\] {
   margin-top: 58px;
+}
+.mt-\[55px\] {
+  margin-top: 55px;
+}
+.mb-\[55px\] {
+  margin-bottom: 55px;
+}
+.mt-\[\] {
+  margin-top: ;
+}
+.mt-\[30\] {
+  margin-top: 30;
+}
+.mt-\[30px\] {
+  margin-top: 30px;
 }
 .block {
   display: block;
@@ -3673,6 +3682,9 @@ details.collapse summary::-webkit-details-marker {
 .h-\[600px\] {
   height: 600px;
 }
+.h-\[80vh\] {
+  height: 80vh;
+}
 .h-auto {
   height: auto;
 }
@@ -3695,6 +3707,21 @@ details.collapse summary::-webkit-details-marker {
 }
 .h-screen {
   height: 100vh;
+}
+.h-\[78vh\] {
+  height: 78vh;
+}
+.h-\[79vh\] {
+  height: 79vh;
+}
+.h-\[7vh\] {
+  height: 7vh;
+}
+.h-\[77vh\] {
+  height: 77vh;
+}
+.h-\[75vh\] {
+  height: 75vh;
 }
 .max-h-56 {
   max-height: 14rem;
@@ -3756,9 +3783,6 @@ details.collapse summary::-webkit-details-marker {
 .w-4 {
   width: 1rem;
 }
-.w-40 {
-  width: 10rem;
-}
 .w-44 {
   width: 11rem;
 }
@@ -3816,6 +3840,9 @@ details.collapse summary::-webkit-details-marker {
 .w-\[78\%\] {
   width: 78%;
 }
+.w-\[80\%\] {
+  width: 80%;
+}
 .w-\[85\%\] {
   width: 85%;
 }
@@ -3840,6 +3867,12 @@ details.collapse summary::-webkit-details-marker {
 }
 .min-w-\[380px\] {
   min-width: 380px;
+}
+.min-w-\[400px\] {
+  min-width: 400px;
+}
+.min-w-\[440px\] {
+  min-width: 440px;
 }
 .max-w-2xl {
   max-width: 42rem;
@@ -4167,6 +4200,9 @@ details.collapse summary::-webkit-details-marker {
 .overflow-x-scroll {
   overflow-x: scroll;
 }
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
 .scroll-smooth {
   scroll-behavior: smooth;
 }
@@ -4193,6 +4229,9 @@ details.collapse summary::-webkit-details-marker {
 .rounded-\[20px\] {
   border-radius: 20px;
 }
+.rounded-\[30px\] {
+  border-radius: 30px;
+}
 .rounded-\[34px\] {
   border-radius: 34px;
 }
@@ -4210,12 +4249,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .rounded-xl {
   border-radius: 0.75rem;
-}
-.rounded-\[2xl\] {
-  border-radius: 2xl;
-}
-.rounded-\[30px\] {
-  border-radius: 30px;
 }
 .rounded-b {
   border-bottom-right-radius: 0.25rem;
@@ -4652,6 +4685,9 @@ details.collapse summary::-webkit-details-marker {
 .bg-primary-pink-300\/80 {
   background-color: rgb(255 19 130 / 0.8);
 }
+.bg-primary-pink-300\/\[0\.7\] {
+  background-color: rgb(255 19 130 / 0.7);
+}
 .bg-primary-purple-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(115 68 117 / var(--tw-bg-opacity));
@@ -4659,10 +4695,6 @@ details.collapse summary::-webkit-details-marker {
 .bg-purple-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(237 235 254 / var(--tw-bg-opacity));
-}
-.bg-purple-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(202 191 253 / var(--tw-bg-opacity));
 }
 .bg-purple-50 {
   --tw-bg-opacity: 1;
@@ -4732,21 +4764,6 @@ details.collapse summary::-webkit-details-marker {
 .bg-yellow-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(159 88 10 / var(--tw-bg-opacity));
-}
-.bg-black\/\[1\] {
-  background-color: rgb(0 0 0 / 1);
-}
-.bg-black\/\[0\.2\] {
-  background-color: rgb(0 0 0 / 0.2);
-}
-.bg-primary-pink-300\/\[\] {
-  background-color: rgb(255 19 130 / );
-}
-.bg-primary-pink-300\/\[0\.5\] {
-  background-color: rgb(255 19 130 / 0.5);
-}
-.bg-primary-pink-300\/\[0\.7\] {
-  background-color: rgb(255 19 130 / 0.7);
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
@@ -5313,6 +5330,9 @@ details.collapse summary::-webkit-details-marker {
 .tracking-\[12px\] {
   letter-spacing: 12px;
 }
+.tracking-\[6px\] {
+  letter-spacing: 6px;
+}
 .tracking-normal {
   letter-spacing: 0em;
 }
@@ -5328,10 +5348,6 @@ details.collapse summary::-webkit-details-marker {
 .text-\[\#22C55E\] {
   --tw-text-opacity: 1;
   color: rgb(34 197 94 / var(--tw-text-opacity));
-}
-.text-\[\#2D0130\] {
-  --tw-text-opacity: 1;
-  color: rgb(45 1 48 / var(--tw-text-opacity));
 }
 .text-\[\#6E4778\] {
   --tw-text-opacity: 1;
@@ -5368,10 +5384,6 @@ details.collapse summary::-webkit-details-marker {
 .text-\[\#FF4747\] {
   --tw-text-opacity: 1;
   color: rgb(255 71 71 / var(--tw-text-opacity));
-}
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 .text-blue-500 {
   --tw-text-opacity: 1;
@@ -6404,10 +6416,6 @@ details.collapse summary::-webkit-details-marker {
 
 	  .hover\:bg-primary-pink-300\/\[0\.8\]:hover {
   background-color: rgb(255 19 130 / 0.8);
-}
-
-	  .hover\:bg-primary-pink-300\/\[0\.9\]:hover {
-  background-color: rgb(255 19 130 / 0.9);
 }
 
 	  .hover\:bg-primary-purple-800\/\[0\.8\]:hover {
@@ -8093,6 +8101,11 @@ details.collapse summary::-webkit-details-marker {
     margin-right: 0px;
   }
 
+  .sm\:mx-20 {
+    margin-left: 5rem;
+    margin-right: 5rem;
+  }
+
   .sm\:mx-\[100px\] {
     margin-left: 100px;
     margin-right: 100px;
@@ -8330,6 +8343,18 @@ details.collapse summary::-webkit-details-marker {
     margin-top: 0px;
   }
 
+  .lg\:mt-\[155px\] {
+    margin-top: 155px;
+  }
+
+  .lg\:mt-\[150px\] {
+    margin-top: 150px;
+  }
+
+  .lg\:mt-\[160px\] {
+    margin-top: 160px;
+  }
+
   .lg\:flex {
     display: flex;
   }
@@ -8384,6 +8409,10 @@ details.collapse summary::-webkit-details-marker {
 
   .\32xl\:mb-0 {
     margin-bottom: 0px;
+  }
+
+  .\32xl\:mt-\[270px\] {
+    margin-top: 270px;
   }
 
   .\32xl\:h-full {

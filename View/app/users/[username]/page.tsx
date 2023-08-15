@@ -13,8 +13,8 @@ const percentage:string = "70%";
 const level:string = "5";
 
 const progress: CSS.Properties = {
-  width: '200px',
-  height: '200px',
+  width: '180px',
+  height: '180px',
   borderRadius: '50%',
   // background: `conic-gradient(#FF1382 ${percentage}, #91145D 0)`,
   background: `radial-gradient(closest-side, #474572 79%, transparent 80% 100%), conic-gradient(#FF1382 ${percentage}, #91145D 0)`,
@@ -113,14 +113,14 @@ const Achievments: React.FC<Props> = ({ styles, title }) => {
 
 const Profile = () => {
   return (
-    <div className=" grid grid-rows-2 gap-y-10 h-auto">
+    <div className=" grid grid-rows-2 gap-y-10 h-auto ">
       <div className=" grid grid-cols-1 2xl:grid-cols-3 gap-6 xl:gap-x-6">
         <LevelReached title="Level Reached" styles="" number="" />
         <WinRate title="Win Rate" styles="xl:col-span-2" number="" />
       </div>
       <div className=" grid grid-cols-1 2xl:grid-cols-3 gap-6 xl:gap-x-6">
         <Achievments title="Achievments" styles="" number="" />
-        <MatchHistory title="Match History" styles="xl:col-span-2 order-2 " number="" />
+        <MatchHistory title="Match History" styles="xl:col-span-2  " number="" />
       </div>
     </div>
   );

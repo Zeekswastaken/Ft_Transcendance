@@ -20,7 +20,7 @@ const Row = ( {opponent, score, date, result, avatar} : TableDataRow ) => {
 					<div className=" ml-3 mt-3 font-Heading tracking-wider ">{opponent}</div>
 				</div>
 			</td>
-			<td className="px-5 text-2xl">{score}</td>
+			<td className="px-5 font-Bomb tracking-wide text-2xl">{score}</td>
 			<td className="p-3 rounded-r-[.625rem]">{date}</td>
 		</tr>
 	)
