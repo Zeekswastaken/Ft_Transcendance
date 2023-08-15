@@ -6,6 +6,9 @@ export declare class AuthService {
     private readonly userservice;
     private readonly jwtoken;
     constructor(userservice: UserService, jwtoken: JWToken);
+    generateSecret(userid: Number): Promise<User>;
+    generateQrCodeUri(userid: Number, secret: string): Promise<string>;
+    verifyToken(secret: string, token: string, userid: Number): Promise<boolean>;
     check_and_create(body: UserDto): Promise<String | boolean>;
     validate_by_email(username: String, password: String): Promise<User | null>;
     create_Oauth(body: UserDto): Promise<boolean>;

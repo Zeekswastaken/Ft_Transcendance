@@ -52,6 +52,7 @@ let ChannelService = exports.ChannelService = class ChannelService {
         if (createChannelDto.Type === "protected" && !createChannelDto.Password)
             throw new common_1.HttpException('Password required', common_1.HttpStatus.FORBIDDEN);
         const savedChannel = await this.channelRepository.save(channel);
+        console.log("-=-=-=-=-==---==-> ", savedChannel.id);
         const membership = new channelMembership_entity_1.ChannelMembership();
         membership.Userid = owner;
         membership.Channelid = savedChannel.id;
@@ -169,6 +170,14 @@ let ChannelService = exports.ChannelService = class ChannelService {
         const user2 = await this.channelMembershipRepository.findOne({ where: { Userid: (0, typeorm_3.Equal)(initiatorID), Type: 'member' } });
         if (user2)
             throw new common_1.HttpException("This User doesn't have the rights to perform this action", common_1.HttpStatus.FORBIDDEN);
+        const checkUser2 = await this.channelMembershipRepository.findOne({
+            where: [
+                { Userid: (0, typeorm_3.Equal)(initiatorID), isMuted: true },
+                { Userid: (0, typeorm_3.Equal)(initiatorID), isBanned: true }
+            ],
+        });
+        if (checkUser2)
+            throw new common_1.HttpException("This User is banned/muted", common_1.HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({
             where: [
                 {
@@ -205,6 +214,14 @@ let ChannelService = exports.ChannelService = class ChannelService {
         const user2 = await this.channelMembershipRepository.findOne({ where: { Userid: (0, typeorm_3.Equal)(initiatorID), Type: 'member' } });
         if (user2)
             throw new common_1.HttpException("This User doesn't have the rights to perform this action", common_1.HttpStatus.FORBIDDEN);
+        const checkUser2 = await this.channelMembershipRepository.findOne({
+            where: [
+                { Userid: (0, typeorm_3.Equal)(initiatorID), isMuted: true },
+                { Userid: (0, typeorm_3.Equal)(initiatorID), isBanned: true }
+            ],
+        });
+        if (checkUser2)
+            throw new common_1.HttpException("This User is banned/muted", common_1.HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({
             where: [
                 {
@@ -289,6 +306,28 @@ let ChannelService = exports.ChannelService = class ChannelService {
     async hashPassword(password) {
         const saltOrRounds = 10;
         return await bcrypt.hash(password, saltOrRounds);
+    }
+    async validateInvitationLink(invitationLink) {
+        const splitLink = invitationLink.split('-');
+        if (splitLink.length !== 3)
+            return false;
+        const [channelID, timestamp, randomData] = splitLink;
+        const time = Date.now();
+        const linkTime = +timestamp;
+        const Threshold = 90 * 60 * 1000;
+        if (isNaN(linkTime) || time - linkTime > Threshold)
+            return false;
+        const checkChannel = await this.channelRepository.findOne({ where: { id: (0, typeorm_3.Equal)(+channelID) } });
+        if (!checkChannel)
+            return false;
+        return true;
+    }
+    generateInvitationLink(channelID) {
+        const timestamp = Date.now().toString();
+        const randomData = Math.random().toString(36).substring(7);
+        const token = `${channelID}-${timestamp}-${randomData}`;
+        const invitationLink = `https://localhost.com:3099/join-channel?token=${token}`;
+        return invitationLink;
     }
 };
 exports.ChannelService = ChannelService = __decorate([

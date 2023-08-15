@@ -89,6 +89,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => blockedUser_entity_1.BlockedUser, blockedUser => blockedUser.blockedUser),
     __metadata("design:type", Array)
 ], User.prototype, "usersBlocked", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "twoFactorSecret", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "twoFactorEnabled", void 0);
 exports.User = User = User_1 = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

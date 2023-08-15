@@ -14,10 +14,37 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
 const jwt_service_1 = require("./jwt.service");
 const passwordChecker_1 = require("../utils/passwordChecker");
+const speakeasy = require("speakeasy");
 let AuthService = exports.AuthService = class AuthService {
     constructor(userservice, jwtoken) {
         this.userservice = userservice;
         this.jwtoken = jwtoken;
+    }
+    async generateSecret(userid) {
+        const user = await this.userservice.findById(userid);
+        user.twoFactorSecret = speakeasy.generateSecret().base32;
+        this.userservice.saveByObj(user);
+        return (user);
+    }
+    async generateQrCodeUri(userid, secret) {
+        const user = await this.userservice.findById(userid);
+        return speakeasy.otpauthURL({
+            secret,
+            label: user.username,
+            issuer: 'Pong',
+        });
+    }
+    async verifyToken(secret, token, userid) {
+        if (speakeasy.totp.verify({
+            secret,
+            encoding: 'base32',
+            token,
+        })) {
+            const user = await this.userservice.findById(userid);
+            user.twoFactorEnabled = true;
+            return true;
+        }
+        return false;
     }
     async check_and_create(body) {
         if (!body.username)

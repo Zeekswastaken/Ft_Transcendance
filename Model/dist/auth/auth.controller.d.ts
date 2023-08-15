@@ -25,6 +25,22 @@ export declare class googleController {
         message: string;
     }>;
 }
+export declare class twoFactAuth_Controller {
+    private readonly authservice;
+    constructor(authservice: AuthService);
+    getSecret(req: any, res: any): Promise<void>;
+    generateQrCode(body: {
+        userid: Number;
+        secret: string;
+    }, res: any): Promise<void>;
+    verifyToken(body: {
+        secret: string;
+        token: string;
+        userid: Number;
+    }): {
+        isValid: Promise<boolean>;
+    };
+}
 export declare class fortytwo_Controller {
     private readonly authservice;
     constructor(authservice: AuthService);

@@ -24,6 +24,9 @@ let UserService = exports.UserService = class UserService {
     async save(Body) {
         await this.userRepo.save(Body);
     }
+    async saveByObj(Body) {
+        await this.userRepo.save(Body);
+    }
     async update(Body, id) {
         await this.userRepo.update(id, Body);
     }

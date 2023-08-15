@@ -24,7 +24,7 @@ export class ChannelService {
         console.log('ChannelRepository:', channelRepository);
         console.log('ChannelMembershipRepository:', channelMembershipRepository);
         console.log('UserRepository:', userRepository);}
-    async createChannel(createChannelDto: createChannelDto, owner: Number)
+    async createChannel(createChannelDto: Partial<Channel>, owner: Number)
     {
         console.log('--------> ', createChannelDto.Name);
         console.log('--------> ', createChannelDto.Type);
@@ -52,7 +52,7 @@ export class ChannelService {
                 //TRY TO THINK OF A WAY FOR INVITATION LINKS TO WORK HERE/// FRIEND LIST
         // }
         const savedChannel = await this.channelRepository.save(channel);
-        
+        console.log("-=-=-=-=-==---==-> ", savedChannel.id);
         const membership = new ChannelMembership();
         membership.Userid = owner;
         membership.Channelid = savedChannel.id
@@ -188,14 +188,22 @@ export class ChannelService {
         const user2 = await this.channelMembershipRepository.findOne( { where: {Userid: Equal(initiatorID), Type: 'member'}});
         if (user2)
             throw new HttpException("This User doesn't have the rights to perform this action", HttpStatus.FORBIDDEN);
-        const membership = await this.channelMembershipRepository.findOne({
+        const checkUser2 = await this.channelMembershipRepository.findOne({
             where: [
-              {
+              { Userid: Equal(initiatorID), isMuted: true },
+              {Userid: Equal(initiatorID), isBanned: true }
+            ],
+          });            
+        if (checkUser2)
+            throw new HttpException("This User is banned/muted", HttpStatus.FORBIDDEN);
+        const membership = await this.channelMembershipRepository.findOne({
+        where: [
+            {
                 user: { id: Equal(user.id) },
                 channel: { id: Equal(channel.id) },
                 isMuted: true,
-              },
-              {
+            },
+            {
                 user: { id: Equal(user.id) },
                 channel: { id: Equal(channel.id) },
                 isBanned: true,
@@ -227,7 +235,15 @@ export class ChannelService {
         const user2 = await this.channelMembershipRepository.findOne( { where: {Userid: Equal(initiatorID), Type: 'member'}});
         if (user2)
             throw new HttpException("This User doesn't have the rights to perform this action", HttpStatus.FORBIDDEN);
-
+        const checkUser2 = await this.channelMembershipRepository.findOne({
+            where: [
+              { Userid: Equal(initiatorID), isMuted: true },
+              {Userid: Equal(initiatorID), isBanned: true }
+            ],
+        });            
+        if (checkUser2)
+            throw new HttpException("This User is banned/muted", HttpStatus.FORBIDDEN);
+    
         const membership = await this.channelMembershipRepository.findOne({
             where: [
               {
@@ -353,7 +369,7 @@ export class ChannelService {
         return true;
       }
 
-    generateInvitationLink(channelID: number): string {
+    generateInvitationLink(channelID: Number): string {
     const timestamp = Date.now().toString();
     const randomData = Math.random().toString(36).substring(7);
     const token = `${channelID}-${timestamp}-${randomData}`;

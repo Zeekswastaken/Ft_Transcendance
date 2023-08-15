@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChannelGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const channel_service_1 = require("./channel.service");
-const createChannel_dto_1 = require("./dto/createChannel.dto");
 const socket_io_1 = require("socket.io");
 const jwt_1 = require("@nestjs/jwt");
 let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
@@ -28,10 +27,16 @@ let ChannelGateway = exports.ChannelGateway = class ChannelGateway {
             const userid = 1;
             const channel = await this.channelService.createChannel(createChannelDto, userid);
             this.server.emit('channel', channel);
+            if (channel.Type === 'private') {
+                const invitationLink = this.channelService.generateInvitationLink(channel.id);
+                console.log("----------> ", invitationLink);
+                client.emit('invitationLink', invitationLink);
+            }
             return channel;
         }
         catch (error) {
             console.error('Error creating channel: ', error.message);
+            client.emit('error', error.message);
             throw error;
         }
     }
@@ -156,7 +161,7 @@ __decorate([
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [createChannel_dto_1.createChannelDto, socket_io_1.Socket]),
+    __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
     __metadata("design:returntype", Promise)
 ], ChannelGateway.prototype, "create", null);
 __decorate([

@@ -10,6 +10,7 @@ import { error } from 'console';
 import { JWToken } from './jwt.service';
 import { BSON } from 'typeorm';
 import { User } from 'src/database/user.entity';
+import * as speakeasy from 'speakeasy';
 
 
 
@@ -142,6 +143,31 @@ export class googleController{
     }
 }
 
+@Controller('2factauth')
+export class twoFactAuth_Controller{
+    constructor(private readonly authservice:AuthService){}
+    @Get('secret')
+    async getSecret(@Req() req, @Res() res) {
+      const secret = await this.authservice.generateSecret(req.user.id);
+      
+      res.send({ secret: secret.twoFactorSecret});
+    }
+  
+    @Post('qr-code')
+    async generateQrCode(@Body() body: { userid: Number, secret: string }, @Res() res) {
+        
+        const qrCodeUri = await this.authservice.generateQrCodeUri(body.userid, body.secret);
+        res.send({ qrCodeUri });
+
+    }
+  
+    @Post('verify')
+    verifyToken(@Body() body: { secret: string, token: string, userid: Number }) {
+      const isValid = this.authservice.verifyToken(body.secret, body.token, body.userid);
+      return { isValid };
+    }
+}
+
 @Controller('auth')
 export class fortytwo_Controller{
     constructor(private readonly authservice:AuthService){}
@@ -192,4 +218,5 @@ export class fortytwo_Controller{
             return user_data;
         }
     }
+
 }

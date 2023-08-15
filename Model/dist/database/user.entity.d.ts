@@ -21,4 +21,6 @@ export declare class User {
     player2: Match[];
     blockedUsers: BlockedUser[];
     usersBlocked: BlockedUser[];
+    twoFactorSecret: string;
+    twoFactorEnabled: boolean;
 }

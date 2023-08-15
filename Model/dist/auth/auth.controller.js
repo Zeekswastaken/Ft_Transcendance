@@ -12,7 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fortytwo_Controller = exports.googleController = exports.AuthController = void 0;
+exports.fortytwo_Controller = exports.twoFactAuth_Controller = exports.googleController = exports.AuthController = void 0;
 const user_service_1 = require("./../user/user.service");
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
@@ -173,6 +173,50 @@ exports.googleController = googleController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], googleController);
+let twoFactAuth_Controller = exports.twoFactAuth_Controller = class twoFactAuth_Controller {
+    constructor(authservice) {
+        this.authservice = authservice;
+    }
+    async getSecret(req, res) {
+        const secret = await this.authservice.generateSecret(req.user.id);
+        res.send({ secret: secret.twoFactorSecret });
+    }
+    async generateQrCode(body, res) {
+        const qrCodeUri = await this.authservice.generateQrCodeUri(body.userid, body.secret);
+        res.send({ qrCodeUri });
+    }
+    verifyToken(body) {
+        const isValid = this.authservice.verifyToken(body.secret, body.token, body.userid);
+        return { isValid };
+    }
+};
+__decorate([
+    (0, common_1.Get)('secret'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], twoFactAuth_Controller.prototype, "getSecret", null);
+__decorate([
+    (0, common_1.Post)('qr-code'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], twoFactAuth_Controller.prototype, "generateQrCode", null);
+__decorate([
+    (0, common_1.Post)('verify'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], twoFactAuth_Controller.prototype, "verifyToken", null);
+exports.twoFactAuth_Controller = twoFactAuth_Controller = __decorate([
+    (0, common_1.Controller)('2factauth'),
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
+], twoFactAuth_Controller);
 let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controller {
     constructor(authservice) {
         this.authservice = authservice;

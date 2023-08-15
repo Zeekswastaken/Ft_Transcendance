@@ -5,6 +5,7 @@ import { Socket, Server } from 'socket.io';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtService } from '@nestjs/jwt';
+import { Channel } from 'src/database/channel.entity';
 @WebSocketGateway({
   cors: {
     origin: '*',
@@ -18,7 +19,7 @@ export class ChannelGateway {
               private readonly jwtService: JwtService) {}
 
   @SubscribeMessage('createChannel')
-  async create(@MessageBody() createChannelDto: createChannelDto, @ConnectedSocket() client: Socket) {
+  async create(@MessageBody() createChannelDto: Partial<Channel>, @ConnectedSocket() client: Socket) {
     try{
       const userid = 1;
     // console.log("====> ", client.id);xxxxx
@@ -28,10 +29,17 @@ export class ChannelGateway {
       // const userid = decodedToken.sub;
       const channel = await this.channelService.createChannel(createChannelDto, userid);
       this.server.emit('channel', channel);
+      if (channel.Type === 'private')
+      {
+        const invitationLink = this.channelService.generateInvitationLink(channel.id);
+        console.log("----------> ", invitationLink);
+        client.emit('invitationLink', invitationLink);
+      }
       return channel;
     } catch (error)
     {
       console.error('Error creating channel: ', error.message);
+      client.emit('error', error.message);
       throw error;
     }
   }

@@ -42,4 +42,8 @@ export class User{
     blockedUsers: BlockedUser[]; //USERS THAT GOT BLOCKED
     @OneToMany(() => BlockedUser, blockedUser => blockedUser.blockedUser)
     usersBlocked: BlockedUser[]; //USERS THAT BLOCKED
+    @Column({ nullable: true })
+    twoFactorSecret: string;
+    @Column({ default: false })
+    twoFactorEnabled: boolean;
 }
