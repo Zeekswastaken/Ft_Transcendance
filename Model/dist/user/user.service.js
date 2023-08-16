@@ -28,7 +28,7 @@ let UserService = exports.UserService = class UserService {
         await this.userRepo.update(id, Body);
     }
     async findByName(username) {
-        const user = await this.userRepo.findOne({ where: { username: username } });
+        const user = await this.userRepo.findOne({ where: { username: username }, });
         return user;
     }
     async findById(id) {

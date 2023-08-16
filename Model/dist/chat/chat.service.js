@@ -5,27 +5,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const channelMembership_entity_1 = require("../database/channelMembership.entity");
+const typeorm_2 = require("typeorm");
+const typeorm_3 = require("typeorm");
 let ChatService = exports.ChatService = class ChatService {
-    create(createChatDto) {
-        return 'This action adds a new chat';
+    constructor(ChannelMRepo) {
+        this.ChannelMRepo = ChannelMRepo;
     }
-    findAll() {
-        return `This action returns all chat`;
-    }
-    findOne(id) {
-        return `This action returns a #${id} chat`;
-    }
-    update(id, updateChatDto) {
-        return `This action updates a #${id} chat`;
-    }
-    remove(id) {
-        return `This action removes a #${id} chat`;
+    async getAllRooms(Userid) {
+        const rooms = await this.ChannelMRepo.find({
+            where: { Userid: (0, typeorm_3.Equal)(Userid) }, relations: ['Channel'],
+        });
+        const channelNames = rooms.map(membership => membership.channel.Name);
+        return channelNames;
     }
 };
 exports.ChatService = ChatService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(channelMembership_entity_1.ChannelMembership)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], ChatService);
 //# sourceMappingURL=chat.service.js.map

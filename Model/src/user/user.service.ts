@@ -18,7 +18,7 @@ export class UserService {
     }
     async findByName(username:any): Promise<User>
     {
-       const user =  await this.userRepo.findOne({where :{ username: username}});
+       const user =  await this.userRepo.findOne({where :{ username: username},});
        return user;
     }
     async findById(id:any): Promise<User>

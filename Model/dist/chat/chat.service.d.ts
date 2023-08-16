@@ -1,9 +1,7 @@
-import { CreateChatDto } from './dto/create-chat.dto';
-import { UpdateChatDto } from './dto/update-chat.dto';
+import { ChannelMembership } from 'src/database/channelMembership.entity';
+import { Repository } from 'typeorm';
 export declare class ChatService {
-    create(createChatDto: CreateChatDto): string;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateChatDto: UpdateChatDto): string;
-    remove(id: number): string;
+    private readonly ChannelMRepo;
+    constructor(ChannelMRepo: Repository<ChannelMembership>);
+    getAllRooms(Userid: number): Promise<string[]>;
 }

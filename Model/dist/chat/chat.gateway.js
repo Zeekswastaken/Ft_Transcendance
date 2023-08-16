@@ -9,20 +9,55 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChatGateway = void 0;
+exports.WebsocketGateway = void 0;
+const common_1 = require("@nestjs/common");
 const websockets_1 = require("@nestjs/websockets");
-let ChatGateway = exports.ChatGateway = class ChatGateway {
+const socket_io_1 = require("socket.io");
+const chat_service_1 = require("./chat.service");
+const jwt_service_1 = require("../auth/jwt.service");
+let WebsocketGateway = exports.WebsocketGateway = class WebsocketGateway {
+    constructor(chatservice, jwt) {
+        this.chatservice = chatservice;
+        this.jwt = jwt;
+    }
+    async handleConnection(client) {
+        const token = client.handshake.query.token;
+        if (await this.jwt.verify(token)) {
+            const user = await this.jwt.decoded(token);
+            const rooms = await this.chatservice.getAllRooms(user.id);
+            rooms.forEach(room => { client.join(room); });
+            console.log(`Client connected: ${client.id}`);
+        }
+    }
+    handleDisconnect(client) {
+        const token = client.handshake.query.token;
+        console.log(`Client disconnected: ${client.id}`);
+    }
+    afterInit(server) {
+        console.log('WebSocket gateway initialized');
+    }
     handleMessage(client, payload) {
-        return 'Hello world!';
     }
 };
 __decorate([
-    (0, websockets_1.SubscribeMessage)('message'),
+    (0, websockets_1.WebSocketServer)(),
+    __metadata("design:type", socket_io_1.Server)
+], WebsocketGateway.prototype, "server", void 0);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('joinDuo'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", String)
-], ChatGateway.prototype, "handleMessage", null);
-exports.ChatGateway = ChatGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)()
-], ChatGateway);
+    __metadata("design:paramtypes", [socket_io_1.Socket]),
+    __metadata("design:returntype", Promise)
+], WebsocketGateway.prototype, "handleConnection", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('Duo'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:returntype", void 0)
+], WebsocketGateway.prototype, "handleMessage", null);
+exports.WebsocketGateway = WebsocketGateway = __decorate([
+    (0, common_1.Injectable)(),
+    (0, websockets_1.WebSocketGateway)(),
+    __metadata("design:paramtypes", [chat_service_1.ChatService, jwt_service_1.JWToken])
+], WebsocketGateway);
 //# sourceMappingURL=chat.gateway.js.map
