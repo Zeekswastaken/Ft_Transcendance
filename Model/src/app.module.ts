@@ -22,6 +22,7 @@ import { BlockedUser } from './database/blockedUser.entity';
 import { UserFriends } from './database/userFriends.entity';
 import { Achievements } from './database/achievements.entity';
 import { ChatGateway } from './chat/chat.gateway';
+import { FriendsModule } from './friends/friends.module';
 
 @Module({
   imports: [
@@ -39,7 +40,7 @@ import { ChatGateway } from './chat/chat.gateway';
     UserModule, AuthModule,ChannelModule,JwtModule.register({
       secret:"0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6", 
       signOptions: { expiresIn: '1h' },
-    })
+    }), FriendsModule
   ],
   controllers: [AppController, UserController],
   providers: [AppService,TokenGuard,JWToken,UserService,ChannelService, ChatGateway],

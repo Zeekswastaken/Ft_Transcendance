@@ -4,6 +4,7 @@ import { Stats } from "./stats.entity";
 import { GameInvite } from "./gameInvite.entity";
 import { Match } from "./match.entity";
 import { BlockedUser } from "./blockedUser.entity";
+import { Notification } from "./notifications.entity";
 @Entity()
 export class User{
     @PrimaryGeneratedColumn()
@@ -46,4 +47,6 @@ export class User{
     twoFactorSecret: string;
     @Column({ default: false })
     twoFactorEnabled: boolean;
+    @OneToMany(() => Notification, notification => notification.recipient)
+  receivedNotifications: Notification[];
 }
