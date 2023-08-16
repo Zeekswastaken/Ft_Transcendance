@@ -143,7 +143,7 @@ export class googleController{
     }
 }
 
-@Controller('2factauth')
+@Controller('auth')
 export class twoFactAuth_Controller{
     constructor(private readonly authservice:AuthService){}
     @Get('secret')
@@ -154,16 +154,16 @@ export class twoFactAuth_Controller{
     }
   
     @Post('qr-code')
-    async generateQrCode(@Body() body: { userid: Number, secret: string }, @Res() res) {
+    async generateQrCode(@Body() body: { userid: Number}, @Res() res) {
         
-        const qrCodeUri = await this.authservice.generateQrCodeUri(body.userid, body.secret);
+        const qrCodeUri = await this.authservice.generateQrCodeUri(body.userid);
         res.send({ qrCodeUri });
 
     }
   
     @Post('verify')
-    verifyToken(@Body() body: { secret: string, token: string, userid: Number }) {
-      const isValid = this.authservice.verifyToken(body.secret, body.token, body.userid);
+    verifyToken(@Body() body: {token: string, userid: Number }) {
+      const isValid = this.authservice.verifyToken(body.token, body.userid);
       return { isValid };
     }
 }

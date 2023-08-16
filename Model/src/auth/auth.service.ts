@@ -23,23 +23,23 @@ export class AuthService {
         return (user);
     }
 
-    async generateQrCodeUri(userid: Number, secret: string): Promise<string> {
+    async generateQrCodeUri(userid: Number): Promise<string> {
         const user = await this.userservice.findById(userid);
         return speakeasy.otpauthURL({
-         secret,
+         secret: user.twoFactorSecret,
          label: user.username,
          issuer: 'Pong',
        });
     }
 
-    async verifyToken(secret: string, token: string, userid: Number): Promise<boolean> {
+    async verifyToken(token: string, userid: Number): Promise<boolean> {
+        const user = await this.userservice.findById(userid);
         if (speakeasy.totp.verify({
-          secret,
+          secret: user.twoFactorSecret,
           encoding: 'base32',
           token,
         }))
         {
-            const user = await this.userservice.findById(userid);
             user.twoFactorEnabled = true;
             return true;
         }
