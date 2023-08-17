@@ -96,7 +96,7 @@ export default function SelectFriend() {
       <Listbox value={selected} onChange={setSelected}>
         {({ open }) => (
           <>
-            <div className=" relative ">
+            <div className=" relative">
               <Listbox.Button className="relative w-full bg-[#a34b83] rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none  sm:text-sm">
                 <span className="flex items-center">
                   <img src={selected.avatar} alt="" className="flex-shrink-0 h-8 w-8 rounded-full" />

@@ -7,11 +7,9 @@ import { FormEvent, Fragment } from 'react'
 const ProfileDropDown = () => {
 
   const router = useRouter();
-  const currentUsername = "Fouamep";
-  const profilePage = `/users/${currentUsername}`;
   const pushProfilePage = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    router.push(profilePage);
+    router.push("/profile");
   }
 
   return (

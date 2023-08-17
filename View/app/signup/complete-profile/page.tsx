@@ -4,8 +4,12 @@ import React, { useEffect, useState, FormEvent, useRef } from "react"
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, {  ReactDatePickerProps } from 'react-datepicker';
 import axios from "axios";
+<<<<<<< HEAD
 import { getCookie, setCookie } from 'cookies-next';
 import Cookies from 'js-cookie'
+=======
+import { getCookie } from 'cookies-next';
+>>>>>>> fb7da711b484e74446c6154c227f4452a1a97219
 
 
 const completProfile = () => {

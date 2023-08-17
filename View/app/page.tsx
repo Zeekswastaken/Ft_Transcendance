@@ -4,7 +4,7 @@ import MatchHistory from "@/components/home/MatchHistory";
 
 export default function Home() {
   return (
-    <main className="overflow-auto  ">
+    <main className="overflow-hidden ">
       <DiscriptionCard />
       <GameCards />
       <MatchHistory />

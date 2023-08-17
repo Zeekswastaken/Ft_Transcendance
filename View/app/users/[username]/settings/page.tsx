@@ -90,11 +90,10 @@ const Settings = () => {
                 </div>
               </div>
               <div className="  p-12 grid col-span-2 space-y-4">
-                {/* <Inputs label="Full Name" exContent="Fouad Bouanane" type="text" /> */}
+                <Inputs label="Full Name" exContent="Fouad Bouanane" type="text" />
                 <Inputs label="Username" exContent="Fouamep" type="text" />
                 <Inputs label="Privacy" exContent="Public" type="select" />
                 <Inputs label="Password" exContent="" type="password" />
-                <Inputs label="Re-Password" exContent="" type="password" />
               </div>
               <div className=" flex space-x-5 my-5 place-content-center">
                   <button className=" text-white font-Heading text-xl tracking-wide hover:text-primary-pink-300 duration-300">Cancel</button>
