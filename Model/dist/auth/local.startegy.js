@@ -14,13 +14,13 @@ const passport_1 = require("@nestjs/passport");
 const passport_local_1 = require("passport-local");
 const auth_service_1 = require("./auth.service");
 const common_1 = require("@nestjs/common");
-let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)(passport_local_1.Strategy) {
+let LocalStrategy = exports.LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)(passport_local_1.Strategy) {
     constructor(authservice) {
         super();
         this.authservice = authservice;
     }
-    async validate(email, password) {
-        const user = await this.authservice.validate_by_email(email, password);
+    async validate(username, password) {
+        const user = await this.authservice.validate_by_email(username, password);
         if (!user) {
             console.log(user);
             return null;
@@ -29,9 +29,8 @@ let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)
         return user;
     }
 };
-LocalStrategy = __decorate([
+exports.LocalStrategy = LocalStrategy = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], LocalStrategy);
-exports.LocalStrategy = LocalStrategy;
 //# sourceMappingURL=local.startegy.js.map

@@ -1,4 +1,11 @@
 {
   "/page": "app/page.js",
-  "/login/page": "app/login/page.js"
+  "/game/page": "app/game/page.js",
+  "/chat/page": "app/chat/page.js",
+  "/groups/page": "app/groups/page.js",
+  "/leaderboard/page": "app/leaderboard/page.js",
+  "/users/[username]/page": "app/users/[username]/page.js",
+  "/users/[username]/settings/page": "app/users/[username]/settings/page.js",
+  "/users/[username]/friends/page": "app/users/[username]/friends/page.js",
+  "/users/[username]/groups/page": "app/users/[username]/groups/page.js"
 }

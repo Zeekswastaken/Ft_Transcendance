@@ -1,15 +1,23 @@
 "use client"
 
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
+import { useRouter } from 'next/navigation';
+import { FormEvent, Fragment } from 'react'
 
 const ProfileDropDown = () => {
+
+  const router = useRouter();
+  const pushProfilePage = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    router.push("/profile");
+  }
+
   return (
     // <div className="">
       <Menu as="div">
         <div>
           <Menu.Button>
-            <img src="/avatars/avatar1.png" width={60} height={60} alt="Profile"/>
+            <img src="/Spectate.png" className=' rounded-full' width={60} height={60} alt="Profile"/>
           </Menu.Button>
         </div>
         <Transition
@@ -41,14 +49,14 @@ const ProfileDropDown = () => {
             <div className="px-1 py-1 items-center font-bold">
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href='#'
+                  <button
+                    onClick={pushProfilePage}
                     className={`${
                       active ? 'bg-[#be67d2] duration-300' : ''
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     My Profile
-                  </a>
+                  </button>
                 )}
               </Menu.Item>
               <Menu.Item>

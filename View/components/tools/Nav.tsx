@@ -12,7 +12,6 @@ type LinkData = {
 }
 
 const Icon = ({ link, imageSrc, imageAlt} : LinkData) => {
-	// const router = useRouter();
 	const pathname = usePathname();
 	useEffect(() => {
 	  }, [pathname])

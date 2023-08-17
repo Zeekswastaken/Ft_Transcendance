@@ -10,7 +10,7 @@ import { JWToken } from './auth/jwt.service';
 @Controller()
 export class AppController {
   constructor(private readonly userservice:UserService,private readonly jwt:JWToken){}
-  @Get()
+  @Get('hamza')
   @UseGuards(TokenGuard)
   async default(@Res() res:Response,@Req() req:Request,@Query() query: UserDto){
     const status = (req as any).user;
@@ -22,7 +22,7 @@ export class AppController {
         console.log(query.avatar_URL);
         //return req.body;
         const decoded = await this.jwt.decoded(status.token);
-        const user = await this.userservice.findByemail((decoded).email);
+        const user = await this.userservice.findByName((decoded).username);
         //user.username = JSON.stringify(user.username);
         console.log('user == '+ JSON.stringify(user));
         res.render('profile',{user});

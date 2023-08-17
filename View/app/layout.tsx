@@ -1,8 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
+import { Providers } from "@/redux/provider";
+import { useRouter } from 'next/navigation';
 
-
+// interface avatar{setAvatar: string;}
 
 export const metadata: Metadata = {
   title: 'transcendence',
@@ -14,12 +16,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  let checkAuth ="false";
+  // const router = useRouter()
+  let checkAuth ="true";
   return (
     <html lang="en">
-      <body className=" bg-[url('/30.png')] bg-cover bg-center bg-no-repeat flex justify-center ">
+      <body className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat flex justify-center ">
         {checkAuth === "true" ? <Navbar /> : "" }
-        {children}
+        <Providers>
+          {children}
+        </Providers>
         {/* <Footer /> */}
       </body>
     </html>

@@ -2,22 +2,10 @@ import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../DB_tables/user.entities';
+import { User } from '../database/user.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost', // Use the service name from your docker-compose.yml
-      port: 5432,
-      username: 'admin',
-      password: 'pass',
-      database: 'mydb',
-      entities: [User],
-      synchronize: true,
-    }),
-    TypeOrmModule.forFeature([User]),
-  ],
+  imports: [TypeOrmModule.forFeature([User])],
   exports: [TypeOrmModule],
   providers: [UserService],
   controllers: [UserController],

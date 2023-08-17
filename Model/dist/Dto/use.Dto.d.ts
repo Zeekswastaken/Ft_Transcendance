@@ -1,13 +1,44 @@
 export declare class UserDto {
     username: String;
-    email: String;
     password: String;
-    confirmpassword: String;
+    repassword: String;
     avatar_URL: String;
     gender: String;
+    birthDay: Date;
+    constructor();
+}
+export declare class UserDto2 {
+    username: String;
+    password: String;
+    avatar_URL: String;
+    gender: String;
+    birthDay: Date;
     constructor();
 }
 export declare class jwtDTO {
     username: String;
-    email: String;
+    avatar_URL: String;
+    gender: String;
+    birthDay: Date;
+}
+export declare class MoreInfos {
+    id: number;
+    avatar_URL: String;
+    gender: String;
+    birthDay: Date;
+    cookie: String;
+    constructor();
+}
+export declare class TO_update {
+    avatar_URL: String;
+    gender: String;
+    birthDay: Date;
+    constructor();
+}
+export declare class update {
+    username: String;
+    password: String;
+    Bio: String;
+    privacy: Boolean;
+    constructor();
 }

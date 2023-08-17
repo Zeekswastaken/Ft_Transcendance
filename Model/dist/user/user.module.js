@@ -11,28 +11,15 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const user_controller_1 = require("./user.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_entities_1 = require("../DB_tables/user.entities");
-let UserModule = class UserModule {
+const user_entity_1 = require("../database/user.entity");
+let UserModule = exports.UserModule = class UserModule {
 };
-UserModule = __decorate([
+exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                username: 'admin',
-                password: 'pass',
-                database: 'mydb',
-                entities: [user_entities_1.User],
-                synchronize: true,
-            }),
-            typeorm_1.TypeOrmModule.forFeature([user_entities_1.User]),
-        ],
+        imports: [typeorm_1.TypeOrmModule.forFeature([user_entity_1.User])],
         exports: [typeorm_1.TypeOrmModule],
         providers: [user_service_1.UserService],
         controllers: [user_controller_1.UserController],
     })
 ], UserModule);
-exports.UserModule = UserModule;
 //# sourceMappingURL=user.module.js.map

@@ -13,27 +13,26 @@ exports.fortytwo_Strategy = void 0;
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const passport_42_1 = require("passport-42");
-let fortytwo_Strategy = class fortytwo_Strategy extends (0, passport_1.PassportStrategy)(passport_42_1.Strategy, '42') {
+let fortytwo_Strategy = exports.fortytwo_Strategy = class fortytwo_Strategy extends (0, passport_1.PassportStrategy)(passport_42_1.Strategy, '42') {
     constructor() {
         super({
             clientID: 'u-s4t2ud-97201b0b9664120cef3e2130f4f15b0f1993c65c776a8593967c46214ef534d6',
             clientSecret: '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',
-            callbackURL: 'http://10.11.6.2:3000/auth/from-42',
+            callbackURL: 'http://localhost:3000/auth/from-42',
         });
     }
     async validate(accessToken, refreshToken, profile) {
-        const { name, emails, photos } = profile;
+        const { name, emails, _json } = profile;
         const user = {
             username: name,
             email: emails[0].value,
-            image: photos[0].value,
+            avatar_URL: _json.image.versions.small,
         };
         return user;
     }
 };
-fortytwo_Strategy = __decorate([
+exports.fortytwo_Strategy = fortytwo_Strategy = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [])
 ], fortytwo_Strategy);
-exports.fortytwo_Strategy = fortytwo_Strategy;
 //# sourceMappingURL=42.strategy.js.map
