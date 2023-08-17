@@ -4,7 +4,10 @@ import { User } from './user.entity';
 @Entity()
 export class UserFriends {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: Number;
+
+  @Column()
+  status: String;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'User1ID' })

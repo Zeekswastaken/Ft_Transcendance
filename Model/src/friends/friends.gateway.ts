@@ -1,34 +1,45 @@
-import { WebSocketGateway, SubscribeMessage, MessageBody } from '@nestjs/websockets';
+import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer, ConnectedSocket } from '@nestjs/websockets';
 import { FriendsService } from './friends.service';
-import { CreateFriendDto } from './dto/create-friend.dto';
-import { UpdateFriendDto } from './dto/update-friend.dto';
-
-@WebSocketGateway()
+import { JwtService } from '@nestjs/jwt';
+import { Socket, Server } from 'socket.io';
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
 export class FriendsGateway {
-  constructor(private readonly friendsService: FriendsService) {}
+  @WebSocketServer()
+  server: Server;
+  constructor(private readonly friendsService: FriendsService,
+              private readonly jwtService: JwtService) {}
 
-  @SubscribeMessage('createFriend')
-  create(@MessageBody() createFriendDto: CreateFriendDto) {
-    return this.friendsService.create(createFriendDto);
+  @SubscribeMessage('sendFriendRequest')
+  async create(@MessageBody() data: { userID: Number, recipientID: Number}) {
+    return await this.friendsService.create(data.userID, data.recipientID);
   }
 
-  @SubscribeMessage('findAllFriends')
+  @SubscribeMessage('getAllFriends')
   findAll() {
     return this.friendsService.findAll();
   }
 
-  @SubscribeMessage('findOneFriend')
-  findOne(@MessageBody() id: number) {
-    return this.friendsService.findOne(id);
+  // @SubscribeMessage('findOneFriend')
+  // findOne(@MessageBody() id: number) {
+  //   return this.friendsService.findOne(id);
+  // }
+
+  @SubscribeMessage('acceptFriendRequest')
+  async accept(@MessageBody() data: { userID: Number, recipientID: Number}) {
+    return await this.friendsService.acceptRequest(data.userID, data.recipientID);
   }
 
-  @SubscribeMessage('updateFriend')
-  update(@MessageBody() updateFriendDto: UpdateFriendDto) {
-    return this.friendsService.update(updateFriendDto.id, updateFriendDto);
+  @SubscribeMessage('denyFriendRequest')
+  async deny(@MessageBody() data: { userID: Number, recipientID: Number}) {
+    return await this.friendsService.refuseRequest(data.userID, data.recipientID);
   }
-
-  @SubscribeMessage('removeFriend')
-  remove(@MessageBody() id: number) {
-    return this.friendsService.remove(id);
+  
+  @SubscribeMessage('Unfriend')
+  remove(@MessageBody() data: { userID: Number, recipientID: Number}) {
+    return this.friendsService.removeFriendship(data.userID, data.recipientID);
   }
 }

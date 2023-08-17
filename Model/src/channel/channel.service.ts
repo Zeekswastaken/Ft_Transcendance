@@ -20,10 +20,7 @@ export class ChannelService {
         private readonly channelMembershipRepository: Repository<ChannelMembership>,
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
-    ){
-        console.log('ChannelRepository:', channelRepository);
-        console.log('ChannelMembershipRepository:', channelMembershipRepository);
-        console.log('UserRepository:', userRepository);}
+    ){}
     async createChannel(createChannelDto: Partial<Channel>, owner: Number)
     {
         console.log('--------> ', createChannelDto.Name);
@@ -63,8 +60,7 @@ export class ChannelService {
     }
 
     async assignAdmin(channelID: Number, userId: Number, initiatorId: Number): Promise<ChannelMembership>
-    {
-        
+    {   
         const initiator = await this.userRepository.findOne({where: { id: Equal(initiatorId)}});
         console.log("-------8888-> ");
         const channel = await this.channelRepository.findOne({ where: {id: Equal(channelID)}});
