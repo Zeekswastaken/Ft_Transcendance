@@ -11,7 +11,7 @@ export declare class WebsocketGateway implements OnGatewayInit, OnGatewayConnect
     handleDisconnect(client: Socket): void;
     afterInit(server: Server): void;
     handleMessage(client: Socket, payload: {
-        message: string;
-        channelId: number;
-    }): void;
+        text: String;
+        channelName: string;
+    }): Promise<void>;
 }

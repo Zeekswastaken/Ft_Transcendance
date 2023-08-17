@@ -36,7 +36,15 @@ let WebsocketGateway = exports.WebsocketGateway = class WebsocketGateway {
     afterInit(server) {
         console.log('WebSocket gateway initialized');
     }
-    handleMessage(client, payload) {
+    async handleMessage(client, payload) {
+        const token = client.handshake.query.token;
+        if (await this.jwt.verify(token)) {
+            const user = await this.jwt.decoded(token);
+            if (this.chatservice.isMatched(payload.channelName, user.id)) {
+                client.to(payload.channelName).emit(payload.text);
+                await this.chatservice.saveMsg({ text: payload.text });
+            }
+        }
     }
 };
 __decorate([
@@ -44,16 +52,10 @@ __decorate([
     __metadata("design:type", socket_io_1.Server)
 ], WebsocketGateway.prototype, "server", void 0);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('joinDuo'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket]),
-    __metadata("design:returntype", Promise)
-], WebsocketGateway.prototype, "handleConnection", null);
-__decorate([
     (0, websockets_1.SubscribeMessage)('Duo'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], WebsocketGateway.prototype, "handleMessage", null);
 exports.WebsocketGateway = WebsocketGateway = __decorate([
     (0, common_1.Injectable)(),
