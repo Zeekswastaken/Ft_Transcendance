@@ -2,15 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { JwtService, JwtVerifyOptions } from '@nestjs/jwt';
 import { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken';
 import {jwtDTO } from 'src/Dto/use.Dto';
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 
 @Injectable()
 export class JWToken{
   constructor(private readonly jwtService: JwtService) {}
 
     private secret_key:String = '0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6';
-    async generateToken(user:jwtDTO){
-        return  this.jwtService.sign(user);
+    // async generateToken(user:Partial<User>){
+      
+    //     return  this.jwtService.sign(user);
+    // }
+    async generateToken_2(user:Partial<User>):Promise<String>{
+      const obj = {id:user.id,username:user.username,gender:user.gender,birthday:user.birthDay,avatar_URL:user.avatar_URL};
+        return  this.jwtService.sign(obj,{secret:'0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'});
     }
     async verify(token):Promise<boolean>
     {
@@ -50,7 +55,6 @@ export class JWToken{
           if (token)
           {
             const user = await this.jwtService.verifyAsync(token, {secret:this.secret_key.toString()});
-            console.log('Decoded:', user);
             return user;
           }
           else 
@@ -58,7 +62,7 @@ export class JWToken{
         } 
         catch (error) {
           console.log('4---------------->>>>');
-          return null; // Token is invalid
+          return error; // Token is invalid
         }
     }
   }

@@ -1,80 +1,89 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { UserService } from './../user/user.service';
+import { Body, Controller, Get, Post, Req, Res, UseGuards,Put } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserDto } from 'src/Dto/use.Dto';
+import { UserDto, MoreInfos, TO_update, jwtDTO, UserDto2 } from 'src/Dto/use.Dto';
 import { LocalStrategy } from './local.startegy';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { TokenGuard } from './guards';
 import { error } from 'console';
+import { JWToken } from './jwt.service';
+import { BSON } from 'typeorm';
+import { User } from 'src/database/user.entity';
 
 
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authservice:AuthService,private readonly localStrategy:LocalStrategy){}
-//     @Get('signin')
-//    // @UseGuards(TokenGuard)
-//     singin(@Res() res:Response){
-//         this.authservice.singin(res);
-//     }
-//     @Get('signup')
-//     //@UseGuards(TokenGuard)
-//     singup(@Res() res:Response){
-//         this.authservice.singup(res);
-//     }
-    @Post('signup')
-    async create(@Body() Body:UserDto,@Res() res:Response){
-        if(await this.authservice.check_and_create(Body)  != null)
+    constructor(private readonly authservice:AuthService,private readonly localStrategy:LocalStrategy,private readonly userservice:UserService,private readonly jwtservice:JWToken){}
+
+    @Put('modify-data')
+    async modyfiy(@Body() Body,@Res() res){
+        console.log(Body);
+        const decode = await this.jwtservice.decoded(Body.cookie);
+        delete Body.cookie;
+        const id = decode.id as number;
+        await this.userservice.update(Body,id);
+        const user = await this.userservice.findById(id);
+
+        if (user)
         {
-            const cookie_token = await this.authservice.generatOken(Body);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
-              });
-            res.send("User Created Successfully");
-            // res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
+            console.log(user);
+            console.log("HOLOALDJN");
+            const cookie_token = await this.authservice.generateToken_2(user);
+            console.log(await this.jwtservice.decoded(cookie_token));
+            res.send(cookie_token);
+        }
+        else
+            res.send('Error');
+    }
+
+    @Post('signup')
+    async create(@Body() Body:UserDto,@Res() res){
+
+        const ret = await this.authservice.check_and_create(Body);
+        if(ret == true)
+        {
+            const cookie_token = await this.authservice.generateToken_2(Body);
+            console.log(await this.jwtservice.decoded(cookie_token));
+            res.send(cookie_token);
         }
         else
              res.send({
-                user:Body,
-                message:'this username already exist',
-
-             })       
-            // return {
-            //     user:Body,
-            //     message:'something wrong with email or password',
-            // }
+                message: ret,
+             })
     }
+
     @Post('login')
-    async checking(@Body() Body:UserDto,@Res() res:Response){
+    async checking(@Body() Body:UserDto,@Res() res){
 
         // console.log(Body);
-        const user = await this.localStrategy.validate(Body.username,Body.password);
-        if (!user)
-        {
-            var obj:Object = {
-                token:'error',
-                user:Body,
-                message:'something wrong with username or password'
-            }
-            res.send(obj);
-            //return obj;
-        }
+        if (!Body.username)
+            res.send('empty');
+        const user1 = await this.localStrategy.validate(Body.username,Body.password);
+        const user = await this.userservice.findByName(Body.username);
+        if (!user1)
+            res.send({message:'notExists'});
         else 
         {
-            const cookie_token = await this.authservice.generatOken(Body);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
-              });
-             var obj:Object  = {
-                token:cookie_token,
-                user:Body,
-                message:'the user entrance secssufully'
-            }
-            res.send(obj);
+            const cookie_token = await this.authservice.generateToken_2(user);
+            const user2 = await this.jwtservice.decoded(cookie_token);
+            // res.cookie('accessToken', cookie_token, {
+            //     httpOnly: true,
+            //   });
+            res.send({message:'success',cookie:cookie_token,user:user2});
             //return obj;
         }
     }
+    @Get('Sign-Out')
+    async log_out(@Body() Body,@Res() res){
+        // const decode = await this.jwtservice.decoded(Body.cookie);
+        res.clearCookie('accessToken');
+        res.status(200)
+        .redirect('localhost:3001/login');
+    }
 }
+
 @Controller('auth')
 export class googleController{
     constructor(private readonly authservice:AuthService){}
@@ -88,13 +97,13 @@ export class googleController{
 
     @UseGuards(AuthGuard('google'))
     @Get('from-google')
-    async googleloginredirect(@Req() req, @Res() res:Response){
+    async googleloginredirect(@Req() req, @Res() res){
         console.log("CallBack");
         const user = await req.user;
         console.log(user);
         if (await this.authservice.create_Oauth(user) == true)
         {
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
 
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
@@ -113,7 +122,7 @@ export class googleController{
         }
         else{
             console.log('error');
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
               });
@@ -146,12 +155,12 @@ export class fortytwo_Controller{
 
     @Get('from-42')
     @UseGuards(AuthGuard('42'))
-    async fortytwo_loginredirect(@Req() req, @Res() res:Response ){
+    async fortytwo_loginredirect(@Req() req, @Res() res ){
         console.log("CallBack");
         const user = await req.user;
         if (await this.authservice.create_Oauth(user) == true)
         {
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,secure:false
               });
@@ -165,7 +174,7 @@ export class fortytwo_Controller{
             return user_data;
         }
         else{
-            const cookie_token = await this.authservice.generatOken(user);
+            const cookie_token = await this.authservice.generateToken_2(user);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,secure:false
               });

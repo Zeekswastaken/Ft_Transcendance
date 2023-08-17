@@ -14,11 +14,11 @@ export class fortytwo_Strategy extends PassportStrategy(Strategy,'42'){
         // Access the tokens
         //console.log('Access Token:', accessToken);
         //console.log('Refresh Token:', refreshToken);
-        const {  name, emails ,photos} = profile;
+        const {  name, emails , _json } = profile;
         const user = {
           username:name,
           email: emails[0].value,
-          image:photos[0].value,
+          avatar_URL:_json.image.versions.small,
         };
         return user;
       }

@@ -2,10 +2,10 @@ import { Injectable, Res } from '@nestjs/common';
 import { promises } from 'dns';
 import { Response } from 'express';
 import { UserDto, jwtDTO } from 'src/Dto/use.Dto';
-import { User } from 'src/DB_tables/user.entities';
+import { User } from 'src/database/user.entity';
 import { UserService } from 'src/user/user.service';
 import { JWToken } from './jwt.service';
-
+import { checkPasswordStrength } from 'src/utils/passwordChecker';
 
 @Injectable()
 export class AuthService {
@@ -16,9 +16,12 @@ export class AuthService {
     // singup(@Res() res:Response){
     //     res.sendFile('/Users/orbiay/Desktop/App2/app/views/signup.html');
     // }
-    async check_and_create(body:UserDto):Promise<boolean>{
-
-        if (body.password == body.confirmpassword)
+    async check_and_create(body:UserDto):Promise<String | boolean>{
+        if (!body.username)
+            return 'empty';
+        if (checkPasswordStrength(body.password) == 'Weak')
+            return 'weak';
+        if (body.password == body.repassword)
         {
             if (await this.userservice.findByName(body.username) == null)
             {
@@ -26,10 +29,10 @@ export class AuthService {
                 return true;
             }
             else 
-                return false;
+                return 'exists';
         }
         else
-            return false;
+            return 'notMatch';
     }
     async validate_by_email(username:String,password:String) :Promise<User | null>
     {
@@ -56,8 +59,13 @@ export class AuthService {
         else
             return false;
     }
-    async generatOken(user:jwtDTO){
-        return await this.jwtoken.generateToken(user);
+    // async generatOken(user:Partial<User>){
+    //     console.log(user);
+    //     return await this.jwtoken.generateToken(user);
+    // }
+    async generateToken_2(user:Partial<User>)
+    {
+        return await this.jwtoken.generateToken_2(user);
     }
     async isValid(token:String)
     {

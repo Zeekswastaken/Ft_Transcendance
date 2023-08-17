@@ -18,7 +18,7 @@ const guards_1 = require("./auth/guards");
 const user_service_1 = require("./user/user.service");
 const use_Dto_1 = require("./Dto/use.Dto");
 const jwt_service_1 = require("./auth/jwt.service");
-let AppController = class AppController {
+let AppController = exports.AppController = class AppController {
     constructor(userservice, jwt) {
         this.userservice = userservice;
         this.jwt = jwt;
@@ -40,7 +40,7 @@ let AppController = class AppController {
     }
 };
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('hamza'),
     (0, common_1.UseGuards)(guards_1.TokenGuard),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Req)()),
@@ -49,9 +49,8 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, use_Dto_1.UserDto]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "default", null);
-AppController = __decorate([
+exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [user_service_1.UserService, jwt_service_1.JWToken])
 ], AppController);
-exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map

@@ -1,8 +1,18 @@
+"use client"
+
 import Nav from "./tools/Nav";
 import ProfileDropDown from "./tools/ProfileDropDown";
 import NotificationDropDown from "./tools/NotificationDropDown";
+import { usePathname } from "next/navigation";
+
 
 const Navbar = () => {
+
+	const pathName = usePathname();
+	if (pathName === "/login" || pathName === "/signup" || pathName === "/signup/complete-profile")
+		return (
+				<></>
+			)
 	return (
 		// Desktop Navigation
 		// <div className=" ">

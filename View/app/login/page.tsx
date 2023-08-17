@@ -10,22 +10,30 @@ const login = ({response}:any) => {
   const router = useRouter();
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    await axios.post("http://10.11.3.3:3000/auth/login", {
+    e.preventDefault();
+    console.log("Password : " + password);
+    console.log("username :" + username);
+    await axios.post("http://localhost:3000/auth/login", {
       password,
       username,
-    })
+    }).then(res => {
+      if (res.data.message === "success")
+        console.log(res.data.user);
+      else {
+        console.log(res.data.message);
+      }
+      // router.push("/");
+    }).catch(err => {console.log(err)})
     
     // Your logic here, if needed
     // console.log(result);
-    router.push("/");
   };
   
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  const link_42 = "http://10.11.3.3:3000/auth/42";
-  const link_google = "http://10.11.3.3:3000/auth/google"
+  const link_42 = "http://localhost:3000/auth/42";
+  const link_google = "http://localhost:3000/auth/google"
 
   return (
     <div className=" grid place-items-center h-screen ">

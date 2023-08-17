@@ -13,22 +13,27 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
 const jwt_service_1 = require("./jwt.service");
-let AuthService = class AuthService {
+const passwordChecker_1 = require("../utils/passwordChecker");
+let AuthService = exports.AuthService = class AuthService {
     constructor(userservice, jwtoken) {
         this.userservice = userservice;
         this.jwtoken = jwtoken;
     }
     async check_and_create(body) {
-        if (body.password == body.confirmpassword) {
+        if (!body.username)
+            return 'empty';
+        if ((0, passwordChecker_1.checkPasswordStrength)(body.password) == 'Weak')
+            return 'weak';
+        if (body.password == body.repassword) {
             if (await this.userservice.findByName(body.username) == null) {
                 await this.userservice.save(body);
                 return true;
             }
             else
-                return false;
+                return 'exists';
         }
         else
-            return false;
+            return 'notMatch';
     }
     async validate_by_email(username, password) {
         const user = await this.userservice.findByName(username);
@@ -50,16 +55,15 @@ let AuthService = class AuthService {
         else
             return false;
     }
-    async generatOken(user) {
-        return await this.jwtoken.generateToken(user);
+    async generateToken_2(user) {
+        return await this.jwtoken.generateToken_2(user);
     }
     async isValid(token) {
         return await this.jwtoken.verify(token);
     }
 };
-AuthService = __decorate([
+exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_service_1.UserService, jwt_service_1.JWToken])
 ], AuthService);
-exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

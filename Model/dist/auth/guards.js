@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TokenGuard = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_service_1 = require("./jwt.service");
-let TokenGuard = class TokenGuard {
+let TokenGuard = exports.TokenGuard = class TokenGuard {
     constructor(jwtToken) {
         this.jwtToken = jwtToken;
     }
@@ -36,9 +36,8 @@ let TokenGuard = class TokenGuard {
         return true;
     }
 };
-TokenGuard = __decorate([
+exports.TokenGuard = TokenGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_service_1.JWToken])
 ], TokenGuard);
-exports.TokenGuard = TokenGuard;
 //# sourceMappingURL=guards.js.map

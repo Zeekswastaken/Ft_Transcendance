@@ -4,7 +4,8 @@ import React, { useEffect, useState, FormEvent, useRef } from "react"
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, {  ReactDatePickerProps } from 'react-datepicker';
 import axios from "axios";
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
+import Cookies from 'js-cookie'
 
 
 const completProfile = () => {
@@ -23,7 +24,7 @@ const completProfile = () => {
     console.log(avatar_URL);
 
     e.preventDefault();
-    await axios.put("http://10.11.3.3:3000/auth/modify-data", {
+    await axios.put("http://localhost:3000/auth/modify-data", {
 
       birthDay: birthDay,
       gender: gender,
@@ -31,7 +32,9 @@ const completProfile = () => {
       avatar_URL: avatar_URL,
     }, {headers: {
       "Content-Type": "application/json"
-    }}).then(res => {}).catch(err => {});
+    }}).then(res => {
+      setCookie("accessToken", res.data)
+    }).catch(err => {});
     // await axios.post("http://10.11.3.3:3000/upload", 
 
     //   // birthDay,

@@ -1,4 +1,4 @@
-node_modules/
+Model/node_modules/
 View/node_modules/
-Mode/node_modules/
-```
+node_modules/
+Model/pgdata/
