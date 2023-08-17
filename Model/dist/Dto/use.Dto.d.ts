@@ -2,7 +2,7 @@ export declare class UserDto {
     username: String;
     password: String;
     repassword: String;
-    avatar_URL: String;
+    avatar_url: String;
     gender: String;
     birthDay: Date;
     constructor();

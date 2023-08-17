@@ -6,6 +6,7 @@ import { User } from 'src/database/user.entity';
 import { UserService } from 'src/user/user.service';
 import { JWToken } from './jwt.service';
 import { checkPasswordStrength } from 'src/utils/passwordChecker';
+import { Stats } from 'src/database/stats.entity';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     // singup(@Res() res:Response){
     //     res.sendFile('/Users/orbiay/Desktop/App2/app/views/signup.html');
     // }
-    async check_and_create(body:UserDto):Promise<String | boolean>{
+    async check_and_create(body:UserDto):Promise<String | boolean | User>{
         if (!body.username)
             return 'empty';
         if (checkPasswordStrength(body.password) == 'Weak')
@@ -25,8 +26,24 @@ export class AuthService {
         {
             if (await this.userservice.findByName(body.username) == null)
             {
-                await this.userservice.save(body);
-                return true;
+                const user = new User();
+               // console.log("************>>"+user.id);
+                user.username = body.username;
+                user.password = body.password;
+                user.avatar_url = body.password;
+                await this.userservice.save(user);
+                console.log("************>>"+user.id);
+
+                const stats = new Stats();
+                user.stats = stats;
+                stats.user = user;
+                await this.userservice.saveStat(stats);
+                //this.userservice.initStats(body);
+                await this.userservice.save(user);
+                console.log("************>>"+user.id);
+
+                //await this.userservice.initStats(await this.userservice.findByName(body.username));
+                return user;
             }
             else 
                 return 'exists';

@@ -16,13 +16,17 @@ exports.ProfileController = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_service_1 = require("../auth/jwt.service");
 const user_service_1 = require("../user/user.service");
+const profile_service_1 = require("./profile.service");
 let ProfileController = exports.ProfileController = class ProfileController {
-    constructor(userservice, jwt) {
+    constructor(userservice, profileService, jwt) {
         this.userservice = userservice;
+        this.profileService = profileService;
         this.jwt = jwt;
     }
     async display(username, res) {
-        const user = await this.userservice.findByName(username);
+        console.log(username);
+        const user = await this.profileService.findByName(username);
+        console.log(user.stats);
         delete user.password;
         res.send(user);
     }
@@ -30,7 +34,7 @@ let ProfileController = exports.ProfileController = class ProfileController {
         if (Body) {
             await this.userservice.update(Body, id);
             const user = await this.userservice.findById(id);
-            console.log(user);
+            console.log(user.stats);
             const cookie = await this.jwt.generateToken_2(user);
             console.log(await this.jwt.decoded(cookie));
             res.send({ message: 'success', cookie: cookie });
@@ -59,6 +63,6 @@ __decorate([
 ], ProfileController.prototype, "update", null);
 exports.ProfileController = ProfileController = __decorate([
     (0, common_1.Controller)('profile'),
-    __metadata("design:paramtypes", [user_service_1.UserService, jwt_service_1.JWToken])
+    __metadata("design:paramtypes", [user_service_1.UserService, profile_service_1.ProfileService, jwt_service_1.JWToken])
 ], ProfileController);
 //# sourceMappingURL=profile.controller.js.map

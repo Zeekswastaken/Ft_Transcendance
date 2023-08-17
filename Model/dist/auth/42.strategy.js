@@ -26,7 +26,7 @@ let fortytwo_Strategy = exports.fortytwo_Strategy = class fortytwo_Strategy exte
         const user = {
             username: name,
             email: emails[0].value,
-            avatar_URL: _json.image.versions.small,
+            avatar_url: _json.image.versions.small,
         };
         return user;
     }

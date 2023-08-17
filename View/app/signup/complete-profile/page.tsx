@@ -5,7 +5,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, {  ReactDatePickerProps } from 'react-datepicker';
 import axios from "axios";
 import { getCookie, setCookie } from 'cookies-next';
-import Cookies from 'js-cookie'
 
 
 const completProfile = () => {
@@ -19,9 +18,9 @@ const completProfile = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     // console.log("avatar_URL = " + avatar_URL);
-    const avatar_URL = new FormData();
-    avatar_URL.append("file", avatar.current as File);
-    console.log(avatar_URL);
+    const avatar_url = new FormData();
+    avatar_url.append("file", avatar.current as File);
+    console.log(avatar_url);
 
     e.preventDefault();
     await axios.put("http://localhost:3000/auth/modify-data", {
@@ -29,13 +28,13 @@ const completProfile = () => {
       birthDay: birthDay,
       gender: gender,
       cookie: cookie,
-      avatar_URL: avatar_URL,
+      avatar_url: avatar_url,
     }, {headers: {
       "Content-Type": "application/json"
     }}).then(res => {
-      setCookie("accessToken", res.data)
+      setCookie("accessToken", res.data);
     }).catch(err => {});
-    // await axios.post("http://10.11.3.3:3000/upload", 
+    // await axios.post("http://localhost:3000/upload", 
 
     //   // birthDay,
     //   formData,

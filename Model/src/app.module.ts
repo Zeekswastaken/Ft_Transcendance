@@ -24,6 +24,7 @@ import { Achievements } from './database/achievements.entity';
 import { WebsocketGateway } from './chat/chat.gateway';
 import { ChatService } from './chat/chat.service';
 import { ChatModule } from './chat/chat.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -41,7 +42,7 @@ import { ChatModule } from './chat/chat.module';
     UserModule, AuthModule,ChannelModule,JwtModule.register({
       secret:"0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6", 
       signOptions: { expiresIn: '1h' },
-    }), ChatModule
+    }), ChatModule,ProfileModule
   ],
   controllers: [AppController, UserController],
   providers: [AppService,TokenGuard,JWToken,UserService,ChannelService,],

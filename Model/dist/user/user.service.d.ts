@@ -1,11 +1,15 @@
 import { Repository } from 'typeorm';
 import { User } from '../database/user.entity';
-import { UserDto } from '../Dto/use.Dto';
+import { Stats } from 'src/database/stats.entity';
 export declare class UserService {
     private readonly userRepo;
-    constructor(userRepo: Repository<User>);
-    save(Body: UserDto): Promise<void>;
+    private readonly statsRepository;
+    constructor(userRepo: Repository<User>, statsRepository: Repository<Stats>);
+    save(Body: Partial<User>): Promise<void>;
     update(Body: Partial<User>, id: number): Promise<void>;
     findByName(username: any): Promise<User>;
     findById(id: any): Promise<User>;
+    create(User: Partial<User>): Promise<void>;
+    saveStat(stat: Partial<Stats>): Promise<void>;
+    initStats(user: User): Promise<Stats>;
 }

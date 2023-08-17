@@ -42,9 +42,10 @@ export class AuthController {
     async create(@Body() Body:UserDto,@Res() res){
 
         const ret = await this.authservice.check_and_create(Body);
-        if(ret == true)
+        if(typeof ret == 'object')
         {
-            const cookie_token = await this.authservice.generateToken_2(Body);
+            console.log("Body = "+ret);
+            const cookie_token = await this.authservice.generateToken_2(ret as User);
             console.log(await this.jwtservice.decoded(cookie_token));
             res.send(cookie_token);
         }

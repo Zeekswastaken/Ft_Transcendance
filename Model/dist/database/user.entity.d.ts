@@ -11,7 +11,7 @@ export declare class User {
     gender: String;
     privacy: Boolean;
     Bio: String;
-    avatar_URL: String;
+    avatar_url: String;
     memberships: ChannelMembership[];
     friends: User[];
     stats: Stats;

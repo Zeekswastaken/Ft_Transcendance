@@ -50,7 +50,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU" }),
     __metadata("design:type", String)
-], User.prototype, "avatar_URL", void 0);
+], User.prototype, "avatar_url", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => channelMembership_entity_1.ChannelMembership, membership => membership.user, { cascade: true, onDelete: 'CASCADE' }),
     __metadata("design:type", Array)
@@ -61,7 +61,7 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "friends", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => stats_entity_1.Stats, stats => stats.user),
+    (0, typeorm_1.OneToOne)(() => stats_entity_1.Stats, stats => stats.user, { cascade: true, eager: true }),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", stats_entity_1.Stats)
 ], User.prototype, "stats", void 0);

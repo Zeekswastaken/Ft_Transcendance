@@ -19,7 +19,7 @@ export class AppController {
         res.sendFile('/Users/orbiay/Desktop/App2/app/views/index.html');
     if(status.status == 'authorized')
     {
-        console.log(query.avatar_URL);
+        console.log(query.avatar_url);
         //return req.body;
         const decoded = await this.jwt.decoded(status.token);
         const user = await this.userservice.findByName((decoded).username);

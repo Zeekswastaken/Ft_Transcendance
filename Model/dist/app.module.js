@@ -31,6 +31,7 @@ const blockedUser_entity_1 = require("./database/blockedUser.entity");
 const userFriends_entity_1 = require("./database/userFriends.entity");
 const achievements_entity_1 = require("./database/achievements.entity");
 const chat_module_1 = require("./chat/chat.module");
+const profile_module_1 = require("./profile/profile.module");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -50,7 +51,7 @@ exports.AppModule = AppModule = __decorate([
             user_module_1.UserModule, auth_module_1.AuthModule, channel_module_1.ChannelModule, jwt_1.JwtModule.register({
                 secret: "0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
                 signOptions: { expiresIn: '1h' },
-            }), chat_module_1.ChatModule
+            }), chat_module_1.ChatModule, profile_module_1.ProfileModule
         ],
         controllers: [app_controller_1.AppController, user_controller_1.UserController],
         providers: [app_service_1.AppService, guards_1.TokenGuard, jwt_service_1.JWToken, user_service_1.UserService, channel_service_1.ChannelService,],

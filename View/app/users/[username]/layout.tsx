@@ -1,18 +1,11 @@
-"use client";
-
+"use client"
 import React, { useEffect } from "react";
-// import UserCard from "./UserCard";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import ProfileSvgs from "@/components/tools/ProfileSvgs";
 import Link from "next/link";
-import { get } from "http";
 import { getCookie } from "cookies-next";
-import { current } from "@reduxjs/toolkit";
-import { is } from "immer/dist/internal";
-
-// type User = {
-// params: { username: string };
-// };
+import axios from "axios";
+import jwt from "jsonwebtoken";
 
 interface Props {
   styles: string;
@@ -55,9 +48,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const User = useParams().username;
-
   const token = getCookie("accessToken");
+  // const secret = "0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6";
+  // try {
+  //   const decoded = jwt.verify(token as string, secret) as { [key: string]: any };
+  //   console.log("decoded = " + decoded);
+  // } catch (error) {
+  //   console.error('JWT decoding error:', error);
+  // }
+  
+  const User = useParams().username;
+  axios.get(`http://localhost:3000/profile/${User}`).then((res) =>{
+    console.log( res.data)
+  }).catch((err) => {
+    console.log(err);
+  })
   const isFriend = false;
   const isPrivate = false;
   const currentUsername = "Fouamep";
