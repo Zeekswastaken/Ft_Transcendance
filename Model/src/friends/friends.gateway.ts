@@ -14,8 +14,17 @@ export class FriendsGateway {
               private readonly jwtService: JwtService) {}
 
   @SubscribeMessage('sendFriendRequest')
-  async create(@MessageBody() data: { userID: Number, recipientID: Number}) {
-    return await this.friendsService.create(data.userID, data.recipientID);
+  async create(@MessageBody() data: { userID: Number, recipientID: Number}, @ConnectedSocket() client: Socket) {
+    try{
+      const request = await this.friendsService.create(data.userID, data.recipientID);
+      client.emit('friendRequest', request); 
+      return request;
+    } catch (error)
+    {
+      console.error('Error sending the friend request: ',error.message);
+      client.emit('error', error.message);
+      throw error;
+    }
   }
 
   @SubscribeMessage('getAllFriends')
@@ -29,17 +38,38 @@ export class FriendsGateway {
   // }
 
   @SubscribeMessage('acceptFriendRequest')
-  async accept(@MessageBody() data: { userID: Number, recipientID: Number}) {
+  async accept(@MessageBody() data: { userID: Number, recipientID: Number}, @ConnectedSocket() client: Socket) {
+    try {
     return await this.friendsService.acceptRequest(data.userID, data.recipientID);
+    } catch (error)
+    {
+      console.error('Error accepting the friend request: ',error.message);
+      client.emit('error', error.message);
+      throw error;
+    }
   }
 
   @SubscribeMessage('denyFriendRequest')
-  async deny(@MessageBody() data: { userID: Number, recipientID: Number}) {
+  async deny(@MessageBody() data: { userID: Number, recipientID: Number}, @ConnectedSocket() client: Socket) {
+    try {
     return await this.friendsService.refuseRequest(data.userID, data.recipientID);
+    }  catch (error)
+    {
+      console.error('Error refusing the friend request: ',error.message);
+      client.emit('error', error.message);
+      throw error;
+    }
   }
   
   @SubscribeMessage('Unfriend')
-  remove(@MessageBody() data: { userID: Number, recipientID: Number}) {
-    return this.friendsService.removeFriendship(data.userID, data.recipientID);
+  remove(@MessageBody() data: { userID: Number, recipientID: Number}, @ConnectedSocket() client: Socket) {
+    try{
+      return this.friendsService.removeFriendship(data.userID, data.recipientID);
+    } catch (error)
+    {
+      console.error('Error unfriending the user: ',error.message);
+      client.emit('error', error.message);
+      throw error;
+    }
   }
 }

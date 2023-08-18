@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from '../database/user.entity';
-import { UserFriends } from 'src/database/userFriends.entity'; 
-import { Notification } from 'src/database/notifications.entity';
+import { UserFriends } from '../database/userFriends.entity'; 
+import { Notification } from '../database/notifications.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Not, Equal } from 'typeorm';
 @Injectable()
@@ -12,8 +12,8 @@ export class FriendsService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Notification)
-    private readonly notifictaionsRepository: Repository<Notification>
-    ){}
+    private readonly notificationsRepository: Repository<Notification>
+  ) {}
   async create(userid: Number, recipientid: Number) {
     const initiator = await this.userRepository.findOne({where: { id: Equal(userid)}});
     const recipient = await this.userRepository.findOne({where: { id: Equal(recipientid)}});
@@ -55,6 +55,22 @@ export class FriendsService {
       throw new HttpException("No friendship to remove", HttpStatus.FORBIDDEN);
     await this.userFriendsRepository.remove(friendship);
   }
+
+  async getUserFriendsWithDetails(userid: Number): Promise<{ id: Number, username: String, avatar_URL: String }[]> {
+    const friendDetails = await this.userRepository
+    .createQueryBuilder('user')
+    .leftJoinAndSelect(
+      'user.friends',
+      'friendship',
+      'friendship.user1 = :userid OR friendship.user2 = :userid',
+      { userid }
+    )
+    .select(['user.id', 'user.username', 'user.avatar_URL'])
+    .getMany();
+
+    return friendDetails;
+  }
+  
   //  async findOne(id: Number): Promise<User>{
   //   return await this.user;
   // }

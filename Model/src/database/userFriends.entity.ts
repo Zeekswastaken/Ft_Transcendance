@@ -7,7 +7,7 @@ export class UserFriends {
   id: Number;
 
   @Column()
-  status: String;
+  status: string;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'User1ID' })
