@@ -53,9 +53,9 @@ const login = ({response}:any) => {
             <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="Password" className="bg-[#1C0D16] border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-4 sm:mx-0 mx-5 rounded-xl "/>
             
             
-            <a href="#" className=" hover:underline pt-2 text-[#EBA3EA] text-end font-normal text-sm">Forgot  Password?</a>
+            {/* <a href="#" className=" hover:underline pt-2 text-[#EBA3EA] text-end font-normal text-sm">Forgot  Password?</a>Sing */}
             <button type="submit" className= " text-center text-xl bg-primary-pink-300 hover:bg-primary-pink-3000./[8] transition duration-300 hover:border font-Bomb mx-20 mt-10 p-2 rounded-2xl">log in</button>
-            <p className=" font-normal text-xs mt-3">Don’t have an account? <a className=" hover:underline text-[#EBA3EA]" href="/signup">Sing up</a></p>
+            <p className=" font-normal text-xs mt-3">Don’t have an account? <a className=" hover:underline text-[#EBA3EA]" href="/signup">Sign up</a></p>
         </div>
       </form>
       </div>

@@ -1,19 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import UserCard from "./UserCard";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import ProfileSvgs from "@/components/tools/ProfileSvgs";
 import Link from "next/link";
-import { get } from "http";
 import { getCookie } from "cookies-next";
-import { current } from "@reduxjs/toolkit";
-import { is } from "immer/dist/internal";
 import axios from "axios";
-
-// type User = {
-// params: { username: string };
-// };
+import jwt from "jsonwebtoken";
 
 interface Props {
   styles: string;
@@ -51,23 +45,41 @@ interface ToggleTextButtonProps {
   styles: string;
 }
 
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const User = useParams().username;
-
-  axios.get(`http://localhost:3000/profile/${User}`).then((res) =>{
-    console.log( res.data)
-  }).catch((err) => {
-    console.log(err);
-  })
-
+  const [currentUsername, setCurrentUsername] = useState();
+  const router = useRouter();
   const token = getCookie("accessToken");
+  const [userData, setUserData] = useState({})
+  useEffect(() => {
+    try {
+      setCurrentUsername(jwt.decode(token).username);
+    } catch (error) {
+      console.error('Error decoding token:');
+    }
+  }, [])
+
+
+  
+  useEffect(() => {
+    axios.get(`http://localhost:3000/profile/${User}`).then((res) =>{
+      setUserData(res.data);
+      
+    }).catch((err) => {
+      console.log(err);
+    })
+    
+  }, [User])
+  
+  console.log(userData);
   const isFriend = false;
-  const isPrivate = false;
-  const currentUsername = "Fouamep";
+  const isPrivate = true;
+  // const currentUsername = "Fouamep";
   const [isClicked, setIsClicked] = React.useState(true);
 
   const SetButtonText: React.FC<ToggleTextButtonProps> =  ( {initialText, newText, styles} ) => {
@@ -90,7 +102,7 @@ export default function RootLayout({
       <div className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat h-screen overflow-y-scroll no-scrollbar w-full">
         <div className=" 2xl:mt-[270px] lg:mt-[160px] mt-[50px] min-w-[400px] overflow-y-scroll w-full h-[75vh] no-scrollbar ">
           <div className=" grid grid-cols-1 2xl:grid-cols-3 mb-10">
-            {isPrivate ? (
+            {isPrivate && (userData.username !== currentUsername)  ?  (
               <div className=" 2xl:order-1 order-2 col-span-2  p-20">
                 <div className=" flex items-center place-content-center glass w-full 2xl:h-full">
                   <h1 className=" text-3xl font-Heading text-white tracking-wider">
@@ -114,24 +126,18 @@ export default function RootLayout({
                     className=" border-4   border-primary-pink-300 rounded-full"
                   />
                   <div className=" text-center pt-4 space-y-2 font-Heading tracking-wider">
-                    <p className=" text-3xl text-white">Fouamep</p>
-                    {/* <p clas
-    <div className=" "> sName=" text-xl tracking-widest text-[#D4D4D4]">
-                      Fouad Bouanane
-                    </p> */}
+                    <p className=" text-3xl text-white">{User}</p>
                   </div>
                 </div>
                 <div className=" grid place-items-center">
+                  {userData.Bio ? (
                   <div className="  bg-[#411941]/[0.8]  shadow-xl overflow-hidden whitespace-wrap mt-5 w-[75%] h-auto rounded-xl">
                     {/* max 180 character */}
-                    <p className=" shadow-none text-white font-Heading text-xl leading-9 tracking-normal p-5 ">
-                      Sed ut perspiciatis gdffs nbv adfgx bbfgg fg dhx s fggsgv b
-                      sfbvn kfjv;fknv;klnbjb; nbkcmv/l n nklj; v
-                      mjsdkfovppkz,cl'ds ddsds ds unde omnis iste natus error sit
-                      .
-                    </p>
+                    <p className=" shadow-none text-white text-center font-Heading text-xl leading-9 tracking-normal p-5 ">{userData.Bio}</p>
                   </div>
-                  {isPrivate ? (
+
+                  ) : ("")}
+                  {isPrivate && (userData.username !== currentUsername) ? (
                     <div className=" bg-[#411941]/[0.8]  shadow-xl overflow-hidden whitespace-wrap mt-10 w-[75%] rounded-xl mb-10">
                       <div className=" grid place-items-center items-center  h-[200px]">
                         <img
@@ -182,7 +188,7 @@ export default function RootLayout({
                     </div>
                   )}
                   { currentUsername !== User && !isFriend ? (
-                    <div className=" mt-20">
+                    <div className=" mt-10 mb-5 ">
                     <SetButtonText styles=" text-white font-Bomb text-2xl px-5 pt-3 pb-2 rounded-2xl bg-[#6E4778] hover:text-gray-100 hover:bg-[#8d549c] shadow-inner duration-300" initialText="Add Friend" newText="Cancel Friend Request" />
                     </div>
                   ) : ("")}
