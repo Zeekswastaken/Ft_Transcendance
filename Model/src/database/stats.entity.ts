@@ -5,21 +5,21 @@ import { Achievements } from "./achievements.entity";
 export class Stats{
     @PrimaryGeneratedColumn()
     id: Number;
-    @Column()
-    Matches_Played:Number;
-    @Column()
-    Wins:Number;
-    @Column()
-    Losses:Number;
-    @Column()
-    Level:Number;
-    @Column()
-    Winrate:Number;
+    @Column({nullable:true})
+    matches_played:Number;
+    @Column({nullable:true})
+    wins:Number;
+    @Column({nullable:true})
+    losses:Number;
+    @Column({nullable:true})
+    level:Number;
+    @Column({nullable:true})
+    winrate:Number;
     // @Column()
     // Achievement;
     @OneToOne(() => User, user => user.stats)
     @JoinColumn()
-    user: User;
+    user: User ;
     @OneToMany(() => Achievements, achievements => achievements.stats)
     achievements: Achievements[];
 }

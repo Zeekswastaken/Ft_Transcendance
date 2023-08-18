@@ -20,25 +20,25 @@ __decorate([
     __metadata("design:type", Number)
 ], Stats.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Stats.prototype, "Matches_Played", void 0);
+], Stats.prototype, "matches_played", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Stats.prototype, "Wins", void 0);
+], Stats.prototype, "wins", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Stats.prototype, "Losses", void 0);
+], Stats.prototype, "losses", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Stats.prototype, "Level", void 0);
+], Stats.prototype, "level", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
-], Stats.prototype, "Winrate", void 0);
+], Stats.prototype, "winrate", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => user_entity_1.User, user => user.stats),
     (0, typeorm_1.JoinColumn)(),

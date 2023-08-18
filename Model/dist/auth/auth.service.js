@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
+const user_entity_1 = require("../database/user.entity");
 const user_service_1 = require("../user/user.service");
 const jwt_service_1 = require("./jwt.service");
 const passwordChecker_1 = require("../utils/passwordChecker");
+const stats_entity_1 = require("../database/stats.entity");
 let AuthService = exports.AuthService = class AuthService {
     constructor(userservice, jwtoken) {
         this.userservice = userservice;
@@ -26,8 +28,19 @@ let AuthService = exports.AuthService = class AuthService {
             return 'weak';
         if (body.password == body.repassword) {
             if (await this.userservice.findByName(body.username) == null) {
-                await this.userservice.save(body);
-                return true;
+                const user = new user_entity_1.User();
+                user.username = body.username;
+                user.password = body.password;
+                user.avatar_url = body.password;
+                await this.userservice.save(user);
+                console.log("************>>" + user.id);
+                const stats = new stats_entity_1.Stats();
+                user.stats = stats;
+                stats.user = user;
+                await this.userservice.saveStat(stats);
+                await this.userservice.save(user);
+                console.log("************>>" + user.id);
+                return user;
             }
             else
                 return 'exists';

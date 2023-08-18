@@ -6,7 +6,7 @@ export declare class AuthService {
     private readonly userservice;
     private readonly jwtoken;
     constructor(userservice: UserService, jwtoken: JWToken);
-    check_and_create(body: UserDto): Promise<String | boolean>;
+    check_and_create(body: UserDto): Promise<String | boolean | User>;
     validate_by_email(username: String, password: String): Promise<User | null>;
     create_Oauth(body: UserDto): Promise<boolean>;
     generateToken_2(user: Partial<User>): Promise<String>;

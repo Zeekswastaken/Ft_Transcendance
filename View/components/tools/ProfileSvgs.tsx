@@ -60,7 +60,7 @@ const ProfileSvgs:React.FC<Props> = ({SvgName, SvgColor}) => {
         case 'Friends':
             Svg = <Friends SvgName='' SvgColor={SvgColor}/>
             break;
-        case 'Groups':
+        case 'Channels':
             Svg = <Groups SvgName='' SvgColor={SvgColor}/>
             break;
     }

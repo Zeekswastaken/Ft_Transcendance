@@ -10,23 +10,15 @@ const login = ({response}:any) => {
   const router = useRouter();
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Password : " + password);
-    console.log("username :" + username);
+    e.preventDefault(); // Prevent the default form submission behavior
     await axios.post("http://localhost:3000/auth/login", {
       password,
       username,
-    }).then(res => {
-      if (res.data.message === "success")
-        console.log(res.data.user);
-      else {
-        console.log(res.data.message);
-      }
-      // router.push("/");
-    }).catch(err => {console.log(err)})
+    })
     
     // Your logic here, if needed
     // console.log(result);
+    router.push("/");
   };
   
   const [password, setPassword] = useState("");

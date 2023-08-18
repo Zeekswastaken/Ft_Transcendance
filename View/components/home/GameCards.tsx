@@ -16,7 +16,7 @@ type Cards = {
 const Card = ( {title, description, buttonText, image, span} : Cards ) => {
 
   let backGround;
-  if (title === "One Vs One") backGround = "bg-[url('/artwork.jpeg')]"; else if (title === "One Vs Bot") backGround = "bg-[url('/robot.jpg')] "; else backGround = "";
+  if (title === "One Vs One") backGround = "bg-[url('/artwork.jpeg')] backdrop-blur-md rounded-xl"; else if (title === "One Vs Bot") backGround = "bg-[url('/robot.jpg')] "; else backGround = " bg-[url('/pingpong-pingpong-ani.gif')]";
   
   const [clicked, setClicked] = useState(false);
   const targetWord = span;
@@ -71,7 +71,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95"
                   >
-                    <Dialog.Panel className={`w-full max-w-3xl transform mx-5 grid place-content-center rounded-2xl ${backGround} bg-cover bg-center p-6 text-center align-middle shadow-2xl transition-all shadow-primary-pink-300`}>
+                    <Dialog.Panel className={`w-full max-w-3xl transform mx-5 grid place-content-center  rounded-2xl ${backGround} bg-cover bg-center p-6 text-center align-middle shadow-2xl transition-all shadow-primary-pink-300`}>
                       <div className=" grid place-items-center "><ModalContent title={title}/></div>
                     </Dialog.Panel>
                   </Transition.Child>
@@ -86,7 +86,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
 
 const GameCards = () => {
   return (
-  <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:max-w-[1400px] mt-20 px-10  justify-center">
+  <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:max-w-[1400px] min-w-[440px] mt-20 px-10  justify-center">
     <Card title="One Vs One" description="Compete head-to-head against friends and rivals in thrilling ping pong matches." buttonText="Play Now" image="/OneVsOne.png" span="head-to-head"/>
     <Card title="One Vs Bot" description="Challenge yourself against an advanced AI opponent  in intense solo ping pong battles." buttonText="Play Now" image="/OneVsBot.png" span="AI opponent" />
     <Card title="Spectate" description="Spectate live streams of exciting ping pong matches for an immersive viewing experience." buttonText="Watch Stream" image="/Spectate.png" span="live streams"/>

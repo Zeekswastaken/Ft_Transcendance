@@ -80,10 +80,10 @@ const signup = () => {
             {userNotFound && <p className="text-red-500 text-xs pt-1 text-left">{userNotFound}</p>}
 
             <input onChange={e => setPassword(e.target.value)} id="password" value={password} type="password" placeholder="Password" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-3 sm:mx-0 mx-20 rounded-xl peer ... "/>
-            {/* {passwordError && <p className="text-red-500 text-xs pt-1 text-left">{passwordError}</p>} */}
+            {passwordError && <p className="text-red-500 text-xs pt-1 text-left">{passwordError}</p>}
 
             <input onChange={e => setRePassword(e.target.value)} value={repassword} type="password" placeholder="Re-Password" className="bg-[#1C0D16] px-6 border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-3 sm:mx-0 mx-20 rounded-xl"/>
-            {/* {passNotMatch && <p className="text-red-500 text-xs pt-1 text-left">{passNotMatch}</p>} */}
+            {passNotMatch && <p className="text-red-500 text-xs pt-1 text-left">{passNotMatch}</p>}
             
             <a href="#" className=" hover:underline pt-2 text-[#EBA3EA] text-end font-normal text-sm">Forgot  Password?</a>
             <button type="submit" className= " bg-primary-pink-300 hover:bg-primary-pink-300/[0.8] transition duration-300 hover:border font-Bomb mx-20 mt-6 p-2 rounded-2xl text-center text-xl">

@@ -18,7 +18,7 @@ class GoogleStrategy extends (0, passport_1.PassportStrategy)(passport_google_oa
         const user = {
             username: name,
             email: emails[0].value,
-            avatar_URL: photos[0].value,
+            avatar_url: photos[0].value,
         };
         return user;
     }

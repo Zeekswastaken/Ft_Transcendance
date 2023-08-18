@@ -1,4 +1,4 @@
-import {Entity, PrimaryColumn, Column, PrimaryGeneratedColumn, Collection, ManyToMany, JoinTable,OneToMany, ManyToOne, JoinColumn, OneToOne} from "typeorm";
+import {Entity, PrimaryColumn, Column,getRepository, PrimaryGeneratedColumn, AfterInsert,Collection, ManyToMany, JoinTable,OneToMany, ManyToOne, JoinColumn, OneToOne} from "typeorm";
 import { ChannelMembership } from "./channelMembership.entity";
 import { Stats } from "./stats.entity";
 import { GameInvite } from "./gameInvite.entity";
@@ -21,13 +21,13 @@ export class User{
     @Column({nullable:true})
     Bio:String;
     @Column({default:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU"})
-    avatar_URL: String;
+    avatar_url: String;
     @OneToMany(() => ChannelMembership, membership => membership.user, { cascade: true, onDelete: 'CASCADE' })
     memberships: ChannelMembership[];
     @ManyToMany(() => User, user => user.friends)
     @JoinTable({ name: 'userFriends' })
     friends: User[];
-    @OneToOne(() => Stats, stats => stats.user)
+    @OneToOne(() => Stats, stats => stats.user, { cascade: true, eager: true })
     @JoinColumn()
     stats: Stats;
     @OneToMany(() => GameInvite, invite => invite.sender, { cascade: true, onDelete: 'CASCADE' })

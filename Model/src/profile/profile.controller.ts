@@ -4,14 +4,17 @@ import { User } from 'src/database/user.entity';
 import { update } from 'src/Dto/use.Dto';
 import { JWToken } from 'src/auth/jwt.service';
 import { UserService } from 'src/user/user.service';
+import { ProfileService } from './profile.service';
 
 @Controller('profile')
 export class ProfileController {
-    constructor (private readonly userservice:UserService,private readonly jwt:JWToken){}
+    constructor (private readonly userservice:UserService,private readonly profileService:ProfileService,private readonly jwt:JWToken){}
 
     @Get(':username')
     async display(@Param('username') username:String,@Res() res){
-        const user = await this.userservice.findByName(username);
+        console.log(username);
+        const user = await this.profileService.findByName(username);
+        console.log(user.stats);
         delete user.password;
         res.send(user);
     }
@@ -21,7 +24,7 @@ export class ProfileController {
         {
             await this.userservice.update(Body,id);
             const user = await this.userservice.findById(id); 
-            console.log(user);
+            console.log(user.stats);
             const cookie = await this.jwt.generateToken_2(user);
             
             console.log(await this.jwt.decoded(cookie));

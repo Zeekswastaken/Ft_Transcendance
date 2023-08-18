@@ -14,7 +14,7 @@ export class JWToken{
     //     return  this.jwtService.sign(user);
     // }
     async generateToken_2(user:Partial<User>):Promise<String>{
-      const obj = {id:user.id,username:user.username,gender:user.gender,birthday:user.birthDay,avatar_URL:user.avatar_URL};
+      const obj = {id:user.id,username:user.username,gender:user.gender,birthday:user.birthDay,avatar_URL:user.avatar_url};
         return  this.jwtService.sign(obj,{secret:'0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'});
     }
     async verify(token):Promise<boolean>

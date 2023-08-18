@@ -46,8 +46,9 @@ let AuthController = exports.AuthController = class AuthController {
     }
     async create(Body, res) {
         const ret = await this.authservice.check_and_create(Body);
-        if (ret == true) {
-            const cookie_token = await this.authservice.generateToken_2(Body);
+        if (typeof ret == 'object') {
+            console.log("Body = " + ret);
+            const cookie_token = await this.authservice.generateToken_2(ret);
             console.log(await this.jwtservice.decoded(cookie_token));
             res.send(cookie_token);
         }
