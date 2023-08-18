@@ -1,6 +1,1 @@
-{
-  "/login/page": "app/login/page.js",
-  "/signup/page": "app/signup/page.js",
-  "/signup/complete-profile/page": "app/signup/complete-profile/page.js",
-  "/users/[username]/page": "app/users/[username]/page.js"
-}
+{}
