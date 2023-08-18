@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 // import { FormEvent } from "react";
 import axios from "axios";
 import Cookies from 'js-cookie'
-import { getCookie, setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 
 
 const signup = () => {
@@ -32,7 +32,7 @@ const signup = () => {
           setPasswordError("");
           return ;
         }
-        else if (res.data.message === "weak") {const token = getCookie("accessToken");
+        else if (res.data.message === "weak") {
           setPasswordError("Your Password not Strong enough, Please try again.");
           setUserNotFound("");
           setPassNotMatch("");
