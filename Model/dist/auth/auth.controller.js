@@ -113,8 +113,9 @@ exports.AuthController = AuthController = __decorate([
     __metadata("design:paramtypes", [auth_service_1.AuthService, local_startegy_1.LocalStrategy, user_service_1.UserService, jwt_service_1.JWToken])
 ], AuthController);
 let googleController = exports.googleController = class googleController {
-    constructor(authservice) {
+    constructor(authservice, userservice) {
         this.authservice = authservice;
+        this.userservice = userservice;
     }
     googlelogin() {
         console.log("Auth/google");
@@ -123,8 +124,9 @@ let googleController = exports.googleController = class googleController {
         console.log("CallBack");
         const user = await req.user;
         console.log(user);
-        if (await this.authservice.create_Oauth(user) == true) {
-            const cookie_token = await this.authservice.generateToken_2(user);
+        const newUser = await this.authservice.create_Oauth(user);
+        if (typeof newUser == 'object') {
+            const cookie_token = await this.authservice.generateToken_2(newUser);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
             });
@@ -133,13 +135,13 @@ let googleController = exports.googleController = class googleController {
             return {
                 status: 200,
                 token: cookie_token,
-                user: user,
+                user: newUser,
                 message: 'the user create secssufully',
             };
         }
         else {
-            console.log('error');
-            const cookie_token = await this.authservice.generateToken_2(user);
+            const usertoken = await this.userservice.findByName(req.user.username);
+            const cookie_token = await this.authservice.generateToken_2(usertoken);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
             });
@@ -148,7 +150,7 @@ let googleController = exports.googleController = class googleController {
             return {
                 status: 200,
                 token: cookie_token,
-                user: user,
+                user: usertoken,
                 message: 'the user already exist'
             };
         }
@@ -172,11 +174,12 @@ __decorate([
 ], googleController.prototype, "googleloginredirect", null);
 exports.googleController = googleController = __decorate([
     (0, common_1.Controller)('auth'),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService, user_service_1.UserService])
 ], googleController);
 let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controller {
-    constructor(authservice) {
+    constructor(authservice, usersrvice) {
         this.authservice = authservice;
+        this.usersrvice = usersrvice;
     }
     googlelogin(req, res) {
         console.log("heloWorld");
@@ -184,29 +187,34 @@ let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controlle
     async fortytwo_loginredirect(req, res) {
         console.log("CallBack");
         const user = await req.user;
-        if (await this.authservice.create_Oauth(user) == true) {
-            const cookie_token = await this.authservice.generateToken_2(user);
+        const newUser = await this.authservice.create_Oauth(user);
+        console.log("New User = " + newUser);
+        if (typeof newUser == 'object') {
+            console.log("Fist time");
+            const cookie_token = await this.authservice.generateToken_2(newUser);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true, secure: false
             });
             res.redirect("http://localhost:3001/");
             const user_data = { token: cookie_token,
-                user: user,
-                message: 'the email already exist' };
+                user: newUser,
+                message: 'success' };
             console.log(user_data);
             return user_data;
         }
         else {
-            const cookie_token = await this.authservice.generateToken_2(user);
+            const usertoken = await this.usersrvice.findByName(req.user.username);
+            console.log(usertoken);
+            const cookie_token = await this.authservice.generateToken_2(usertoken);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true, secure: false
             });
             console.log('coockie token = ' + cookie_token);
             res.redirect("http://localhost:3001/");
             const user_data = { token: cookie_token,
-                user: user,
-                message: 'the email already exist' };
-            console.log(user_data);
+                user: usertoken,
+                message: 'user already exist' };
+            console.log(usertoken);
             return user_data;
         }
     }
@@ -231,6 +239,6 @@ __decorate([
 ], fortytwo_Controller.prototype, "fortytwo_loginredirect", null);
 exports.fortytwo_Controller = fortytwo_Controller = __decorate([
     (0, common_1.Controller)('auth'),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService, user_service_1.UserService])
 ], fortytwo_Controller);
 //# sourceMappingURL=auth.controller.js.map

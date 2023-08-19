@@ -15,8 +15,9 @@ export class fortytwo_Strategy extends PassportStrategy(Strategy,'42'){
         //console.log('Access Token:', accessToken);
         //console.log('Refresh Token:', refreshToken);
         const {  name, emails , _json } = profile;
+        const firstName = name?.givenName
         const user = {
-          username:name,
+          username:firstName,
           email: emails[0].value,
           avatar_url:_json.image.versions.small,
         };

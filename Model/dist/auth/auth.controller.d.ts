@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { UserDto } from 'src/Dto/use.Dto';
 import { LocalStrategy } from './local.startegy';
 import { JWToken } from './jwt.service';
+import { User } from 'src/database/user.entity';
 export declare class AuthController {
     private readonly authservice;
     private readonly localStrategy;
@@ -16,22 +17,24 @@ export declare class AuthController {
 }
 export declare class googleController {
     private readonly authservice;
-    constructor(authservice: AuthService);
+    private readonly userservice;
+    constructor(authservice: AuthService, userservice: UserService);
     googlelogin(): void;
     googleloginredirect(req: any, res: any): Promise<{
         status: number;
         token: String;
-        user: any;
+        user: User;
         message: string;
     }>;
 }
 export declare class fortytwo_Controller {
     private readonly authservice;
-    constructor(authservice: AuthService);
+    private readonly usersrvice;
+    constructor(authservice: AuthService, usersrvice: UserService);
     googlelogin(req: any, res: any): void;
     fortytwo_loginredirect(req: any, res: any): Promise<{
         token: String;
-        user: any;
+        user: User;
         message: string;
     }>;
 }

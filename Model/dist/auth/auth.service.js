@@ -31,7 +31,7 @@ let AuthService = exports.AuthService = class AuthService {
                 const user = new user_entity_1.User();
                 user.username = body.username;
                 user.password = body.password;
-                user.avatar_url = body.password;
+                user.avatar_url = body.avatar_url;
                 await this.userservice.save(user);
                 console.log("************>>" + user.id);
                 const stats = new stats_entity_1.Stats();
@@ -60,10 +60,22 @@ let AuthService = exports.AuthService = class AuthService {
         }
     }
     async create_Oauth(body) {
-        const user = await this.userservice.findByName(body.username);
-        if (!user) {
-            await this.userservice.save(body);
-            return true;
+        const user1 = await this.userservice.findByName(body.username);
+        if (!user1) {
+            console.log(body);
+            const user = new user_entity_1.User();
+            user.username = body.username;
+            user.avatar_url = body.avatar_url;
+            await this.userservice.save(user);
+            const stats = new stats_entity_1.Stats();
+            user.stats = stats;
+            stats.user = user;
+            await this.userservice.saveStat(stats);
+            console.log("BEFORE");
+            await this.userservice.save(user);
+            console.log("AFTER");
+            console.log("************>>" + user.id);
+            return user;
         }
         else
             return false;

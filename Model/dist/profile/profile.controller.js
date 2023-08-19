@@ -26,8 +26,10 @@ let ProfileController = exports.ProfileController = class ProfileController {
     async display(username, res) {
         console.log(username);
         const user = await this.profileService.findByName(username);
-        console.log(user.stats);
-        delete user.password;
+        if (user) {
+            console.log(user.stats);
+            delete user.password;
+        }
         res.send(user);
     }
     async update(Body, res, id) {

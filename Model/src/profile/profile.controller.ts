@@ -14,8 +14,11 @@ export class ProfileController {
     async display(@Param('username') username:String,@Res() res){
         console.log(username);
         const user = await this.profileService.findByName(username);
-        console.log(user.stats);
-        delete user.password;
+        if (user)
+        {
+            console.log(user.stats);
+            delete user.password;
+        }
         res.send(user);
     }
     @Put('update/:id')

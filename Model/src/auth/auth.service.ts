@@ -7,6 +7,7 @@ import { UserService } from 'src/user/user.service';
 import { JWToken } from './jwt.service';
 import { checkPasswordStrength } from 'src/utils/passwordChecker';
 import { Stats } from 'src/database/stats.entity';
+import { exit } from 'process';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
                // console.log("************>>"+user.id);
                 user.username = body.username;
                 user.password = body.password;
-                user.avatar_url = body.password;
+                user.avatar_url = body.avatar_url;
                 await this.userservice.save(user);
                 console.log("************>>"+user.id);
 
@@ -61,17 +62,30 @@ export class AuthService {
         }
         else 
         {
-            console.log(user);
+            console.log(user)
             return null;
         }
     }
-    async create_Oauth(body:UserDto):Promise<boolean>
+    async create_Oauth(body:UserDto):Promise<boolean | User>
     {
-       const user = await this.userservice.findByName(body.username);
-       if (!user)
+       const user1 = await this.userservice.findByName(body.username);
+       if (!user1)
        {
-            await this.userservice.save(body);
-            return true;
+            console.log(body);
+            const user = new User();
+            user.username = body.username;
+            user.avatar_url = body.avatar_url;  
+            await this.userservice.save(user);
+            const stats = new Stats();
+            user.stats = stats;
+            stats.user = user;
+            await this.userservice.saveStat(stats);
+            console.log("BEFORE")
+            await this.userservice.save(user);
+            console.log("AFTER");
+            console.log("************>>"+user.id);
+            //exit(0);
+            return user;
        }
         else
             return false;
