@@ -9,27 +9,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlockedUser = void 0;
+exports.Notification = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("./user.entity");
-let BlockedUser = exports.BlockedUser = class BlockedUser {
+let Notification = exports.Notification = class Notification {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], BlockedUser.prototype, "Blockedid", void 0);
+], Notification.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.blockedUsers),
-    (0, typeorm_1.JoinColumn)({ name: 'BlockedById' }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User),
     __metadata("design:type", user_entity_1.User)
-], BlockedUser.prototype, "blockedby", void 0);
+], Notification.prototype, "sender", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.usersBlocked),
-    (0, typeorm_1.JoinColumn)({ name: 'BlockedUserId' }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User),
     __metadata("design:type", user_entity_1.User)
-], BlockedUser.prototype, "blockeduser", void 0);
-exports.BlockedUser = BlockedUser = __decorate([
+], Notification.prototype, "recipient", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Notification.prototype, "type", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], Notification.prototype, "isRead", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Notification.prototype, "message", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Notification.prototype, "createdAt", void 0);
+exports.Notification = Notification = __decorate([
     (0, typeorm_1.Entity)()
-], BlockedUser);
-;
-//# sourceMappingURL=blockedUser.entity.js.map
+], Notification);
+//# sourceMappingURL=notifications.entity.js.map

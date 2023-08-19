@@ -4,6 +4,7 @@ import { UserFriends } from '../database/userFriends.entity';
 import { Notification } from '../database/notifications.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Not, Equal } from 'typeorm';
+import { refCount } from 'rxjs';
 @Injectable()
 export class FriendsService {
   constructor(
@@ -34,7 +35,8 @@ export class FriendsService {
   }
 
   async acceptRequest(userid:Number, recipientid:Number){
-    const friendship = await this.userFriendsRepository.findOne({where: {user1: Equal(userid), user2: Equal(recipientid)}})
+    console.log("*****************************************");
+    const friendship = await this.userFriendsRepository.findOne({where: {user1: Equal(recipientid), user2: Equal(userid)}})
     if (!friendship)
       throw new HttpException("No request to accept", HttpStatus.FORBIDDEN);
     friendship.status = "accepted";
@@ -50,22 +52,22 @@ export class FriendsService {
 
   async removeFriendship(userid:Number, recipientid:Number)
   {
-    const friendship = await this.userFriendsRepository.findOne({where: {user1: Equal(userid), user2: Equal(recipientid)}});
+    const friendship = await this.userFriendsRepository.findOne({where: [{user1: Equal(userid), user2: Equal(recipientid)},{ user1: Equal(recipientid), user2: Equal(userid)}]});
     if (!friendship)
       throw new HttpException("No friendship to remove", HttpStatus.FORBIDDEN);
     await this.userFriendsRepository.remove(friendship);
   }
 
-  async getUserFriendsWithDetails(userid: Number): Promise<{ id: Number, username: String, avatar_URL: String }[]> {
+  async getUserFriendsWithDetails(userid: Number): Promise<{ id: Number, username: String, avatar_url: String }[]> {
     const friendDetails = await this.userRepository
     .createQueryBuilder('user')
     .leftJoinAndSelect(
       'user.friends',
       'friendship',
-      'friendship.user1 = :userid OR friendship.user2 = :userid',
+      'friendship.User1ID = :userid OR friendship.User2ID = :userid',
       { userid }
     )
-    .select(['user.id', 'user.username', 'user.avatar_URL'])
+    .select(['user.id', 'user.username', 'user.avatar_url'])
     .getMany();
 
     return friendDetails;

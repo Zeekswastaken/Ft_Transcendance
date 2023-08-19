@@ -182,11 +182,11 @@ let twoFactAuth_Controller = exports.twoFactAuth_Controller = class twoFactAuth_
         res.send({ secret: secret.twoFactorSecret });
     }
     async generateQrCode(body, res) {
-        const qrCodeUri = await this.authservice.generateQrCodeUri(body.userid, body.secret);
+        const qrCodeUri = await this.authservice.generateQrCodeUri(body.userid);
         res.send({ qrCodeUri });
     }
     verifyToken(body) {
-        const isValid = this.authservice.verifyToken(body.secret, body.token, body.userid);
+        const isValid = this.authservice.verifyToken(body.token, body.userid);
         return { isValid };
     }
 };
@@ -214,7 +214,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], twoFactAuth_Controller.prototype, "verifyToken", null);
 exports.twoFactAuth_Controller = twoFactAuth_Controller = __decorate([
-    (0, common_1.Controller)('2factauth'),
+    (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], twoFactAuth_Controller);
 let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controller {

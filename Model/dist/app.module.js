@@ -31,6 +31,8 @@ const blockedUser_entity_1 = require("./database/blockedUser.entity");
 const userFriends_entity_1 = require("./database/userFriends.entity");
 const achievements_entity_1 = require("./database/achievements.entity");
 const chat_gateway_1 = require("./chat/chat.gateway");
+const friends_module_1 = require("./friends/friends.module");
+const notifications_entity_1 = require("./database/notifications.entity");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -43,14 +45,14 @@ exports.AppModule = AppModule = __decorate([
                 username: 'admin',
                 password: 'pass',
                 database: 'mydb',
-                entities: [message_entity_1.Message, channel_entity_1.Channel, user_entity_1.User, channelMembership_entity_1.ChannelMembership, stats_entity_1.Stats, match_entity_1.Match, gameInvite_entity_1.GameInvite, blockedUser_entity_1.BlockedUser, userFriends_entity_1.UserFriends, achievements_entity_1.Achievements],
+                entities: [message_entity_1.Message, channel_entity_1.Channel, user_entity_1.User, channelMembership_entity_1.ChannelMembership, stats_entity_1.Stats, match_entity_1.Match, gameInvite_entity_1.GameInvite, blockedUser_entity_1.BlockedUser, userFriends_entity_1.UserFriends, achievements_entity_1.Achievements, notifications_entity_1.Notification],
                 logging: true,
                 synchronize: true,
             }),
             user_module_1.UserModule, auth_module_1.AuthModule, channel_module_1.ChannelModule, jwt_1.JwtModule.register({
                 secret: "0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
                 signOptions: { expiresIn: '1h' },
-            })
+            }), friends_module_1.FriendsModule
         ],
         controllers: [app_controller_1.AppController, user_controller_1.UserController],
         providers: [app_service_1.AppService, guards_1.TokenGuard, jwt_service_1.JWToken, user_service_1.UserService, channel_service_1.ChannelService, chat_gateway_1.ChatGateway],

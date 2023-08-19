@@ -27,10 +27,6 @@ export class FriendsGateway {
     }
   }
 
-  @SubscribeMessage('getAllFriends')
-  findAll() {
-    return this.friendsService.findAll();
-  }
 
   // @SubscribeMessage('findOneFriend')
   // findOne(@MessageBody() id: number) {
@@ -40,6 +36,9 @@ export class FriendsGateway {
   @SubscribeMessage('acceptFriendRequest')
   async accept(@MessageBody() data: { userID: Number, recipientID: Number}, @ConnectedSocket() client: Socket) {
     try {
+      console.log("-------> user ");
+      console.log("-------> user ", data.userID); 
+      console.log("-------> recipient ", data.recipientID);
     return await this.friendsService.acceptRequest(data.userID, data.recipientID);
     } catch (error)
     {
@@ -68,6 +67,18 @@ export class FriendsGateway {
     } catch (error)
     {
       console.error('Error unfriending the user: ',error.message);
+      client.emit('error', error.message);
+      throw error;
+    }
+  }
+
+  @SubscribeMessage('getAllFriends')
+  getAll(@MessageBody() data: { userID: Number}, @ConnectedSocket() client: Socket) {
+    try{
+      return this.friendsService.getUserFriendsWithDetails(data.userID);
+    } catch (error)
+    {
+      console.error('Error getting the friends of the user: ',error.message);
       client.emit('error', error.message);
       throw error;
     }

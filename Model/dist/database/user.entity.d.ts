@@ -3,6 +3,7 @@ import { Stats } from "./stats.entity";
 import { GameInvite } from "./gameInvite.entity";
 import { Match } from "./match.entity";
 import { BlockedUser } from "./blockedUser.entity";
+import { Notification } from "./notifications.entity";
 export declare class User {
     id: Number;
     username: String;
@@ -10,8 +11,8 @@ export declare class User {
     password: String;
     gender: String;
     privacy: Boolean;
-    Bio: String;
-    avatar_URL: String;
+    bio: String;
+    avatar_url: String;
     memberships: ChannelMembership[];
     friends: User[];
     stats: Stats;
@@ -23,4 +24,5 @@ export declare class User {
     usersBlocked: BlockedUser[];
     twoFactorSecret: string;
     twoFactorEnabled: boolean;
+    receivedNotifications: Notification[];
 }

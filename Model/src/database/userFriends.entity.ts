@@ -10,10 +10,10 @@ export class UserFriends {
   status: string;
 
   @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: 'User1ID' })
+  @JoinColumn({ name: 'user1' })
   user1: User;
 
   @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: 'User2ID' })
+  @JoinColumn({ name: 'user2' })
   user2: User;
 }

@@ -31,10 +31,8 @@ export declare class twoFactAuth_Controller {
     getSecret(req: any, res: any): Promise<void>;
     generateQrCode(body: {
         userid: Number;
-        secret: string;
     }, res: any): Promise<void>;
     verifyToken(body: {
-        secret: string;
         token: string;
         userid: Number;
     }): {

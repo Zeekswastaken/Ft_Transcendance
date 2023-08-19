@@ -2,6 +2,10 @@ import { Entity, PrimaryGeneratedColumn, CreateDateColumn,Column, ManyToOne, Joi
 import { User } from './user.entity';
 @Entity()
 export class Notification   {
+  
+  @PrimaryGeneratedColumn()
+  id:Number;
+  
   @ManyToOne(() => User)
   sender: User;
 

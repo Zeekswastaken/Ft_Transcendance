@@ -26,21 +26,21 @@ let AuthService = exports.AuthService = class AuthService {
         this.userservice.saveByObj(user);
         return (user);
     }
-    async generateQrCodeUri(userid, secret) {
+    async generateQrCodeUri(userid) {
         const user = await this.userservice.findById(userid);
         return speakeasy.otpauthURL({
-            secret,
+            secret: user.twoFactorSecret,
             label: user.username,
             issuer: 'Pong',
         });
     }
-    async verifyToken(secret, token, userid) {
+    async verifyToken(token, userid) {
+        const user = await this.userservice.findById(userid);
         if (speakeasy.totp.verify({
-            secret,
+            secret: user.twoFactorSecret,
             encoding: 'base32',
             token,
         })) {
-            const user = await this.userservice.findById(userid);
             user.twoFactorEnabled = true;
             return true;
         }

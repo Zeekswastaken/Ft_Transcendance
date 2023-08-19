@@ -27,9 +27,6 @@ let ChannelService = exports.ChannelService = class ChannelService {
         this.channelRepository = channelRepository;
         this.channelMembershipRepository = channelMembershipRepository;
         this.userRepository = userRepository;
-        console.log('ChannelRepository:', channelRepository);
-        console.log('ChannelMembershipRepository:', channelMembershipRepository);
-        console.log('UserRepository:', userRepository);
     }
     async createChannel(createChannelDto, owner) {
         console.log('--------> ', createChannelDto.Name);

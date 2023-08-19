@@ -17,6 +17,7 @@ const stats_entity_1 = require("./stats.entity");
 const gameInvite_entity_1 = require("./gameInvite.entity");
 const match_entity_1 = require("./match.entity");
 const blockedUser_entity_1 = require("./blockedUser.entity");
+const notifications_entity_1 = require("./notifications.entity");
 let User = exports.User = User_1 = class User {
 };
 __decorate([
@@ -46,11 +47,11 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "Bio", void 0);
+], User.prototype, "bio", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU" }),
     __metadata("design:type", String)
-], User.prototype, "avatar_URL", void 0);
+], User.prototype, "avatar_url", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => channelMembership_entity_1.ChannelMembership, membership => membership.user, { cascade: true, onDelete: 'CASCADE' }),
     __metadata("design:type", Array)
@@ -82,11 +83,11 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "player2", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => blockedUser_entity_1.BlockedUser, blockedUser => blockedUser.blockedBy),
+    (0, typeorm_1.OneToMany)(() => blockedUser_entity_1.BlockedUser, blockedUser => blockedUser.blockedby),
     __metadata("design:type", Array)
 ], User.prototype, "blockedUsers", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => blockedUser_entity_1.BlockedUser, blockedUser => blockedUser.blockedUser),
+    (0, typeorm_1.OneToMany)(() => blockedUser_entity_1.BlockedUser, blockedUser => blockedUser.blockeduser),
     __metadata("design:type", Array)
 ], User.prototype, "usersBlocked", void 0);
 __decorate([
@@ -97,6 +98,10 @@ __decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], User.prototype, "twoFactorEnabled", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => notifications_entity_1.Notification, notification => notification.recipient),
+    __metadata("design:type", Array)
+], User.prototype, "receivedNotifications", void 0);
 exports.User = User = User_1 = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

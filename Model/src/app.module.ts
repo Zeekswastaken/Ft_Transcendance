@@ -23,6 +23,7 @@ import { UserFriends } from './database/userFriends.entity';
 import { Achievements } from './database/achievements.entity';
 import { ChatGateway } from './chat/chat.gateway';
 import { FriendsModule } from './friends/friends.module';
+import { Notification } from './database/notifications.entity';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { FriendsModule } from './friends/friends.module';
       username: 'admin',
       password: 'pass',
       database: 'mydb',
-      entities: [Message, Channel, User, ChannelMembership, Stats, Match, GameInvite, BlockedUser, UserFriends, Achievements],
+      entities: [Message, Channel, User, ChannelMembership, Stats, Match, GameInvite, BlockedUser, UserFriends, Achievements, Notification],
       logging: true,
       synchronize: true,
     }),
