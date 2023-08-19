@@ -76,7 +76,7 @@ export default function RootLayout({
     
   }, [User])
   
-  console.log(userData);
+  console.log(userData)
   const isFriend = false;
   const isPrivate = true;
   // const currentUsername = "Fouamep";
@@ -115,7 +115,7 @@ export default function RootLayout({
                 {children}
               </div>
             )}
-            <div className="  order-1 flex place-content-center">
+            <div className=" mt-20 lg:mt-0 order-1 flex place-content-center">
               <div className="  bg-[#321B38]/[0.7] shadow-2xl rounded-2xl w-[85%]">
                 <div className=" 2xl:mb-0 mt-[50px] grid place-content-center ">
                   <img

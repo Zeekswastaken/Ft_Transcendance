@@ -1,24 +1,15 @@
 {
   "pages": {
-    "/users/[username]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/users/[username]/page.js"
-    ],
     "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/users/[username]/layout": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/users/[username]/layout.js"
-    ],
-    "/users/[username]/settings/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/users/[username]/settings/page.js"
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -26,10 +17,30 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/users/[username]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/users/[username]/page.js"
+    ],
+    "/game/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/game/page.js"
+    ],
+    "/users/[username]/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/users/[username]/layout.js"
+    ],
     "/users/[username]/friends/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/users/[username]/friends/page.js"
+    ],
+    "/users/[username]/groups/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/users/[username]/groups/page.js"
     ]
   }
 }

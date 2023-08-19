@@ -16,12 +16,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // const router = useRouter()
-  let checkAuth ="true";
   return (
     <html lang="en">
       <body className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat flex justify-center ">
-        {checkAuth === "true" ? <Navbar /> : "" }
+        <Navbar />
         <Providers>
           {children}
         </Providers>

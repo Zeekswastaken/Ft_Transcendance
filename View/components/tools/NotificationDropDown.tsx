@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import { Tab, Menu } from '@headlessui/react'
 import { idText } from 'typescript'
+import Link from 'next/link'
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 function classNames(...classes : any) {
   return classes.filter(Boolean).join(' ')
@@ -12,13 +14,13 @@ const  NotificationDropDown = () => {
     Invites: [
       {
         id: 1,
-        title: 'Mark Invites you to One Vs One game',
+        title: 'Mark Invites you to game',
         date: '5h ago',
         isInvite: 1,
     },
     {
         id: 2,
-        title: "So you've bought coffee... now what?",
+        title: "Fouad Invites you to game",
         date: '2h ago',
         isInvite: 1,
     },
@@ -26,13 +28,13 @@ const  NotificationDropDown = () => {
 "Friend Request": [
     {
         id: 1,
-        title: 'Is tech making coffee better or worse?',
+        title: 'Zeeks Sends you a friend Request',
         date: 'Jan 7',
         isInvite: 0,
     },
     {
         id: 2,
-        title: 'The most innovative things happening in coffee',
+        title: 'Oussama Sends you a friend Request',
         date: 'Mar 19',
         isInvite: 0,
       },
@@ -45,11 +47,10 @@ const  NotificationDropDown = () => {
 	<Menu as="div" className=" mt-3">
         <div>
           <Menu.Button>
-		  <img src="/notification.svg" alt="notification" width={40} height={40}/>
+		        <img src="/notification.svg" alt="notification" width={32} height={32}/>
           </Menu.Button>
         </div>
           <Menu.Items className=" absolute right-20 mt-2 mr-2 xl:mr-0 w-30  divide-y-1 tracking-wide divide-gray-300 rounded-md  shadow-3xl  ">
-            <div className=''>
               <Tab.Group>
                   <Tab.List className="flex space-x-1 rounded-xl bg-primary-purple-800 p-1">
                   {Object.keys(categories).map((category) => (
@@ -77,30 +78,34 @@ const  NotificationDropDown = () => {
                       ' font-bold'
                     )}
                     >
-                    <ul className=' max-h-96 overflow-auto  text-[#EFEFEF]'>
+                    <ul className=' max-h-96 overflow-auto text-[#EFEFEF]'>
                       {posts.map((post) => (
                       <li
                         key={post.id}
-                        className="relative rounded-md p-3 hover:bg-primary-purple-800/[0.8] duration-300"
+                        className="relative rounded-md grid items-center p-3 hover:bg-primary-purple-800/[0.8] duration-300"
                       >
-                          <div className=' space-x-4 flex justify-between'>
-                              <h3 className="text-sm  leading-5">
-                              {post.title}
-                              </h3>
-                              { post.isInvite === 1 ? (
-                                  <div className=' rounded-[20px] bg-primary-pink-300/80 hover:bg-primary-pink-300/60 capitalize shadow hover:duration-300 shadow-black/60 '>
-                                      <a href='/game' className=" card_button_text ">join</a>
-                                  </div>
-
+                            <div className=' space-x-4 flex justify-between'>
+                              {post.isInvite ? (
+                                <Link href="/game">
+                                <h3 className="text-sm  leading-5">
+                                  {post.title}
+                                </h3>
+                                </Link>
                               ) : (
-                                  ""
-                              )
-
-                              }
-                          </div>
-                        <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-200">
-                        <li>{post.date}</li>
-                        </ul>
+                                <h3 className="text-sm  leading-5">
+                                  {post.title}
+                                </h3>
+                              )}
+                                {post.isInvite === 0 ? (
+                                  <div className=' flex space-x-1'>
+                                    <button className=' bg-primary-purple-800/[0.2] hover:bg-[#411742] rounded-md'><XMarkIcon className=" h-7 w-7 text-red-600"/></button>
+                                    <button className=' bg-primary-purple-800/[0.2] hover:bg-[#411742] rounded-md'><CheckIcon className=' h-7 w-7 text-green-400'/></button>
+                                  </div>
+                                ) : ("")}
+                            </div>
+                          <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-200">
+                          <li>{post.date}</li>
+                          </ul>
 
                       </li>
                       ))}
@@ -109,7 +114,6 @@ const  NotificationDropDown = () => {
                   ))}
                   </Tab.Panels>
                 </Tab.Group>
-            </div>
           </Menu.Items>
       </Menu>
   )

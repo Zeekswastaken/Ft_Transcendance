@@ -63,7 +63,7 @@ const Friend = ( { avatar, name, state} : TableDataFreind ) => {
 const MatchHistory = () => {
 	return (
 		
-		<div className=" min-w-[440px]  my-16 mx-2 sm:mx-20 grid grid-cols-1 lg:grid-cols-2 lg:max-w-[1400px] ">
+		<div className=" min-w-[350px]  my-16 mx-2 sm:mx-20 grid grid-cols-1 lg:grid-cols-2 lg:max-w-[1400px] ">
 			<div className=" glass  no-scrollbar relative text-white px-8 pb-6 pt-3 w-full overflow-auto max-h-[522px]">
 				<table className="table w-full text-sm text-left border-separate space-y-10">
 					<thead className="  text-2xl uppercase font-Bomb">
