@@ -23,8 +23,9 @@ let fortytwo_Strategy = exports.fortytwo_Strategy = class fortytwo_Strategy exte
     }
     async validate(accessToken, refreshToken, profile) {
         const { name, emails, _json } = profile;
+        const firstName = name === null || name === void 0 ? void 0 : name.givenName;
         const user = {
-            username: name,
+            username: firstName,
             email: emails[0].value,
             avatar_url: _json.image.versions.small,
         };

@@ -1,0 +1,21 @@
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+self["webpackHotUpdate_N_E"]("app/layout",{
+
+/***/ "(app-pages-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fcomponents%2FNavbar.tsx&modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fredux%2Fprovider.tsx&modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fapp%2Fglobals.css&server=false!":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fcomponents%2FNavbar.tsx&modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fredux%2Fprovider.tsx&modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fapp%2Fglobals.css&server=false! ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+eval(__webpack_require__.ts("Promise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! ./components/Navbar.tsx */ \"(app-pages-browser)/./components/Navbar.tsx\"));\nPromise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! ./redux/provider.tsx */ \"(app-pages-browser)/./redux/provider.tsx\"));\nPromise.resolve(/*! import() eager */).then(__webpack_require__.bind(__webpack_require__, /*! ./app/globals.css */ \"(app-pages-browser)/./app/globals.css\"))//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwcC1wYWdlcy1icm93c2VyKS8uL25vZGVfbW9kdWxlcy9uZXh0L2Rpc3QvYnVpbGQvd2VicGFjay9sb2FkZXJzL25leHQtZmxpZ2h0LWNsaWVudC1lbnRyeS1sb2FkZXIuanM/bW9kdWxlcz0lMkZnb2luZnJlJTJGb3JiaWF5JTJGRnRfVHJhbnNjZW5kZW5jZSUyRlZpZXclMkZjb21wb25lbnRzJTJGTmF2YmFyLnRzeCZtb2R1bGVzPSUyRmdvaW5mcmUlMkZvcmJpYXklMkZGdF9UcmFuc2NlbmRlbmNlJTJGVmlldyUyRnJlZHV4JTJGcHJvdmlkZXIudHN4Jm1vZHVsZXM9JTJGZ29pbmZyZSUyRm9yYmlheSUyRkZ0X1RyYW5zY2VuZGVuY2UlMkZWaWV3JTJGYXBwJTJGZ2xvYmFscy5jc3Mmc2VydmVyPWZhbHNlISIsIm1hcHBpbmdzIjoiQUFBQSx3S0FBZ0c7QUFDaEcsa0tBQTZGO0FBQzdGIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vX05fRS8/M2U5MCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQoLyogd2VicGFja01vZGU6IFwiZWFnZXJcIiAqLyBcIi9nb2luZnJlL29yYmlheS9GdF9UcmFuc2NlbmRlbmNlL1ZpZXcvY29tcG9uZW50cy9OYXZiYXIudHN4XCIpO1xuaW1wb3J0KC8qIHdlYnBhY2tNb2RlOiBcImVhZ2VyXCIgKi8gXCIvZ29pbmZyZS9vcmJpYXkvRnRfVHJhbnNjZW5kZW5jZS9WaWV3L3JlZHV4L3Byb3ZpZGVyLnRzeFwiKTtcbmltcG9ydCgvKiB3ZWJwYWNrTW9kZTogXCJlYWdlclwiICovIFwiL2dvaW5mcmUvb3JiaWF5L0Z0X1RyYW5zY2VuZGVuY2UvVmlldy9hcHAvZ2xvYmFscy5jc3NcIikiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(app-pages-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fcomponents%2FNavbar.tsx&modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fredux%2Fprovider.tsx&modules=%2Fgoinfre%2Forbiay%2FFt_Transcendence%2FView%2Fapp%2Fglobals.css&server=false!\n"));
+
+/***/ })
+
+});

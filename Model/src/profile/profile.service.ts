@@ -6,9 +6,13 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class ProfileService {
     constructor(@InjectRepository(User) private readonly userRepo: Repository<User>) {}
-    async findByName(username:any): Promise<User>
+    async findByName(username:any): Promise<User| null>
     {
-       const user =  await this.userRepo.findOne({where :{ username: username},relations:['stats']});
-       return user;
+        if (await  this.userRepo.findOne({where :{ username: username}}) != null)
+        {
+            console.log(await  this.userRepo.findOne({where :{ username: username}}));
+            const user =  await this.userRepo.findOne({where :{ username: username},relations:['stats']});
+            return user;
+        }
     }
 }

@@ -22,8 +22,11 @@ let ProfileService = exports.ProfileService = class ProfileService {
         this.userRepo = userRepo;
     }
     async findByName(username) {
-        const user = await this.userRepo.findOne({ where: { username: username }, relations: ['stats'] });
-        return user;
+        if (await this.userRepo.findOne({ where: { username: username } }) != null) {
+            console.log(await this.userRepo.findOne({ where: { username: username } }));
+            const user = await this.userRepo.findOne({ where: { username: username }, relations: ['stats'] });
+            return user;
+        }
     }
 };
 exports.ProfileService = ProfileService = __decorate([

@@ -87,7 +87,7 @@ export class AuthController {
 
 @Controller('auth')
 export class googleController{
-    constructor(private readonly authservice:AuthService){}
+    constructor(private readonly authservice:AuthService,private readonly userservice:UserService){}
     //@UseGuards(TokenGuard)
     @UseGuards(AuthGuard('google'))
     @Get('google')
@@ -102,9 +102,10 @@ export class googleController{
         console.log("CallBack");
         const user = await req.user;
         console.log(user);
-        if (await this.authservice.create_Oauth(user) == true)
+        const newUser = await this.authservice.create_Oauth(user);
+        if (typeof newUser == 'object')
         {
-            const cookie_token = await this.authservice.generateToken_2(user);
+            const cookie_token = await this.authservice.generateToken_2(newUser);
 
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
@@ -117,13 +118,14 @@ export class googleController{
             return {
                 status:200,
                 token : cookie_token,
-                user:user,
+                user:newUser,
                 message:'the user create secssufully',
             }
         }
         else{
-            console.log('error');
-            const cookie_token = await this.authservice.generateToken_2(user);
+            //console.log('error');
+            const usertoken = await this.userservice.findByName(req.user.username);
+            const cookie_token = await this.authservice.generateToken_2(usertoken);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,
               });
@@ -136,7 +138,7 @@ export class googleController{
             return{
                 status:200,
                 token: cookie_token,
-                user:user,
+                user:usertoken,
                 message:'the user already exist'
             } 
         }
@@ -145,7 +147,7 @@ export class googleController{
 
 @Controller('auth')
 export class fortytwo_Controller{
-    constructor(private readonly authservice:AuthService){}
+    constructor(private readonly authservice:AuthService,private readonly usersrvice:UserService){}
     @Get('42')
     @UseGuards(AuthGuard('42'))
     // @UseGuards(TokenGuard)
@@ -159,9 +161,12 @@ export class fortytwo_Controller{
     async fortytwo_loginredirect(@Req() req, @Res() res ){
         console.log("CallBack");
         const user = await req.user;
-        if (await this.authservice.create_Oauth(user) == true)
+        const newUser = await this.authservice.create_Oauth(user);
+        console.log("New User = "+ newUser);
+        if (typeof newUser == 'object')
         {
-            const cookie_token = await this.authservice.generateToken_2(user);
+            console.log("Fist time")
+            const cookie_token = await this.authservice.generateToken_2(newUser);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,secure:false
               });
@@ -169,13 +174,15 @@ export class fortytwo_Controller{
               //res.redirect("http://localhost:3001/");
               res.redirect("http://localhost:3001/");
             const user_data = {token: cookie_token,
-                user:user,
-                message:'the email already exist'}
+                user:newUser,
+                message:'success'}
                 console.log(user_data);
             return user_data;
         }
         else{
-            const cookie_token = await this.authservice.generateToken_2(user);
+            const usertoken = await this.usersrvice.findByName(req.user.username);
+            console.log(usertoken);
+            const cookie_token = await this.authservice.generateToken_2(usertoken);
             res.cookie('accessToken', cookie_token, {
                 httpOnly: true,secure:false
               });
@@ -187,9 +194,9 @@ export class fortytwo_Controller{
             //res.redirect("http://localhost:3001/");
             res.redirect("http://localhost:3001/");
             const user_data = {token: cookie_token,
-                user:user,
-                message:'the email already exist'}
-                console.log(user_data);
+                user:usertoken,
+                message:'user already exist'}
+                console.log(usertoken );
             return user_data;
         }
     }

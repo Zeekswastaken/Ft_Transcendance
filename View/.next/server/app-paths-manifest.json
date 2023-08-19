@@ -1,4 +1,7 @@
 {
+  "/page": "app/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/login/page": "app/login/page.js",
   "/users/[username]/page": "app/users/[username]/page.js",
-  "/users/[username]/settings/page": "app/users/[username]/settings/page.js"
+  "/signup/complete-profile/page": "app/signup/complete-profile/page.js"
 }
