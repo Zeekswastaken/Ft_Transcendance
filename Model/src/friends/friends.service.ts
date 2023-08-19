@@ -20,7 +20,7 @@ export class FriendsService {
     const recipient = await this.userRepository.findOne({where: { id: Equal(recipientid)}});
     if (!initiator || !recipient)
       throw new HttpException("User or Recipient not found",HttpStatus.FORBIDDEN);
-    const friendship = await this.userFriendsRepository.findOne({where: {user1: Equal(userid), user2: Equal(recipientid)}});
+    const friendship = await this.userFriendsRepository.findOne({where: [{user1: Equal(userid), user2: Equal(recipientid)},{user1: Equal(recipientid), user2: Equal(userid)}]});
     if (friendship)
       throw new HttpException("The friend request has already been sent", HttpStatus.FORBIDDEN);
     const actualFriendship = new UserFriends();
@@ -39,7 +39,7 @@ export class FriendsService {
     const friendship = await this.userFriendsRepository.findOne({where: {user1: Equal(recipientid), user2: Equal(userid)}})
     if (!friendship)
       throw new HttpException("No request to accept", HttpStatus.FORBIDDEN);
-    friendship.status = "accepted";
+      friendship.status = "accepted";
     await this.userFriendsRepository.save(friendship);
   }
 
@@ -59,16 +59,27 @@ export class FriendsService {
   }
 
   async getUserFriendsWithDetails(userid: Number): Promise<{ id: Number, username: String, avatar_url: String }[]> {
+
     const friendDetails = await this.userRepository
     .createQueryBuilder('user')
     .leftJoinAndSelect(
-      'user.friends',
-      'friendship',
-      'friendship.User1ID = :userid OR friendship.User2ID = :userid',
-      { userid }
+        'user.friends',
+        'user_friendship',
+        'user_friendship.user1 = :userid OR user_friendship.user2 = :userid',
+        { userid }
+    )
+    .leftJoinAndSelect(
+        'user_friendship.user1',
+        'friendship'
+    )
+    .leftJoinAndSelect(
+        'user_friendship.user2',
+        'friendship'
     )
     .select(['user.id', 'user.username', 'user.avatar_url'])
     .getMany();
+
+
 
     return friendDetails;
   }

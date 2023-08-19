@@ -26,7 +26,7 @@ export class User{
     @OneToMany(() => ChannelMembership, membership => membership.user, { cascade: true, onDelete: 'CASCADE' })
     memberships: ChannelMembership[];
     @ManyToMany(() => User, user => user.friends)
-    @JoinTable({ name: 'userFriends' })
+    @JoinTable({ name: 'user_friends', joinColumn: { name: 'user1_id' }, inverseJoinColumn: { name: 'user2_id' } }) // Use the actual column names
     friends: User[];
     @OneToOne(() => Stats, stats => stats.user)
     @JoinColumn()

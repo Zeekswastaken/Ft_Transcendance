@@ -19,20 +19,20 @@ __decorate([
     __metadata("design:type", Number)
 ], UserFriends.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ default: 'pending' }),
     __metadata("design:type", String)
 ], UserFriends.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, { eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'user1' }),
+    (0, typeorm_1.JoinColumn)({ name: 'user1_id' }),
     __metadata("design:type", user_entity_1.User)
 ], UserFriends.prototype, "user1", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, { eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'user2' }),
+    (0, typeorm_1.JoinColumn)({ name: 'user2_id' }),
     __metadata("design:type", user_entity_1.User)
 ], UserFriends.prototype, "user2", void 0);
 exports.UserFriends = UserFriends = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)({ name: 'user_friends' })
 ], UserFriends);
 //# sourceMappingURL=userFriends.entity.js.map
