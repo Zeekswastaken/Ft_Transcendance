@@ -25,7 +25,15 @@ let FriendsGateway = exports.FriendsGateway = class FriendsGateway {
     async create(data, client) {
         try {
             const request = await this.friendsService.create(data.userID, data.recipientID);
-            client.emit('friendRequest', request);
+            console.log("}}}}}}}}}}");
+            try {
+                const message = "It has been sent";
+                client.emit('friendRequest', request);
+            }
+            catch (error) {
+                console.error('Error emitting friendRequest event: ', error.message);
+            }
+            console.log("{{{{{{{{{{{{{{{{");
             return request;
         }
         catch (error) {
@@ -70,6 +78,7 @@ let FriendsGateway = exports.FriendsGateway = class FriendsGateway {
     async getAll(data, client) {
         try {
             const details = await this.friendsService.getUserFriendsWithDetails(data.userID);
+            console.log(details);
             return details;
         }
         catch (error) {

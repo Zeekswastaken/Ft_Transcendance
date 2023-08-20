@@ -9,10 +9,9 @@ export declare class FriendsService {
     constructor(userFriendsRepository: Repository<UserFriends>, userRepository: Repository<User>, notificationsRepository: Repository<Notification>);
     create(userid: Number, recipientid: Number): Promise<UserFriends>;
     findAll(): string;
-    acceptRequest(userid: Number, recipientid: Number): Promise<void>;
+    acceptRequest(userid: number, recipientid: number): Promise<void>;
     refuseRequest(userid: Number, recipientid: Number): Promise<void>;
     removeFriendship(userid: Number, recipientid: Number): Promise<void>;
-    tar: any;
     getUserFriendsWithDetails(userid: Number): Promise<{
         id: Number;
         username: String;

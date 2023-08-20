@@ -34,25 +34,53 @@ let FriendsService = exports.FriendsService = class FriendsService {
         if (friendship)
             throw new common_1.HttpException("The friend request has already been sent", common_1.HttpStatus.FORBIDDEN);
         const actualFriendship = new userFriends_entity_1.UserFriends();
+        console.log("***********");
         actualFriendship.user1 = initiator;
         actualFriendship.user2 = recipient;
         actualFriendship.status = "pending";
-        initiator.user1Friends.push(actualFriendship);
-        recipient.user2Friends.push(actualFriendship);
-        await this.userRepository.save(recipient);
-        await this.userRepository.save(initiator);
-        return await this.userFriendsRepository.save(actualFriendship);
+        console.log("------------");
+        await this.userFriendsRepository.save(actualFriendship);
+        console.log("++++++++++++++");
+        initiator.user1Friends = [actualFriendship];
+        console.log(initiator.user1Friends);
+        console.log("////////////////");
+        recipient.user2Friends = [actualFriendship];
+        console.log("..............");
+        await this.userRepository.save([initiator, recipient]);
+        console.log("kkkkkkkkkkkkkkkkkkkk");
+        return actualFriendship;
     }
     findAll() {
         return `This action returns all friends`;
     }
     async acceptRequest(userid, recipientid) {
-        console.log("*****************************************");
-        const friendship = await this.userFriendsRepository.findOne({ where: { user1: (0, typeorm_2.Equal)(recipientid), user2: (0, typeorm_2.Equal)(userid) } });
-        if (!friendship)
+        const friendship = await this.userFriendsRepository.findOne({
+            where: { user1: (0, typeorm_2.Equal)(recipientid), user2: (0, typeorm_2.Equal)(userid) }
+        });
+        if (!friendship) {
             throw new common_1.HttpException("No request to accept", common_1.HttpStatus.FORBIDDEN);
+        }
         friendship.status = "accepted";
         await this.userFriendsRepository.save(friendship);
+        const user1 = await this.userRepository.findOne({
+            where: { id: (0, typeorm_2.Equal)(userid) },
+            relations: ['user1Friends', 'user2Friends']
+        });
+        const user2 = await this.userRepository.findOne({
+            where: { id: (0, typeorm_2.Equal)(recipientid) },
+            relations: ['user1Friends', 'user2Friends']
+        });
+        if (user1 && user2) {
+            const user1Friendship = user1.user1Friends.find(friend => friend.user2.id === recipientid);
+            if (user1Friendship) {
+                user1Friendship.status = "accepted";
+            }
+            const user2Friendship = user2.user2Friends.find(friend => friend.user1.id === userid);
+            if (user2Friendship) {
+                user2Friendship.status = "accepted";
+            }
+            await this.userRepository.save([user1, user2]);
+        }
     }
     async refuseRequest(userid, recipientid) {
         const friendship = await this.userFriendsRepository.findOne({ where: { user1: (0, typeorm_2.Equal)(userid), user2: (0, typeorm_2.Equal)(recipientid) } });
@@ -69,14 +97,16 @@ let FriendsService = exports.FriendsService = class FriendsService {
     async getUserFriendsWithDetails(userid) {
         const friendDetails = await this.userRepository
             .createQueryBuilder('user')
-            .leftJoinAndSelect('user.user1Friends', 'user_friendship', 'user_friendship.user1 = :userid AND user_friendship.status = \'accepted\'')
+            .leftJoinAndSelect('user.user1Friends', 'user_friendship', 'user_friendship.status = \'accepted\' AND (user_friendship.user1 = :userid OR user_friendship.user2 = :userid)', { userid })
             .leftJoinAndSelect('user_friendship.user2', 'friend_user2')
-            .leftJoinAndSelect('user.user2Friends', 'user_friendship2', 'user_friendship2.user2 = :userid AND user_friendship2.status = \'accepted\'')
+            .leftJoinAndSelect('user.user2Friends', 'user_friendship2', 'user_friendship2.status = \'accepted\' AND (user_friendship2.user2 = :userid OR user_friendship2.user1 = :userid)', { userid })
             .leftJoinAndSelect('user_friendship2.user1', 'friend_user1')
             .where('user.id = :userid', { userid })
             .select(['friend_user1.id', 'friend_user1.username', 'friend_user1.avatar_url'])
             .addSelect(['friend_user2.id', 'friend_user2.username', 'friend_user2.avatar_url'])
             .getOne();
+        if (!friendDetails)
+            console.log("EMPTYUUUUUUUUUUUU");
         if (friendDetails) {
             console.log("HIHOHIHOIHOH");
             const friendsWithDetails = [

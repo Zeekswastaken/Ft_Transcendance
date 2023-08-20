@@ -28,8 +28,10 @@ export class User{
     memberships: ChannelMembership[];
     @OneToMany(() => UserFriends, userFriends => userFriends.user1, { cascade: true, onDelete: 'CASCADE' })
     user1Friends: UserFriends[];
+    
     @OneToMany(() => UserFriends, userFriends => userFriends.user2, { cascade: true, onDelete: 'CASCADE' })
     user2Friends: UserFriends[];
+    
     @OneToOne(() => Stats, stats => stats.user)
     @JoinColumn()
     stats: Stats;
