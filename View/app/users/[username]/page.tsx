@@ -1,12 +1,16 @@
+"use client"
+
 import ProfileSvgs from "@/components/tools/ProfileSvgs";
 import React from "react";
 import CSS from "csstype";
 import Row from "@/components/tools/Row";
+import { useUserDataContext } from "@/app/userDataProvider";
+
 
 interface Props {
   styles: string;
   title: string; 
-  number: string;
+  number?: string | number;
 }
 
 const percentage:string = "70%";
@@ -50,6 +54,7 @@ const CardStats:React.FC<Props> = ( {styles, title, number} ) => {
 }
 
 const WinRate: React.FC<Props> = ({ styles, title }) => {
+  const userData = useUserDataContext();
   return (
     <div
       className={` glass ${styles}`}
@@ -59,12 +64,12 @@ const WinRate: React.FC<Props> = ({ styles, title }) => {
           <div className="  flex items-center place-content-center opacity-90 rounded-3xl">
               <div className=" flex items-end justify-center">
                 <img className="" src="/trophy.png" alt="trophy" height={70} width={70} />
-                <p className=" font-Bomb text-white text-4xl">58%</p>
+                <p className=" font-Bomb text-white text-4xl">{userData?.stats?.winrate + "%"}</p>
               </div>
           </div>
-          <CardStats title="Played" styles="text-[#D4D4D4]" number="108"/>
-          <CardStats title="Won" styles="text-green-500" number="63"/>
-          <CardStats title="Lost" styles="text-red-600" number="24"/>
+          <CardStats title="Played" styles="text-[#D4D4D4]" number={userData?.stats?.matches_played}/>
+          <CardStats title="Won" styles="text-green-500" number={userData?.stats?.wins}/>
+          <CardStats title="Lost" styles="text-red-600" number={userData?.stats?.losses}/>
         </div>
     </div>
   );

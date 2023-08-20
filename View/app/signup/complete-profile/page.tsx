@@ -23,7 +23,7 @@ const completProfile = () => {
     console.log(avatar_url);
 
     e.preventDefault();
-    await axios.put("http://localhost:3000/auth/modify-data", {
+    await axios.put("http://10.14.3.9:3000/auth/modify-data", {
 
       birthDay: birthDay,
       gender: gender,

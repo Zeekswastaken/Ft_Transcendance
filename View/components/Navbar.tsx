@@ -24,7 +24,7 @@ const MobileLinks = ( {pathname, toGo, value}:any) => {
 
 const Navbar = () => {
 	const pathName = usePathname();
-	if (pathName === "/login" || pathName === "/signup" || pathName === "/signup/complete-profile")
+	if (pathName === "/login" || pathName === "/signup" || pathName === "/signup/complete-profile" || pathName === "/not-found")
 		return (
 				<></>
 			)

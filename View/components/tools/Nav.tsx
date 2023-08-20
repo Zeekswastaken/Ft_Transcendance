@@ -51,7 +51,7 @@ const Nav = () => {
 		<Icon link="/chat" imageSrc="/messages-2.svg" imageAlt="Chat Page" />
 		<Icon link="/leaderboard" imageSrc="/ranking.svg" imageAlt="Leaderboard Page" />
 		{/* <Icon link="/game" imageSrc="/gameboy.svg" imageAlt="Game Page" /> */}
-		<Icon link="/groups" imageSrc="/people.svg" imageAlt="Groups Page" />
+		<Icon link="/channels" imageSrc="/people.svg" imageAlt="Groups Page" />
 	</div>    
   )
 }
