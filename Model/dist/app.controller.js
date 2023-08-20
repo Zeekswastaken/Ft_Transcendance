@@ -26,21 +26,23 @@ let AppController = exports.AppController = class AppController {
     async default(res, req, query) {
         const status = req.user;
         console.log(status);
-        if (status.status == 'unauthorized')
-            res.sendFile('/Users/orbiay/Desktop/App2/app/views/index.html');
+        if (status.status == 'unauthorized') {
+            res.redirect('localhost:3001/login');
+            return {
+                status: status,
+            };
+        }
         if (status.status == 'authorized') {
             console.log(query.avatar_url);
             const decoded = await this.jwt.decoded(status.token);
             const user = await this.userservice.findByName((decoded).username);
             console.log('user == ' + JSON.stringify(user));
-            res.render('profile', { user });
+            res.send({ user: user, status: status });
         }
-        console.log("status = " + status);
-        return status;
     }
 };
 __decorate([
-    (0, common_1.Get)('hamza'),
+    (0, common_1.Get)(),
     (0, common_1.UseGuards)(guards_1.TokenGuard),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Req)()),

@@ -35,6 +35,11 @@ let AuthService = exports.AuthService = class AuthService {
                 await this.userservice.save(user);
                 console.log("************>>" + user.id);
                 const stats = new stats_entity_1.Stats();
+                stats.level = 0;
+                stats.losses = 0;
+                stats.matches_played = 0;
+                stats.winrate = 0;
+                stats.wins = 0;
                 user.stats = stats;
                 stats.user = user;
                 await this.userservice.saveStat(stats);
@@ -68,6 +73,11 @@ let AuthService = exports.AuthService = class AuthService {
             user.avatar_url = body.avatar_url;
             await this.userservice.save(user);
             const stats = new stats_entity_1.Stats();
+            stats.level = 0;
+            stats.losses = 0;
+            stats.matches_played = 0;
+            stats.winrate = 0;
+            stats.wins = 0;
             user.stats = stats;
             stats.user = user;
             await this.userservice.saveStat(stats);

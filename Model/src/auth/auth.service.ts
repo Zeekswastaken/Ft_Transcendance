@@ -36,6 +36,11 @@ export class AuthService {
                 console.log("************>>"+user.id);
 
                 const stats = new Stats();
+                stats.level = 0;
+                stats.losses = 0;
+                stats.matches_played = 0;
+                stats.winrate = 0;
+                stats.wins = 0;
                 user.stats = stats;
                 stats.user = user;
                 await this.userservice.saveStat(stats);
@@ -77,6 +82,11 @@ export class AuthService {
             user.avatar_url = body.avatar_url;  
             await this.userservice.save(user);
             const stats = new Stats();
+            stats.level = 0;
+            stats.losses = 0;
+            stats.matches_played = 0;
+            stats.winrate = 0;
+            stats.wins = 0;
             user.stats = stats;
             stats.user = user;
             await this.userservice.saveStat(stats);
