@@ -67,9 +67,10 @@ let FriendsGateway = exports.FriendsGateway = class FriendsGateway {
             throw error;
         }
     }
-    getAll(data, client) {
+    async getAll(data, client) {
         try {
-            return this.friendsService.getUserFriendsWithDetails(data.userID);
+            const details = await this.friendsService.getUserFriendsWithDetails(data.userID);
+            return details;
         }
         catch (error) {
             console.error('Error getting the friends of the user: ', error.message);
@@ -120,7 +121,7 @@ __decorate([
     __param(1, (0, websockets_1.ConnectedSocket)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], FriendsGateway.prototype, "getAll", null);
 exports.FriendsGateway = FriendsGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({

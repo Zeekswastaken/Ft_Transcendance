@@ -4,6 +4,7 @@ import { GameInvite } from "./gameInvite.entity";
 import { Match } from "./match.entity";
 import { BlockedUser } from "./blockedUser.entity";
 import { Notification } from "./notifications.entity";
+import { UserFriends } from "./userFriends.entity";
 export declare class User {
     id: Number;
     username: String;
@@ -14,7 +15,8 @@ export declare class User {
     bio: String;
     avatar_url: String;
     memberships: ChannelMembership[];
-    friends: User[];
+    user1Friends: UserFriends[];
+    user2Friends: UserFriends[];
     stats: Stats;
     sentInvites: GameInvite[];
     receivedInvites: GameInvite[];

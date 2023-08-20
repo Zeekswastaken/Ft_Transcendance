@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var User_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
@@ -18,7 +17,8 @@ const gameInvite_entity_1 = require("./gameInvite.entity");
 const match_entity_1 = require("./match.entity");
 const blockedUser_entity_1 = require("./blockedUser.entity");
 const notifications_entity_1 = require("./notifications.entity");
-let User = exports.User = User_1 = class User {
+const userFriends_entity_1 = require("./userFriends.entity");
+let User = exports.User = class User {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
@@ -57,10 +57,13 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "memberships", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => User_1, user => user.friends),
-    (0, typeorm_1.JoinTable)({ name: 'user_friends', joinColumn: { name: 'user1_id' }, inverseJoinColumn: { name: 'user2_id' } }),
+    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.user1, { cascade: true, onDelete: 'CASCADE' }),
     __metadata("design:type", Array)
-], User.prototype, "friends", void 0);
+], User.prototype, "user1Friends", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.user2, { cascade: true, onDelete: 'CASCADE' }),
+    __metadata("design:type", Array)
+], User.prototype, "user2Friends", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => stats_entity_1.Stats, stats => stats.user),
     (0, typeorm_1.JoinColumn)(),
@@ -102,7 +105,7 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => notifications_entity_1.Notification, notification => notification.recipient),
     __metadata("design:type", Array)
 ], User.prototype, "receivedNotifications", void 0);
-exports.User = User = User_1 = __decorate([
+exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);
 //# sourceMappingURL=user.entity.js.map

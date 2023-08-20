@@ -24,19 +24,18 @@ import { Achievements } from './database/achievements.entity';
 import { ChatGateway } from './chat/chat.gateway';
 import { FriendsModule } from './friends/friends.module';
 import { Notification } from './database/notifications.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import typeorm from './config/typeorm';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost', // Use the service name defined in your Docker Compose file
-      port: 5432,
-      username: 'admin',
-      password: 'pass',
-      database: 'mydb',
-      entities: [Message, Channel, User, ChannelMembership, Stats, Match, GameInvite, BlockedUser, UserFriends, Achievements, Notification],
-      logging: true,
-      synchronize: true,
+ConfigModule.forRoot({
+      isGlobal: true,
+      load: [typeorm]
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => (configService.get('typeorm'))
     }),
     UserModule, AuthModule,ChannelModule,JwtModule.register({
       secret:"0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6", 

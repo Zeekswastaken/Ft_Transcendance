@@ -4,16 +4,16 @@ import { User } from './user.entity';
 @Entity({ name: 'user_friends' })
 export class UserFriends {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: Number;
 
-  @Column({ default: 'pending' })
+  @Column()
   status: string;
 
-  @ManyToOne(() => User, { eager: true})
-  @JoinColumn({ name: 'user1_id' }) 
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user1' })
   user1: User;
-
-  @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: 'user2_id' })
+  
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user2' })
   user2: User;
 }

@@ -5,6 +5,7 @@ import { GameInvite } from "./gameInvite.entity";
 import { Match } from "./match.entity";
 import { BlockedUser } from "./blockedUser.entity";
 import { Notification } from "./notifications.entity";
+import { UserFriends } from "./userFriends.entity";
 @Entity()
 export class User{
     @PrimaryGeneratedColumn()
@@ -25,9 +26,10 @@ export class User{
     avatar_url: String;
     @OneToMany(() => ChannelMembership, membership => membership.user, { cascade: true, onDelete: 'CASCADE' })
     memberships: ChannelMembership[];
-    @ManyToMany(() => User, user => user.friends)
-    @JoinTable({ name: 'user_friends', joinColumn: { name: 'user1_id' }, inverseJoinColumn: { name: 'user2_id' } }) // Use the actual column names
-    friends: User[];
+    @OneToMany(() => UserFriends, userFriends => userFriends.user1, { cascade: true, onDelete: 'CASCADE' })
+    user1Friends: UserFriends[];
+    @OneToMany(() => UserFriends, userFriends => userFriends.user2, { cascade: true, onDelete: 'CASCADE' })
+    user2Friends: UserFriends[];
     @OneToOne(() => Stats, stats => stats.user)
     @JoinColumn()
     stats: Stats;

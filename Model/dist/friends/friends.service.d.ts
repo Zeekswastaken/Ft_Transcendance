@@ -12,6 +12,7 @@ export declare class FriendsService {
     acceptRequest(userid: Number, recipientid: Number): Promise<void>;
     refuseRequest(userid: Number, recipientid: Number): Promise<void>;
     removeFriendship(userid: Number, recipientid: Number): Promise<void>;
+    tar: any;
     getUserFriendsWithDetails(userid: Number): Promise<{
         id: Number;
         username: String;
