@@ -81,7 +81,7 @@ export class FriendsGateway {
   @SubscribeMessage('getAllFriends')
   async getAll(@MessageBody() data: { userID: Number}, @ConnectedSocket() client: Socket) {
     try{
-        const details = await this.friendsService.getUserFriendsWithDetails(data.userID);
+        const details = await this.friendsService.getUserFriends(data.userID);
         console.log(details);
         return details;
     } catch (error)

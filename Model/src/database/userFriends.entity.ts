@@ -10,10 +10,10 @@ export class UserFriends {
   status: string;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user1' })
-  user1: User;
+  @JoinColumn({ name: 'sender' })
+  sender: User;
   
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user2' })
-  user2: User;
+  @JoinColumn({ name: 'receiver' })
+  receiver: User;
 }

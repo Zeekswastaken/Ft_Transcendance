@@ -77,7 +77,7 @@ let FriendsGateway = exports.FriendsGateway = class FriendsGateway {
     }
     async getAll(data, client) {
         try {
-            const details = await this.friendsService.getUserFriendsWithDetails(data.userID);
+            const details = await this.friendsService.getUserFriends(data.userID);
             console.log(details);
             return details;
         }

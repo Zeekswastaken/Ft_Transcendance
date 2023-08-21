@@ -15,8 +15,8 @@ export declare class User {
     bio: String;
     avatar_url: String;
     memberships: ChannelMembership[];
-    user1Friends: UserFriends[];
-    user2Friends: UserFriends[];
+    friendsassender: UserFriends[];
+    friendsasreceiver: UserFriends[];
     stats: Stats;
     sentInvites: GameInvite[];
     receivedInvites: GameInvite[];

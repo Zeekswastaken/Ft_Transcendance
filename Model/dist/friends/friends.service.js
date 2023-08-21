@@ -26,108 +26,112 @@ let FriendsService = exports.FriendsService = class FriendsService {
         this.notificationsRepository = notificationsRepository;
     }
     async create(userid, recipientid) {
-        const initiator = await this.userRepository.findOne({ where: { id: (0, typeorm_2.Equal)(userid) }, relations: ['user1Friends', 'user2Friends'] });
-        const recipient = await this.userRepository.findOne({ where: { id: (0, typeorm_2.Equal)(recipientid) }, relations: ['user1Friends', 'user2Friends'], });
+        const initiator = await this.userRepository.findOne({ where: { id: (0, typeorm_2.Equal)(userid) }, relations: ['friendsassender', 'friendsasreceiver'] });
+        const recipient = await this.userRepository.findOne({ where: { id: (0, typeorm_2.Equal)(recipientid) }, relations: ['friendsassender', 'friendsasreceiver'], });
         if (!initiator || !recipient)
             throw new common_1.HttpException("User or Recipient not found", common_1.HttpStatus.FORBIDDEN);
-        const friendship = await this.userFriendsRepository.findOne({ where: [{ user1: (0, typeorm_2.Equal)(userid), user2: (0, typeorm_2.Equal)(recipientid) }, { user1: (0, typeorm_2.Equal)(recipientid), user2: (0, typeorm_2.Equal)(userid) }] });
+        const friendship = await this.userFriendsRepository.findOne({ where: [{ sender: (0, typeorm_2.Equal)(userid), receiver: (0, typeorm_2.Equal)(recipientid) }, { sender: (0, typeorm_2.Equal)(recipientid), receiver: (0, typeorm_2.Equal)(userid) }] });
         if (friendship)
             throw new common_1.HttpException("The friend request has already been sent", common_1.HttpStatus.FORBIDDEN);
         const actualFriendship = new userFriends_entity_1.UserFriends();
-        console.log("***********");
-        actualFriendship.user1 = initiator;
-        actualFriendship.user2 = recipient;
+        actualFriendship.sender = initiator;
+        actualFriendship.receiver = recipient;
         actualFriendship.status = "pending";
-        console.log("------------");
         await this.userFriendsRepository.save(actualFriendship);
-        console.log("++++++++++++++");
-        initiator.user1Friends = [actualFriendship];
-        console.log(initiator.user1Friends);
-        console.log("////////////////");
-        recipient.user2Friends = [actualFriendship];
-        console.log("..............");
+        initiator.friendsassender = [actualFriendship];
+        console.log(initiator.friendsassender);
+        recipient.friendsasreceiver = [actualFriendship];
         await this.userRepository.save([initiator, recipient]);
-        console.log("kkkkkkkkkkkkkkkkkkkk");
+        console.log("--------------------------> ", recipient.friendsasreceiver[0].receiver);
         return actualFriendship;
     }
     findAll() {
         return `This action returns all friends`;
     }
     async acceptRequest(userid, recipientid) {
+        var _a, _b;
         const friendship = await this.userFriendsRepository.findOne({
-            where: { user1: (0, typeorm_2.Equal)(recipientid), user2: (0, typeorm_2.Equal)(userid) }
+            where: { sender: (0, typeorm_2.Equal)(recipientid), receiver: (0, typeorm_2.Equal)(userid) }
         });
         if (!friendship) {
             throw new common_1.HttpException("No request to accept", common_1.HttpStatus.FORBIDDEN);
         }
         friendship.status = "accepted";
+        console.log(friendship.receiver);
         await this.userFriendsRepository.save(friendship);
-        const user1 = await this.userRepository.findOne({
+        const accepting = await this.userRepository.findOne({
             where: { id: (0, typeorm_2.Equal)(userid) },
-            relations: ['user1Friends', 'user2Friends']
+            relations: ['friendsassender', 'friendsasreceiver']
         });
-        const user2 = await this.userRepository.findOne({
+        const waiting = await this.userRepository.findOne({
             where: { id: (0, typeorm_2.Equal)(recipientid) },
-            relations: ['user1Friends', 'user2Friends']
+            relations: ['friendsassender', 'friendsasreceiver']
         });
-        if (user1 && user2) {
-            const user1Friendship = user1.user1Friends.find(friend => friend.user2.id === recipientid);
-            if (user1Friendship) {
-                user1Friendship.status = "accepted";
-            }
-            const user2Friendship = user2.user2Friends.find(friend => friend.user1.id === userid);
-            if (user2Friendship) {
-                user2Friendship.status = "accepted";
-            }
-            await this.userRepository.save([user1, user2]);
+        if (!accepting || !waiting) {
+            throw new common_1.HttpException("Users not found", common_1.HttpStatus.FORBIDDEN);
         }
+        console.log("======> ", accepting);
+        console.log("**********> ", accepting.friendsasreceiver[0]);
+        console.log("---------> ", (_a = accepting.friendsasreceiver[0]) === null || _a === void 0 ? void 0 : _a.receiver);
+        const friendsassenderhip = accepting.friendsassender.find(friend => friend.receiver.id === recipientid);
+        if (friendsassenderhip) {
+            friendsassenderhip.status = "accepted";
+        }
+        const friendsasreceiverhip = waiting.friendsassender.find(friend => friend.sender.id === userid);
+        if (friendsasreceiverhip) {
+            friendsasreceiverhip.status = "accepted";
+        }
+        console.log("****************> ", (_b = waiting.friendsassender[0]) === null || _b === void 0 ? void 0 : _b.receiver);
+        await this.userRepository.save([accepting, waiting]);
     }
     async refuseRequest(userid, recipientid) {
-        const friendship = await this.userFriendsRepository.findOne({ where: { user1: (0, typeorm_2.Equal)(userid), user2: (0, typeorm_2.Equal)(recipientid) } });
+        const friendship = await this.userFriendsRepository.findOne({ where: { sender: (0, typeorm_2.Equal)(userid), receiver: (0, typeorm_2.Equal)(recipientid) } });
         if (!friendship)
             throw new common_1.HttpException("No request to accept", common_1.HttpStatus.FORBIDDEN);
         await this.userFriendsRepository.remove(friendship);
     }
     async removeFriendship(userid, recipientid) {
-        const friendship = await this.userFriendsRepository.findOne({ where: [{ user1: (0, typeorm_2.Equal)(userid), user2: (0, typeorm_2.Equal)(recipientid) }, { user1: (0, typeorm_2.Equal)(recipientid), user2: (0, typeorm_2.Equal)(userid) }] });
+        const friendship = await this.userFriendsRepository.findOne({ where: [{ sender: (0, typeorm_2.Equal)(userid), receiver: (0, typeorm_2.Equal)(recipientid) }, { sender: (0, typeorm_2.Equal)(recipientid), receiver: (0, typeorm_2.Equal)(userid) }] });
         if (!friendship)
             throw new common_1.HttpException("No friendship to remove", common_1.HttpStatus.FORBIDDEN);
         await this.userFriendsRepository.remove(friendship);
     }
-    async getUserFriendsWithDetails(userid) {
+    async getUserFriends(userid) {
+        console.log("Here");
         const friendDetails = await this.userRepository
             .createQueryBuilder('user')
-            .leftJoinAndSelect('user.user1Friends', 'user_friendship', 'user_friendship.status = \'accepted\' AND (user_friendship.user1 = :userid OR user_friendship.user2 = :userid)', { userid })
-            .leftJoinAndSelect('user_friendship.user2', 'friend_user2')
-            .leftJoinAndSelect('user.user2Friends', 'user_friendship2', 'user_friendship2.status = \'accepted\' AND (user_friendship2.user2 = :userid OR user_friendship2.user1 = :userid)', { userid })
-            .leftJoinAndSelect('user_friendship2.user1', 'friend_user1')
-            .where('user.id = :userid', { userid })
-            .select(['friend_user1.id', 'friend_user1.username', 'friend_user1.avatar_url'])
-            .addSelect(['friend_user2.id', 'friend_user2.username', 'friend_user2.avatar_url'])
-            .getOne();
-        if (!friendDetails)
-            console.log("EMPTYUUUUUUUUUUUU");
-        if (friendDetails) {
-            console.log("HIHOHIHOIHOH");
+            .leftJoinAndSelect('user.friendsassender', 'user_friendship', 'user_friendship.status = \'accepted\' AND (user_friendship.sender = :userid OR user_friendship.receiver = :userid)', { userid })
+            .leftJoinAndSelect('user.friendsasreceiver', 'user_friendship2', 'user_friendship2.status = \'accepted\' AND (user_friendship2.receiver = :userid OR user_friendship2.sender = :userid)', { userid })
+            .where('user.id = :userid', { userid });
+        const userWithFriendships = await friendDetails.getOne();
+        console.log("User with friendships", userWithFriendships);
+        if (userWithFriendships) {
+            console.log("----0-0-0-0-0- ", userWithFriendships.friendsassender[0]);
             const friendsWithDetails = [
-                ...friendDetails.user1Friends.map(friend => ({
-                    id: friend.user2.id,
-                    username: friend.user2.username,
-                    avatar_url: friend.user2.avatar_url
-                })),
-                ...friendDetails.user2Friends.map(friend => ({
-                    id: friend.user1.id,
-                    username: friend.user1.username,
-                    avatar_url: friend.user1.avatar_url
-                }))
+                ...userWithFriendships.friendsassender.map(friendship => {
+                    var _a, _b, _c;
+                    return ({
+                        id: (_a = friendship.receiver) === null || _a === void 0 ? void 0 : _a.id,
+                        username: (_b = friendship.receiver) === null || _b === void 0 ? void 0 : _b.username,
+                        avatar_url: (_c = friendship.receiver) === null || _c === void 0 ? void 0 : _c.avatar_url,
+                    });
+                }),
+                ...userWithFriendships.friendsasreceiver.map(friendship => {
+                    var _a, _b, _c;
+                    return ({
+                        id: (_a = friendship.sender) === null || _a === void 0 ? void 0 : _a.id,
+                        username: (_b = friendship.sender) === null || _b === void 0 ? void 0 : _b.username,
+                        avatar_url: (_c = friendship.sender) === null || _c === void 0 ? void 0 : _c.avatar_url,
+                    });
+                }),
             ];
-            console.log("HIHOHIHOI22222222222222222HOH");
-            console.log(friendsWithDetails);
+            console.log("Friend Details:", friendsWithDetails);
             return friendsWithDetails;
         }
         else {
-            return [];
+            console.log("No Friend Details found.");
         }
+        return [];
     }
 };
 exports.FriendsService = FriendsService = __decorate([

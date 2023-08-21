@@ -27,6 +27,6 @@ export declare class FriendsGateway {
     }, client: Socket): Promise<{
         id: Number;
         username: String;
-        avatar_url: String;
+        avatar_url: any;
     }[]>;
 }

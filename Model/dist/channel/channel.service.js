@@ -164,16 +164,16 @@ let ChannelService = exports.ChannelService = class ChannelService {
         const userinit = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(initiatorID) } });
         if (!channel || !user || !userinit)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
-        const user2 = await this.channelMembershipRepository.findOne({ where: { Userid: (0, typeorm_3.Equal)(initiatorID), Type: 'member' } });
-        if (user2)
+        const receiver = await this.channelMembershipRepository.findOne({ where: { Userid: (0, typeorm_3.Equal)(initiatorID), Type: 'member' } });
+        if (receiver)
             throw new common_1.HttpException("This User doesn't have the rights to perform this action", common_1.HttpStatus.FORBIDDEN);
-        const checkUser2 = await this.channelMembershipRepository.findOne({
+        const checkreceiver = await this.channelMembershipRepository.findOne({
             where: [
                 { Userid: (0, typeorm_3.Equal)(initiatorID), isMuted: true },
                 { Userid: (0, typeorm_3.Equal)(initiatorID), isBanned: true }
             ],
         });
-        if (checkUser2)
+        if (checkreceiver)
             throw new common_1.HttpException("This User is banned/muted", common_1.HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({
             where: [
@@ -208,16 +208,16 @@ let ChannelService = exports.ChannelService = class ChannelService {
         const user = await this.userRepository.findOne({ where: { id: (0, typeorm_3.Equal)(userID) } });
         if (!channel || !user)
             throw new common_1.HttpException("Channel or User not found", common_1.HttpStatus.FORBIDDEN);
-        const user2 = await this.channelMembershipRepository.findOne({ where: { Userid: (0, typeorm_3.Equal)(initiatorID), Type: 'member' } });
-        if (user2)
+        const receiver = await this.channelMembershipRepository.findOne({ where: { Userid: (0, typeorm_3.Equal)(initiatorID), Type: 'member' } });
+        if (receiver)
             throw new common_1.HttpException("This User doesn't have the rights to perform this action", common_1.HttpStatus.FORBIDDEN);
-        const checkUser2 = await this.channelMembershipRepository.findOne({
+        const checkreceiver = await this.channelMembershipRepository.findOne({
             where: [
                 { Userid: (0, typeorm_3.Equal)(initiatorID), isMuted: true },
                 { Userid: (0, typeorm_3.Equal)(initiatorID), isBanned: true }
             ],
         });
-        if (checkUser2)
+        if (checkreceiver)
             throw new common_1.HttpException("This User is banned/muted", common_1.HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({
             where: [

@@ -181,16 +181,16 @@ export class ChannelService {
         if (!channel || !user || !userinit)
             throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
         
-        const user2 = await this.channelMembershipRepository.findOne( { where: {Userid: Equal(initiatorID), Type: 'member'}});
-        if (user2)
+        const receiver = await this.channelMembershipRepository.findOne( { where: {Userid: Equal(initiatorID), Type: 'member'}});
+        if (receiver)
             throw new HttpException("This User doesn't have the rights to perform this action", HttpStatus.FORBIDDEN);
-        const checkUser2 = await this.channelMembershipRepository.findOne({
+        const checkreceiver = await this.channelMembershipRepository.findOne({
             where: [
               { Userid: Equal(initiatorID), isMuted: true },
               {Userid: Equal(initiatorID), isBanned: true }
             ],
           });            
-        if (checkUser2)
+        if (checkreceiver)
             throw new HttpException("This User is banned/muted", HttpStatus.FORBIDDEN);
         const membership = await this.channelMembershipRepository.findOne({
         where: [
@@ -228,16 +228,16 @@ export class ChannelService {
         if (!channel || !user)
             throw new HttpException("Channel or User not found", HttpStatus.FORBIDDEN);
         
-        const user2 = await this.channelMembershipRepository.findOne( { where: {Userid: Equal(initiatorID), Type: 'member'}});
-        if (user2)
+        const receiver = await this.channelMembershipRepository.findOne( { where: {Userid: Equal(initiatorID), Type: 'member'}});
+        if (receiver)
             throw new HttpException("This User doesn't have the rights to perform this action", HttpStatus.FORBIDDEN);
-        const checkUser2 = await this.channelMembershipRepository.findOne({
+        const checkreceiver = await this.channelMembershipRepository.findOne({
             where: [
               { Userid: Equal(initiatorID), isMuted: true },
               {Userid: Equal(initiatorID), isBanned: true }
             ],
         });            
-        if (checkUser2)
+        if (checkreceiver)
             throw new HttpException("This User is banned/muted", HttpStatus.FORBIDDEN);
     
         const membership = await this.channelMembershipRepository.findOne({

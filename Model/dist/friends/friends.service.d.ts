@@ -9,12 +9,12 @@ export declare class FriendsService {
     constructor(userFriendsRepository: Repository<UserFriends>, userRepository: Repository<User>, notificationsRepository: Repository<Notification>);
     create(userid: Number, recipientid: Number): Promise<UserFriends>;
     findAll(): string;
-    acceptRequest(userid: number, recipientid: number): Promise<void>;
+    acceptRequest(userid: Number, recipientid: Number): Promise<void>;
     refuseRequest(userid: Number, recipientid: Number): Promise<void>;
     removeFriendship(userid: Number, recipientid: Number): Promise<void>;
-    getUserFriendsWithDetails(userid: Number): Promise<{
+    getUserFriends(userid: Number): Promise<{
         id: Number;
         username: String;
-        avatar_url: String;
+        avatar_url: any;
     }[]>;
 }
