@@ -42,4 +42,5 @@ export class User{
     blockedUsers: BlockedUser[]; //USERS THAT GOT BLOCKED
     @OneToMany(() => BlockedUser, blockedUser => blockedUser.blockedUser)
     usersBlocked: BlockedUser[]; //USERS THAT BLOCKED
+    user: Promise<String>;
 }

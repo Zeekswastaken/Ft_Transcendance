@@ -42,3 +42,6 @@ export declare class update {
     privacy: Boolean;
     constructor();
 }
+export declare class tokenDto {
+    token: String;
+}

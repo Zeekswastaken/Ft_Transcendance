@@ -30,7 +30,7 @@ export class AuthService {
                 const user = new User();
                // console.log("************>>"+user.id);
                 user.username = body.username;
-                user.password = body.password;
+                user.password = await  this.userservice.hashpassword(body.password) ;
                 user.avatar_url = body.avatar_url;
                 await this.userservice.save(user);
                 console.log("************>>"+user.id);
@@ -57,10 +57,10 @@ export class AuthService {
         else
             return 'notMatch';
     }
-    async validate_by_email(username:String,password:String) :Promise<User | null>
+    async validate_by_username(username:String,password:String) :Promise<User | null>
     {
         const user = await this.userservice.findByName(username);
-        if (user && password == user.password && user.password && user.password != 'Oauth' )
+        if (user  && user.password && await this.userservice.compare(password,user.password) && user.password != 'Oauth' )
         {
             console.log(user);
             return user;
@@ -73,12 +73,12 @@ export class AuthService {
     }
     async create_Oauth(body:UserDto):Promise<boolean | User>
     {
-       const user1 = await this.userservice.findByName(body.username);
+       const user1 = await this.userservice.findByName(body.username + 'rabi3i');
        if (!user1)
        {
             console.log(body);
             const user = new User();
-            user.username = body.username;
+            user.username = body.username + 'rabi3i';
             user.avatar_url = body.avatar_url;  
             await this.userservice.save(user);
             const stats = new Stats();

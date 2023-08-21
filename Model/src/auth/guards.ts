@@ -1,6 +1,7 @@
-import { CanActivate, ExecutionContext, Injectable, Res } from "@nestjs/common";
+import { Body, CanActivate, ExecutionContext, Injectable, Res } from "@nestjs/common";
 import { JWToken } from "./jwt.service";
 import { Response } from 'express';
+import { tokenDto } from "src/Dto/use.Dto";
 
 // @Injectable()
 // export class TokenGuard implements CanActivate
@@ -38,26 +39,21 @@ export class TokenGuard implements CanActivate {
   constructor(private readonly jwtToken: JWToken) {}
 
   async canActivate(context: ExecutionContext):Promise< boolean> {
-    const req = context.switchToHttp().getRequest<CustomRequest>();
+    const req = context.switchToHttp().getRequest();
     const res = context.switchToHttp().getResponse<Response>();
-    const authorizationHeader = req.headers['authorization'];
-    console.log("\n\n\n\n\nauthorizationHeader = "+ authorizationHeader + "\n\n\n\n")
-    if (authorizationHeader && await authorizationHeader.startsWith('Bearer ')) {
-      const token = await authorizationHeader.substring(7); 
-      console.log('token2 = ' + token + "\n\n\n\n\n\n");
-      
+    const token = req.body.token;
+    console.log("mytoken = " + token)
+    if (token) {
       if (await this.jwtToken.verify(token)) {
-        console.log('Token is valid\n\n\n\n\n');
+        console.log('Token is valid\n');
         //Object.defineProperty(req, 'user', { value: { status: 'authorized', message:'token valid' } });
         req.user = { status: 'authorized', message: 'token valid',token:token };
         return true;
       }
     }
 
-    console.log('Invalid or expired token');
-    //res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
-    console.log('im HERE ')
     req.user = { status: 'unauthorized', message: 'token isn\'t valid',token:null };
-    return true;
+    //res.redirect('10.14.4.8:3000/login');
+      return true;
   }
 }

@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
+const bcrypt = require("bcrypt");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
@@ -22,6 +23,13 @@ let UserService = exports.UserService = class UserService {
     constructor(userRepo, statsRepository) {
         this.userRepo = userRepo;
         this.statsRepository = statsRepository;
+    }
+    async compare(password, hashedone) {
+        return await bcrypt.compare(password, hashedone);
+    }
+    async hashpassword(password) {
+        const saltOrRounds = 10;
+        return await bcrypt.hash(password, saltOrRounds);
     }
     async save(Body) {
         await this.userRepo.save(Body);

@@ -88,3 +88,6 @@ export  class update{
 //         this.password='Oauth';
 //     }
 // }
+export class tokenDto {
+    token:String
+}

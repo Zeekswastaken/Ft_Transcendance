@@ -30,7 +30,7 @@ let AuthService = exports.AuthService = class AuthService {
             if (await this.userservice.findByName(body.username) == null) {
                 const user = new user_entity_1.User();
                 user.username = body.username;
-                user.password = body.password;
+                user.password = await this.userservice.hashpassword(body.password);
                 user.avatar_url = body.avatar_url;
                 await this.userservice.save(user);
                 console.log("************>>" + user.id);
@@ -53,9 +53,9 @@ let AuthService = exports.AuthService = class AuthService {
         else
             return 'notMatch';
     }
-    async validate_by_email(username, password) {
+    async validate_by_username(username, password) {
         const user = await this.userservice.findByName(username);
-        if (user && password == user.password && user.password && user.password != 'Oauth') {
+        if (user && user.password && await this.userservice.compare(password, user.password) && user.password != 'Oauth') {
             console.log(user);
             return user;
         }
@@ -65,11 +65,11 @@ let AuthService = exports.AuthService = class AuthService {
         }
     }
     async create_Oauth(body) {
-        const user1 = await this.userservice.findByName(body.username);
+        const user1 = await this.userservice.findByName(body.username + 'rabi3i');
         if (!user1) {
             console.log(body);
             const user = new user_entity_1.User();
-            user.username = body.username;
+            user.username = body.username + 'rabi3i';
             user.avatar_url = body.avatar_url;
             await this.userservice.save(user);
             const stats = new stats_entity_1.Stats();

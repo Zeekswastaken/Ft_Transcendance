@@ -5,6 +5,8 @@ export declare class UserService {
     private readonly userRepo;
     private readonly statsRepository;
     constructor(userRepo: Repository<User>, statsRepository: Repository<Stats>);
+    compare(password: String, hashedone: String): Promise<Boolean>;
+    hashpassword(password: String): Promise<String>;
     save(Body: Partial<User>): Promise<void>;
     update(Body: Partial<User>, id: number): Promise<void>;
     findByName(username: any): Promise<User>;

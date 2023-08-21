@@ -19,19 +19,15 @@ let TokenGuard = exports.TokenGuard = class TokenGuard {
     async canActivate(context) {
         const req = context.switchToHttp().getRequest();
         const res = context.switchToHttp().getResponse();
-        const authorizationHeader = req.headers['authorization'];
-        console.log("\n\n\n\n\nauthorizationHeader = " + authorizationHeader + "\n\n\n\n");
-        if (authorizationHeader && await authorizationHeader.startsWith('Bearer ')) {
-            const token = await authorizationHeader.substring(7);
-            console.log('token2 = ' + token + "\n\n\n\n\n\n");
+        const token = req.body.token;
+        console.log("mytoken = " + token);
+        if (token) {
             if (await this.jwtToken.verify(token)) {
-                console.log('Token is valid\n\n\n\n\n');
+                console.log('Token is valid\n');
                 req.user = { status: 'authorized', message: 'token valid', token: token };
                 return true;
             }
         }
-        console.log('Invalid or expired token');
-        console.log('im HERE ');
         req.user = { status: 'unauthorized', message: 'token isn\'t valid', token: null };
         return true;
     }

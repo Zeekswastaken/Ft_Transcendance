@@ -1,8 +1,27 @@
+"use client"
+
 import DiscriptionCard from "@/components/home/DiscriptionCard";
 import GameCards from "@/components/home/GameCards";
 import MatchHistory from "@/components/home/MatchHistory";
+import axios from "axios";
+import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export default function Home() {
+export default  function Home() {
+
+  const token = getCookie("accessToken");
+  // const [isUserValid, setIsUserValid] = useState<boolean>(false);
+  const router = useRouter();
+
+   axios.post("http://localhost:3000", {
+    token: token
+  }).then(res => {
+    console.log(res.data)
+    // if (res.data.status === "unauthorized")
+    //   router.push("/login");
+  }).catch(res => (console.log(res)))
+
   return (
     <main className="overflow-auto  ">
       <DiscriptionCard />

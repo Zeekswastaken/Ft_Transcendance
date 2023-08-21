@@ -22,6 +22,7 @@ export class AuthController {
         console.log(Body);
         const decode = await this.jwtservice.decoded(Body.cookie);
         delete Body.cookie;
+        delete Body.avatar_url;
         const id = decode.id as number;
         await this.userservice.update(Body,id);
         const user = await this.userservice.findById(id);
@@ -29,7 +30,6 @@ export class AuthController {
         if (user)
         {
             console.log(user);
-            console.log("HOLOALDJN");
             const cookie_token = await this.authservice.generateToken_2(user);
             console.log(await this.jwtservice.decoded(cookie_token));
             res.send(cookie_token);
@@ -69,11 +69,7 @@ export class AuthController {
         {
             const cookie_token = await this.authservice.generateToken_2(user);
             const user2 = await this.jwtservice.decoded(cookie_token);
-            // res.cookie('accessToken', cookie_token, {
-            //     httpOnly: true,
-            //   });
             res.send({message:'success',cookie:cookie_token,user:user2});
-            //return obj;
         }
     }
     @Get('Sign-Out')
@@ -168,7 +164,7 @@ export class fortytwo_Controller{
             console.log("Fist time")
             const cookie_token = await this.authservice.generateToken_2(newUser);
             res.cookie('accessToken', cookie_token, {
-                httpOnly: true,secure:false
+                httpOnly: true,
               });
               
               //res.redirect("http://localhost:3001/");
@@ -184,7 +180,7 @@ export class fortytwo_Controller{
             console.log(usertoken);
             const cookie_token = await this.authservice.generateToken_2(usertoken);
             res.cookie('accessToken', cookie_token, {
-                httpOnly: true,secure:false
+                httpOnly: true
               });
               
             console.log('coockie token = '+ cookie_token);

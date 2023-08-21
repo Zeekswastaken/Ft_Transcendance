@@ -31,12 +31,12 @@ let AuthController = exports.AuthController = class AuthController {
         console.log(Body);
         const decode = await this.jwtservice.decoded(Body.cookie);
         delete Body.cookie;
+        delete Body.avatar_url;
         const id = decode.id;
         await this.userservice.update(Body, id);
         const user = await this.userservice.findById(id);
         if (user) {
             console.log(user);
-            console.log("HOLOALDJN");
             const cookie_token = await this.authservice.generateToken_2(user);
             console.log(await this.jwtservice.decoded(cookie_token));
             res.send(cookie_token);
@@ -193,7 +193,7 @@ let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controlle
             console.log("Fist time");
             const cookie_token = await this.authservice.generateToken_2(newUser);
             res.cookie('accessToken', cookie_token, {
-                httpOnly: true, secure: false
+                httpOnly: true,
             });
             res.redirect("http://localhost:3001/");
             const user_data = { token: cookie_token,
@@ -207,7 +207,7 @@ let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controlle
             console.log(usertoken);
             const cookie_token = await this.authservice.generateToken_2(usertoken);
             res.cookie('accessToken', cookie_token, {
-                httpOnly: true, secure: false
+                httpOnly: true
             });
             console.log('coockie token = ' + cookie_token);
             res.redirect("http://localhost:3001/");

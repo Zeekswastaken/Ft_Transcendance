@@ -1,4 +1,5 @@
 import { TokenExpiredError } from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
 
 import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,6 +12,15 @@ import { Stats } from 'src/database/stats.entity';
 export class UserService {
     constructor(@InjectRepository(User) private readonly userRepo: Repository<User>, @InjectRepository(Stats)
     private readonly statsRepository: Repository<Stats> ) {}
+    async compare(password:String,hashedone:String):Promise<Boolean>
+    {
+        return await bcrypt.compare(password,hashedone);
+    }
+    async hashpassword(password:String):Promise<String>{
+        const saltOrRounds = 10;
+    return await bcrypt.hash(password, saltOrRounds);
+
+    }
     async save(Body:Partial<User> ){
         await this.userRepo.save(Body);
     }

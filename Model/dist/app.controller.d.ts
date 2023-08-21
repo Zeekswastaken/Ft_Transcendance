@@ -6,7 +6,5 @@ export declare class AppController {
     private readonly userservice;
     private readonly jwt;
     constructor(userservice: UserService, jwt: JWToken);
-    default(res: Response, req: Request, query: UserDto): Promise<{
-        status: any;
-    }>;
+    default(res: Response, req: Request, query: UserDto): Promise<any>;
 }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.update = exports.TO_update = exports.MoreInfos = exports.jwtDTO = exports.UserDto2 = exports.UserDto = void 0;
+exports.tokenDto = exports.update = exports.TO_update = exports.MoreInfos = exports.jwtDTO = exports.UserDto2 = exports.UserDto = void 0;
 class UserDto {
     constructor() {
         this.avatar_url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqtgZ2eW2F2HvvFOq9Rs0kVWiWJL7pQbA5g&usqp=CAU';
@@ -38,4 +38,7 @@ class update {
     }
 }
 exports.update = update;
+class tokenDto {
+}
+exports.tokenDto = tokenDto;
 //# sourceMappingURL=use.Dto.js.map

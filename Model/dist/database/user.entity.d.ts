@@ -21,4 +21,5 @@ export declare class User {
     player2: Match[];
     blockedUsers: BlockedUser[];
     usersBlocked: BlockedUser[];
+    user: Promise<String>;
 }
