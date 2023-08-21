@@ -90,14 +90,14 @@ const Friends = () => {
   };
   
   return (
-    <div className=" border-2 border-primary-pink-300 rounded-[20px]">
+    <div className=" border-2 mt-10 border-primary-pink-300 rounded-[20px]">
       <div className=" glass w-full h-auto  ">
-        <div className=" px-20 2xl:px-40 pt-20 pb-12">
+        <div className=" px-10 2xl:px-28 pt-20 pb-12">
           <h1 className="  text-white font-Bomb text-4xl break-all">
             friend list
           </h1>
-          <div className=" overflow-auto no-scrollbar my-8 bg-[#2F0331] h-[500px] rounded-3xl">
-            <div className="pt-16 pl-10 2xl:pl-20">
+          <div className="  py-8 bg-[#2F0331] rounded-3xl">
+            <div className="pt-1 pl-2 2xl:pl-10">
               <div className=" flex space-x-3 text-white font-Heading text-2xl tracking-wide">
                 <div className={friendButtonStyle}>
                   <button onClick={handleFriendClickedTab}>Friends</button>
@@ -108,11 +108,14 @@ const Friends = () => {
               </div>
             </div>
             {friends && !blocked ? (
-              <div className=" mx-20 2xl:mx-20 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+              <div className=" overflow-y-auto no-scrollbar max-h-[450px] rounded-xl mx-2 2xl:mx-10 mt-8 grid  grid-cols-1 xl:grid-cols-2 gap-4 ">
                 <FriendCard />
+                <FriendCard />
+                <FriendCard />
+
               </div>
             ) : (
-              <div className=" mx-20 2xl:mx-20 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+              <div className=" overflow-y-auto no-scrollbar max-h-[500px] mx-20 2xl:mx-20 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
                 <BlockedCard />
                 <BlockedCard />
                 <BlockedCard />

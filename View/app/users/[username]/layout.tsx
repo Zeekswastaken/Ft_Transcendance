@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-// import UserCard from "./UserCard";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import ProfileSvgs from "@/components/tools/ProfileSvgs";
 import Link from "next/link";
 import { getCookie } from "cookies-next";
 import axios from "axios";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { useUserDataContext } from "../../userDataProvider";
 
 interface Props {
   styles: string;
@@ -45,41 +45,29 @@ interface ToggleTextButtonProps {
   styles: string;
 }
 
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const User = useParams().username;
-  const [currentUsername, setCurrentUsername] = useState();
-  const router = useRouter();
+  const [currentUsername, setCurrentUsername] = useState<string>("");
+  const userData = useUserDataContext();
   const token = getCookie("accessToken");
-  const [userData, setUserData] = useState({})
+  // const [userData, setUserData] = useState<userData>({} as userData)
   useEffect(() => {
     try {
-      setCurrentUsername(jwt.decode(token).username);
+      const user = jwt.decode(token as string) as JwtPayload
+      if (user)
+        setCurrentUsername(user.username)
+      // setCurrentUsername(jwt.decode(token).username);
     } catch (error) {
       console.error('Error decoding token:');
     }
   }, [])
 
-
-  
-  useEffect(() => {
-    axios.get(`http://localhost:3000/profile/${User}`).then((res) =>{
-      setUserData(res.data);
-      
-    }).catch((err) => {
-      console.log(err);
-    })
-    
-  }, [User])
-  
-  console.log(userData)
   const isFriend = false;
-  const isPrivate = true;
-  // const currentUsername = "Fouamep";
+  const isPrivate = false;
   const [isClicked, setIsClicked] = React.useState(true);
 
   const SetButtonText: React.FC<ToggleTextButtonProps> =  ( {initialText, newText, styles} ) => {
@@ -99,10 +87,10 @@ export default function RootLayout({
   };
 
   return (
-      <div className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat h-screen overflow-y-scroll no-scrollbar w-full">
+    <div className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat h-screen overflow-y-scroll no-scrollbar w-full">
         <div className=" 2xl:mt-[270px] lg:mt-[160px] mt-[50px] min-w-[400px] overflow-y-scroll w-full h-[75vh] no-scrollbar ">
           <div className=" grid grid-cols-1 2xl:grid-cols-3 mb-10">
-            {isPrivate && (userData.username !== currentUsername)  ?  (
+            {isPrivate && (userData?.username !== currentUsername)  ?  (
               <div className=" 2xl:order-1 order-2 col-span-2  p-20">
                 <div className=" flex items-center place-content-center glass w-full 2xl:h-full">
                   <h1 className=" text-3xl font-Heading text-white tracking-wider">
@@ -119,25 +107,25 @@ export default function RootLayout({
               <div className="  bg-[#321B38]/[0.7] shadow-2xl rounded-2xl w-[85%]">
                 <div className=" 2xl:mb-0 mt-[50px] grid place-content-center ">
                   <img
-                    src="/Spectate.png"
+                    src={userData?.avatar_url}
                     alt="avatar"
                     width={150}
                     height={150}
-                    className=" border-4   border-primary-pink-300 rounded-full"
+                    className=" border-4 border-primary-pink-300 rounded-full"
                   />
                   <div className=" text-center pt-4 space-y-2 font-Heading tracking-wider">
-                    <p className=" text-3xl text-white">{User}</p>
+                    <p className=" text-3xl text-white overflow-hidden text-ellipsis ">{User}</p>
                   </div>
                 </div>
                 <div className=" grid place-items-center">
-                  {userData.Bio ? (
+                  {userData?.Bio ? (
                   <div className="  bg-[#411941]/[0.8]  shadow-xl overflow-hidden whitespace-wrap mt-5 w-[75%] h-auto rounded-xl">
                     {/* max 180 character */}
-                    <p className=" shadow-none text-white text-center font-Heading text-xl leading-9 tracking-normal p-5 ">{userData.Bio}</p>
+                    <p className=" shadow-none text-white text-center font-Heading text-xl leading-9 tracking-normal p-5 ">{userData?.Bio}</p>
                   </div>
 
                   ) : ("")}
-                  {isPrivate && (userData.username !== currentUsername) ? (
+                  {isPrivate && (userData?.username !== currentUsername) ? (
                     <div className=" bg-[#411941]/[0.8]  shadow-xl overflow-hidden whitespace-wrap mt-10 w-[75%] rounded-xl mb-10">
                       <div className=" grid place-items-center items-center  h-[200px]">
                         <img

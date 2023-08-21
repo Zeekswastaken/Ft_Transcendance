@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import { Providers } from "@/redux/provider";
 import { useRouter } from 'next/navigation';
+import { UserDataProvider } from './userDataProvider';
 
 // interface avatar{setAvatar: string;}
 
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat flex justify-center ">
         <Navbar />
         <Providers>
-          {children}
+          <UserDataProvider>{children}</UserDataProvider>
         </Providers>
         {/* <Footer /> */}
       </body>

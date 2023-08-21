@@ -33,7 +33,7 @@ const Inputs: React.FC<Props> = ({ label, exContent, type }) => {
 
 const Settings = () => {
   return (
-    <div className=" border-2 border-primary-pink-300 rounded-[20px]">
+    <div className=" border-2 mt-10 border-primary-pink-300 rounded-[20px]">
       <div className=" glass w-full h-auto ">
         <div className=" flex place-content-center">
           <div className="  w-[78%] h-auto pb-20">

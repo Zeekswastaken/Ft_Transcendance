@@ -29,15 +29,15 @@ const GroupCard = () => {
 
 const Groups = () => {
   return (
-    <div className=" border-2 border-primary-pink-300 rounded-[20px]">
+    <div className=" border-2 mt-10 border-primary-pink-300 rounded-[20px]">
       <div className=" glass w-full min-w-[380px]  h-auto  ">
         <div className=" px-10 md:px-20 pt-20 pb-12">
-          <h1 className="  text-white font-Bomb text-4xl break-all">
+          <h1 className="  text-white font-Bomb text-4xl mb-4 break-all">
             Channels
           </h1>
-          <div className=" overflow-auto no-scrollbar my-10 bg-[#2F0331] h-[600px] rounded-3xl">
-            {/* <div className="pt-6 pl-20 2xl:pl-28"></div> */}
-            <div className=" mx-4 md:mx-10 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+          <div className=" overflow-auto no-scrollbar py-8  bg-[#2F0331] rounded-3xl">
+            <div className=" overflow-y-auto no-scrollbar max-h-[450px] mx-4 md:mx-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+              <GroupCard />
               <GroupCard />
               <GroupCard />
             </div>
