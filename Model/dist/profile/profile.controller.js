@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const jwt_service_1 = require("../auth/jwt.service");
 const user_service_1 = require("../user/user.service");
 const profile_service_1 = require("./profile.service");
+const passwordChecker_1 = require("../utils/passwordChecker");
 let ProfileController = exports.ProfileController = class ProfileController {
     constructor(userservice, profileService, jwt) {
         this.userservice = userservice;
@@ -34,12 +35,25 @@ let ProfileController = exports.ProfileController = class ProfileController {
     }
     async update(Body, res, id) {
         if (Body) {
-            await this.userservice.update(Body, id);
-            const user = await this.userservice.findById(id);
-            console.log(user.stats);
-            const cookie = await this.jwt.generateToken_2(user);
-            console.log(await this.jwt.decoded(cookie));
-            res.send({ message: 'success', cookie: cookie });
+            if (!Body.username) {
+                res.send('empty');
+                return;
+            }
+            const exist = this.userservice.findByName(Body.username);
+            if (!exist) {
+                if ((0, passwordChecker_1.checkPasswordStrength)(Body.password) == 'Weak') {
+                    res.send('weak');
+                    return;
+                }
+                await this.userservice.update(Body, id);
+                const user = await this.userservice.findById(id);
+                console.log(user.stats);
+                const cookie = await this.jwt.generateToken_2(user);
+                console.log(await this.jwt.decoded(cookie));
+                res.send({ message: 'success', cookie: cookie });
+            }
+            else
+                res.send({ message: 'username already exist', status: 'failure' });
         }
         else {
             res.send({ message: 'error' });
