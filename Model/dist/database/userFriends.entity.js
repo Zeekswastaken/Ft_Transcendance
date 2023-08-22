@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserFriends = void 0;
 const typeorm_1 = require("typeorm");
-const user_entity_1 = require("./user.entity");
 let UserFriends = exports.UserFriends = class UserFriends {
 };
 __decorate([
@@ -23,15 +22,13 @@ __decorate([
     __metadata("design:type", String)
 ], UserFriends.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User),
-    (0, typeorm_1.JoinColumn)({ name: 'sender' }),
-    __metadata("design:type", user_entity_1.User)
-], UserFriends.prototype, "sender", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], UserFriends.prototype, "senderid", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User),
-    (0, typeorm_1.JoinColumn)({ name: 'receiver' }),
-    __metadata("design:type", user_entity_1.User)
-], UserFriends.prototype, "receiver", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], UserFriends.prototype, "receiverid", void 0);
 exports.UserFriends = UserFriends = __decorate([
     (0, typeorm_1.Entity)({ name: 'user_friends' })
 ], UserFriends);

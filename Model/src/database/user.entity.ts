@@ -26,10 +26,12 @@ export class User{
     avatar_url: String;
     @OneToMany(() => ChannelMembership, membership => membership.user, { cascade: true, onDelete: 'CASCADE' })
     memberships: ChannelMembership[];
-    @OneToMany(() => UserFriends, userFriends => userFriends.sender, { cascade: true, onDelete: 'CASCADE' })
+    @OneToMany(() => UserFriends, userFriends => userFriends.senderid)
+    @JoinColumn({ name: "senderid" })
     friendsassender: UserFriends[];
     
-    @OneToMany(() => UserFriends, userFriends => userFriends.receiver, { cascade: true, onDelete: 'CASCADE' })
+    @OneToMany(() => UserFriends, userFriends => userFriends.receiverid)
+    @JoinColumn({ name: "receiverid" })
     friendsasreceiver: UserFriends[];
     
     @OneToOne(() => Stats, stats => stats.user)

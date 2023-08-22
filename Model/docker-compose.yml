@@ -24,7 +24,7 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: mydb
     volumes:
-      - ./pgdata2:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
     networks:
       - app-network
     ports:

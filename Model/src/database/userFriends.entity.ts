@@ -7,13 +7,11 @@ export class UserFriends {
   id: Number;
 
   @Column()
-  status: string;
+  status: String;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'sender' })
-  sender: User;
-  
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'receiver' })
-  receiver: User;
+  @Column()
+  senderid: Number;
+
+  @Column()
+  receiverid: Number;
 }

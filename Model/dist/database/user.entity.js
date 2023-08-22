@@ -57,11 +57,13 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "memberships", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.sender, { cascade: true, onDelete: 'CASCADE' }),
+    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.senderid),
+    (0, typeorm_1.JoinColumn)({ name: "senderid" }),
     __metadata("design:type", Array)
 ], User.prototype, "friendsassender", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.receiver, { cascade: true, onDelete: 'CASCADE' }),
+    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.receiverid),
+    (0, typeorm_1.JoinColumn)({ name: "receiverid" }),
     __metadata("design:type", Array)
 ], User.prototype, "friendsasreceiver", void 0);
 __decorate([
