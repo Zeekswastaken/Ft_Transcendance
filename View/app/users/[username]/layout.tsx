@@ -53,8 +53,8 @@ export default function RootLayout({
   const User = useParams().username;
   const [currentUsername, setCurrentUsername] = useState<string>("");
   const userData = useUserDataContext();
-  const token = getCookie("accessToken");
   // const [userData, setUserData] = useState<userData>({} as userData)
+  const token = getCookie("accessToken");
   useEffect(() => {
     try {
       const user = jwt.decode(token as string) as JwtPayload
@@ -64,10 +64,11 @@ export default function RootLayout({
     } catch (error) {
       console.error('Error decoding token:');
     }
-  }, [])
+  }, [User])
 
+  // console.log(userData);
   const isFriend = false;
-  const isPrivate = false;
+  const isPrivate = !userData?.privacy;
   const [isClicked, setIsClicked] = React.useState(true);
 
   const SetButtonText: React.FC<ToggleTextButtonProps> =  ( {initialText, newText, styles} ) => {

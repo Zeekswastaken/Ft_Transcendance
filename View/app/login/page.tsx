@@ -11,7 +11,7 @@ const login = ({response}:any) => {
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    await axios.post("http://10.14.3.9:3000/auth/login", {
+    await axios.post("http://localhost:3000/auth/login", {
       password,
       username,
     })

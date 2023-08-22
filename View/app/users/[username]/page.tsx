@@ -25,6 +25,7 @@ const progress: CSS.Properties = {
 }
 
 const LevelReached: React.FC<Props> = ({ styles, title }) => {
+  const userData = useUserDataContext();
   return (
     <div
       className={` glass overflow-auto no-scrollbar h-[350px] ${styles}`}
@@ -32,7 +33,7 @@ const LevelReached: React.FC<Props> = ({ styles, title }) => {
         <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
         <div className=" flex place-content-center items-end">
           <div className=" order-2 text-white font-Bomb text-3xl tracking-wider">
-            <p>level {level}</p>
+            <p>level {userData?.stats?.level}</p>
           </div>
           <div style={progress} className=" flex place-content-center items-center">
             <p className=" font-Bomb text-4xl text-white ">{percentage}</p>

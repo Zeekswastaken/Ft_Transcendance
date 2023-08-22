@@ -8,8 +8,9 @@ import { getCookie, setCookie } from 'cookies-next';
 
 
 const completProfile = () => {
-  const cookie = getCookie("accessToken");
-  const [birthDay, setBirthDay] = useState<Date | null>(null);
+  const cookie = getCookie('accessToken');
+  // console.log("cookie = ", cookie)
+  const [birthDay, setBirthDay] = useState<Date |  null>(null);
   const [gender, setGender] = useState("");
   // const [avatar_URL, setAvatar_URL] = useState<File>();
   const avatar = useRef<File | undefined>(undefined);
@@ -20,11 +21,11 @@ const completProfile = () => {
     // console.log("avatar_URL = " + avatar_URL);
     const avatar_url = new FormData();
     avatar_url.append("file", avatar.current as File);
-    console.log(avatar_url);
+    // console.log(avatar_url);
 
     e.preventDefault();
-    await axios.put("http://10.14.3.9:3000/auth/modify-data", {
-
+    await axios.put("http://localhost:3000/auth/modify-data", {
+    
       birthDay: birthDay,
       gender: gender,
       cookie: cookie,

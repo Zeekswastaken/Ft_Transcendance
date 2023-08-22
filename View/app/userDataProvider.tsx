@@ -18,6 +18,7 @@ type userData = {
     losses:number
     wins:number
     winrate:number
+    level: number
   }
 }
 
@@ -36,21 +37,24 @@ interface userDataProviderProps {
 }
 
 
-export function UserDataProvider({ children }: userDataProviderProps) {
+export function UserDataProvider({ children, }: userDataProviderProps) {
+  // let e: Event
+  // e.preventDefault()
   const User = useParams().username;
   const router = useRouter();
   const [userData, setUserData] = useState<userData>({} as userData)
   useEffect(() => {
-    axios.get(`http://10.14.3.9:3000/profile/${User}`).then((res) =>{
-      if(!res.data)
-        return
+    axios.get(`http://localhost:3000/profile/${User}`).then((res) =>{
+      if(!res.data){
+        // router.push("/not-found");
+        return;
+      }
       setUserData(res.data);
-      console.log(res.data)
     }).catch((err) => {
       console.log(err);
     })
     
-  }, [User])
+  }, [userData])
 
 
   return (

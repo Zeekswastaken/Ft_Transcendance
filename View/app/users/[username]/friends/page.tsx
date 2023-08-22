@@ -1,6 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useUserDataContext } from "@/app/userDataProvider";
+import React, { useEffect, useState } from "react";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { getCookie } from "cookies-next";
+
 
 const FriendCard = () => {
   return (
@@ -88,6 +92,22 @@ const Friends = () => {
     setBlocked(true);
     setFriends(false);
   };
+
+  const userData = useUserDataContext();
+  const [currentUsername, setCurrentUsername] = useState<string>("");
+
+  useEffect(() => {
+    const token = getCookie("accessToken");
+    try {
+      const user = jwt.decode(token as string) as JwtPayload
+      if (user)
+        setCurrentUsername(user.username)
+      // setCurrentUsername(jwt.decode(token).username);
+    } catch (error) {
+      console.error('Error decoding token:');
+    }
+  }, [])
+
   
   return (
     <div className=" border-2 mt-10 border-primary-pink-300 rounded-[20px]">
@@ -102,9 +122,11 @@ const Friends = () => {
                 <div className={friendButtonStyle}>
                   <button onClick={handleFriendClickedTab}>Friends</button>
                 </div>
-                <div className={blockedButtonStyle}>
-                  <button onClick={handleBlockedClickedTab}>Blocked</button>
-                </div>
+                {userData?.username === currentUsername && (
+                  <div className={blockedButtonStyle}>
+                    <button onClick={handleBlockedClickedTab}>Blocked</button>
+                  </div>
+                )}
               </div>
             </div>
             {friends && !blocked ? (
@@ -115,7 +137,7 @@ const Friends = () => {
 
               </div>
             ) : (
-              <div className=" overflow-y-auto no-scrollbar max-h-[500px] mx-20 2xl:mx-20 mt-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
+              <div className=" overflow-y-auto no-scrollbar max-h-[450px] rounded-xl mx-2 2xl:mx-10 mt-8 grid  grid-cols-1 xl:grid-cols-2 gap-4 ">
                 <BlockedCard />
                 <BlockedCard />
                 <BlockedCard />

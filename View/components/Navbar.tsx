@@ -3,11 +3,13 @@
 import Nav from "./tools/Nav";
 import ProfileDropDown from "./tools/ProfileDropDown";
 import NotificationDropDown from "./tools/NotificationDropDown";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useMediaQuery from "@/hooks/useMediaQuery"
 import { Bars3Icon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
+import axios from "axios";
+import { deleteCookie } from "cookies-next";
 
 const MobileLinks = ( {pathname, toGo, value}:any) => {
 	return (
@@ -32,33 +34,57 @@ const Navbar = () => {
 		const isAboveMediumScreens = useMediaQuery("(min-width: 1024px)");
 		const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
 		const [mobileSearchtoggle, setMobileSearchtoggle] = useState<boolean>(false);
+		const [searchForUser, setSearchForUser] = useState("");
+		const [userNotFound, setUserNotFound] = useState('');
+		const router = useRouter()
 
+		const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
+			e.preventDefault()
+			axios.get(`http://localhost:3000/profile/${searchForUser}`).then(res => {
+				if (!res.data) {
+					setUserNotFound("User Not Found")
+					return ;
+				}
+				else {
+					setUserNotFound("")
+					router.push(`/users/${searchForUser}`)
+				}
+			})
+		}
+
+		const handleSignOut = (e: React.MouseEvent<HTMLElement>) => {
+			e.preventDefault()  
+			deleteCookie("accessToken");
+			router.push("/login")
+		  }
 
 		return (
 					<nav className="  absolute place-content-center  items-center mt-[30px] mb-[55px] h-auto flex w-full sm:w-[80%] justify-between space-x-5 z-20  p-3 rounded-xl glass">
 						
 						<div className=" flex justify-between">
-							<a href="/" className="flex">
+							<Link href="/" className="flex">
 								<p className=" font-Glitch text-pink-200 text-4xl text-justify pr-5 pt-1">Pong</p>
-							</a>
-							{isAboveMediumScreens || mobileSearchtoggle ? (
-								<form className=" pt-[7px]">
-								<div className="relative ">
-								<span className="absolute inset-y-0 left-2 flex items-center ">
-									<button onClick={() => setMobileSearchtoggle(!mobileSearchtoggle)} className="p-1 focus:outline-none focus:shadow-outline">
-									<img src="/searchIcon.svg" width={20} height={20} alt="search" className=""/>
-									</button>
-								</span>
-									<input type="search" name="q" className="  border-transparent focus:border-transparent focus:ring-0 w-[170px] py-2 text-sm text-[#6E4778] placeholder-[#6E4778] bg-[#411742] rounded-xl pl-10 focus:outline-none focus:bg-primary-dark-500 focus:text-primary-white-200" placeholder="Search..." />
+							</Link>
+							<form onSubmit={handleSearchSubmit} className=" pt-[7px]">
+								{isAboveMediumScreens || mobileSearchtoggle ? (
+									<div className="relative ">
+										<span className="absolute inset-y-0 left-2 flex items-center ">
+											{/* <button onClick={() => setMobileSearchtoggle(!mobileSearchtoggle)} className="p-1 focus:outline-none focus:shadow-outline"> */}
+											{/* <button className="p-1 focus:outline-none focus:shadow-outline"> */}
+												<img src="/searchIcon.svg" width={20} height={20} alt="search" className=""/>
+											{/* </button> */}
+										</span>
+										<input onChange={e => setSearchForUser(e.target.value)} value={searchForUser} type="search" name="q" className="  border-transparent focus:border-transparent focus:ring-0 w-[170px] py-2 text-sm text-[#6E4778] placeholder-[#6E4778] bg-[#411742] rounded-xl pl-10 focus:outline-none focus:bg-primary-dark-500 focus:text-primary-white-200" placeholder="Search..." />
+										{userNotFound && <p className="text-red-500 absolute text-xs pt-1 text-left">{userNotFound}</p>}
 									</div> 
-								</form>
-
-								) : (
-									<button onClick={() => setMobileSearchtoggle(!mobileSearchtoggle)} className="px-1 mt-1 bg-[#411742] rounded-xl focus:outline-none focus:shadow-outline">
-									{/* <img src="/searchIcon.svg" width={30} height={30} alt="search" className=""/> */}
-										<MagnifyingGlassIcon className=" h-7 w-10 text-[#6d4678]" />
-									</button>
+									) : (
+										<button onClick={() => setMobileSearchtoggle(!mobileSearchtoggle)} className="px-1 mt-1 bg-[#411742] rounded-xl focus:outline-none focus:shadow-outline">
+										{/* <img src="/searchIcon.svg" width={30} height={30} alt="search" className=""/> */}
+											<MagnifyingGlassIcon className=" h-7 w-10 text-[#6d4678]" />
+										</button>
 								)}
+							</form>
+
 						</div>
 						{isAboveMediumScreens ? (
 							<>
@@ -115,7 +141,7 @@ const Navbar = () => {
 										</div>
 										<div className="divider"></div>
 										<div className="px-10 pb-5 text-2xl text-white font-Heading tracking-wide duration-300">
-											<button className=" hover:bg-[#FF7171]/[0.9] rounded-lg duration-300 px-2 py-1">Sign out</button>
+											<button onClick={handleSignOut} className=" hover:bg-[#FF7171]/[0.9] rounded-lg duration-300 px-2 py-1">Sign out</button>
 										</div>
 									</div>
 									</div>

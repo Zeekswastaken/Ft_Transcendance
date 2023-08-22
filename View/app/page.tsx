@@ -17,16 +17,9 @@ export default  function Home() {
    axios.post("http://localhost:3000", {
     token: token
   }).then(res => {
-    console.log(res.data)
-    // if (res.data.status === "unauthorized")
-    //   router.push("/login");
+    if (res.data.status === "unauthorized")
+      router.push("/login");
+    else
+      router.push("/home")
   }).catch(res => (console.log(res)))
-
-  return (
-    <main className="overflow-auto  ">
-      <DiscriptionCard />
-      <GameCards />
-      <MatchHistory />
-    </main>
-  );
 }

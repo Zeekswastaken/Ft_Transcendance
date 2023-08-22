@@ -1,25 +1,45 @@
 "use client"
-
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { Menu, Transition } from '@headlessui/react'
+import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
-import { FormEvent, Fragment } from 'react'
+import { FormEvent, Fragment, use, useEffect, useState } from 'react'
+import axios from "axios";
 
 const ProfileDropDown = () => {
 
   const router = useRouter();
-  const currentUsername = "Fouamep";
-  const profilePage = `/users/${currentUsername}`;
   const pushProfilePage = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     router.push(profilePage);
   }
+  const [user, setUser] = useState<JwtPayload>()
+  
+  const token = getCookie("accessToken");
+  useEffect(() => {
+    try {
+      const user = jwt.decode(token as string) as JwtPayload
+      if (user)
+      setUser(user)
+    // setCurrentUsername(jwt.decode(token).username);
+  } catch (error) {
+    console.error('Error decoding token:');
+  }
+}, [])
 
+  const currentUsername = user?.username;
+  const profilePage = `/users/${currentUsername}`;
+  const handleSignOut = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()  
+    deleteCookie("accessToken");
+    router.push("/login")
+  }
   return (
     // <div className="">
       <Menu as="div">
         <div>
           <Menu.Button>
-            <img src="/Spectate.png" className=' rounded-full' width={60} height={60} alt="Profile"/>
+            <img src={user?.avatar_URL as string} className=' rounded-full' width={60} height={60} alt="Profile"/>
           </Menu.Button>
         </div>
         <Transition
@@ -41,8 +61,8 @@ const ProfileDropDown = () => {
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
                     <div>
-                        <div className='font-Bomb'>Fouad Bouanane</div>
-                        <div className=' font-Heading tracking-widest'>Fouamep</div>
+                        <div className='font-Bomb text-center grid'>{user?.username}</div>
+                        {/* <div className=' font-Heading tracking-widest'>Fouamep</div> */}
                     </div>
                 </div>
                 )}
@@ -77,14 +97,14 @@ const ProfileDropDown = () => {
             <div className="px-1 py-2 font-semibold">
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href='#'
+                  <button
+                  onClick={handleSignOut}
                     className={`${
                       active ? 'bg-[#FF7171]/[0.7]  duration-300 ' : ''
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Sign Out
-                  </a>
+                  </button>
                 )}
               </Menu.Item>
             </div>
