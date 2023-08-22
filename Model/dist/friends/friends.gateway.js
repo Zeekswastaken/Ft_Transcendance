@@ -24,6 +24,8 @@ let FriendsGateway = exports.FriendsGateway = class FriendsGateway {
     }
     async create(data, client) {
         try {
+            console.log("---------> ", data.userID);
+            console.log("---------> ", data.recipientID);
             const request = await this.friendsService.create(data.userID, data.recipientID);
             console.log("}}}}}}}}}}");
             try {

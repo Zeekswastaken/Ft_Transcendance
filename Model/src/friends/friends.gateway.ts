@@ -16,6 +16,8 @@ export class FriendsGateway {
   @SubscribeMessage('sendFriendRequest')
   async create(@MessageBody() data: { userID: Number, recipientID: Number}, @ConnectedSocket() client: Socket) {
     try{
+      console.log("---------> ", data.userID);
+      console.log("---------> ", data.recipientID);
       const request = await this.friendsService.create(data.userID, data.recipientID);
       console.log("}}}}}}}}}}");
       try {

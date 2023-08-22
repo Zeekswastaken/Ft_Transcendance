@@ -38,11 +38,12 @@ let FriendsService = exports.FriendsService = class FriendsService {
         actualFriendship.receiver = recipient;
         actualFriendship.status = "pending";
         await this.userFriendsRepository.save(actualFriendship);
-        initiator.friendsassender = [actualFriendship];
+        initiator.friendsassender.push(actualFriendship);
         console.log(initiator.friendsassender);
-        recipient.friendsasreceiver = [actualFriendship];
-        await this.userRepository.save([initiator, recipient]);
-        console.log("--------------------------> ", recipient.friendsasreceiver[0].receiver);
+        recipient.friendsasreceiver.push(actualFriendship);
+        await this.userRepository.save(initiator);
+        await this.userRepository.save(recipient);
+        console.log("--------------------------> ", initiator.friendsassender[0].sender);
         return actualFriendship;
     }
     findAll() {
@@ -61,7 +62,7 @@ let FriendsService = exports.FriendsService = class FriendsService {
         await this.userFriendsRepository.save(friendship);
         const accepting = await this.userRepository.findOne({
             where: { id: (0, typeorm_2.Equal)(userid) },
-            relations: ['friendsassender', 'friendsasreceiver']
+            relations: ['friendsasreceiver']
         });
         const waiting = await this.userRepository.findOne({
             where: { id: (0, typeorm_2.Equal)(recipientid) },
@@ -72,15 +73,7 @@ let FriendsService = exports.FriendsService = class FriendsService {
         }
         console.log("======> ", accepting);
         console.log("**********> ", accepting.friendsasreceiver[0]);
-        console.log("---------> ", (_a = accepting.friendsasreceiver[0]) === null || _a === void 0 ? void 0 : _a.receiver);
-        const friendsassenderhip = accepting.friendsassender.find(friend => friend.receiver.id === recipientid);
-        if (friendsassenderhip) {
-            friendsassenderhip.status = "accepted";
-        }
-        const friendsasreceiverhip = waiting.friendsassender.find(friend => friend.sender.id === userid);
-        if (friendsasreceiverhip) {
-            friendsasreceiverhip.status = "accepted";
-        }
+        console.log("---------> ", (_a = accepting.friendsasreceiver[0]) === null || _a === void 0 ? void 0 : _a.sender);
         console.log("****************> ", (_b = waiting.friendsassender[0]) === null || _b === void 0 ? void 0 : _b.receiver);
         await this.userRepository.save([accepting, waiting]);
     }

@@ -16,7 +16,7 @@ declare const _default: (() => {
     username: string;
     password: string;
     database: string;
-    entities: (typeof User | typeof Message | typeof Channel | typeof ChannelMembership | typeof Stats | typeof Match | typeof GameInvite | typeof BlockedUser | typeof Achievements | typeof Notification)[];
+    entities: (typeof Message | typeof Channel | typeof User | typeof ChannelMembership | typeof Stats | typeof Match | typeof GameInvite | typeof BlockedUser | typeof Achievements | typeof Notification)[];
     logging: boolean;
     synchronize: boolean;
     migrations: string[];
@@ -28,7 +28,7 @@ declare const _default: (() => {
     username: string;
     password: string;
     database: string;
-    entities: (typeof User | typeof Message | typeof Channel | typeof ChannelMembership | typeof Stats | typeof Match | typeof GameInvite | typeof BlockedUser | typeof Achievements | typeof Notification)[];
+    entities: (typeof Message | typeof Channel | typeof User | typeof ChannelMembership | typeof Stats | typeof Match | typeof GameInvite | typeof BlockedUser | typeof Achievements | typeof Notification)[];
     logging: boolean;
     synchronize: boolean;
     migrations: string[];
