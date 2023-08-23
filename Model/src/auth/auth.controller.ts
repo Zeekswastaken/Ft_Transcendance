@@ -33,7 +33,7 @@ export class AuthController {
             const cookie_token = await this.authservice.generateToken_2(user);
             console.log(await this.jwtservice.decoded(cookie_token));
             res.send(cookie_token)
-            res.redirect('localhost:3001/home')
+            //res.redirect('localhost:3001/home')
         }
         else
             res.send('Error');

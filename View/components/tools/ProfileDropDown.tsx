@@ -42,7 +42,9 @@ const ProfileDropDown = () => {
       <Menu as="div">
         <div>
           <Menu.Button>
-            <img src={user?.avatar_URL as string} className=' rounded-full' width={60} height={60} alt="Profile"/>
+            <div className=" w-[60px] h-[60px] rounded-full">
+              <img src={user?.avatar_URL as string} className=' rounded-full w-full h-full' alt="Profile"/>
+            </div>
           </Menu.Button>
         </div>
         <Transition

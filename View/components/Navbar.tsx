@@ -35,8 +35,9 @@ const Navbar = () => {
 		const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
 		const [mobileSearchtoggle, setMobileSearchtoggle] = useState<boolean>(false);
 		const [searchForUser, setSearchForUser] = useState("");
-		const [userNotFound, setUserNotFound] = useState('');
+		const [userNotFound, setUserNotFound] = useState("");
 		const router = useRouter()
+		const [isInputFocused, setIsInputFocused] = useState(false);
 
 		const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
 			e.preventDefault()
@@ -46,10 +47,12 @@ const Navbar = () => {
 					return ;
 				}
 				else {
-					setUserNotFound("")
 					router.push(`/users/${searchForUser}`)
+					setUserNotFound('')
+					setSearchForUser('')
+					setIsInputFocused(false)
 				}
-			})
+			}).catch(res => {console.log(res)})
 		}
 
 		const handleSignOut = (e: React.MouseEvent<HTMLElement>) => {
@@ -57,98 +60,109 @@ const Navbar = () => {
 			deleteCookie("accessToken");
 			router.push("/login")
 		  }
+		const handleInputFocus = () => {
+    		setIsInputFocused(true);
+  		};
 
+		const handleInputBlur = () => {
+			setIsInputFocused(false);
+		};
 		return (
-					<nav className="  absolute place-content-center  items-center mt-[30px] mb-[55px] h-auto flex w-full sm:w-[80%] justify-between space-x-5 z-20  p-3 rounded-xl glass">
-						
-						<div className=" flex justify-between">
-							<Link href="/" className="flex">
-								<p className=" font-Glitch text-pink-200 text-4xl text-justify pr-5 pt-1">Pong</p>
-							</Link>
-							<form onSubmit={handleSearchSubmit} className=" pt-[7px]">
-								{isAboveMediumScreens || mobileSearchtoggle ? (
-									<div className="relative ">
-										<span className="absolute inset-y-0 left-2 flex items-center ">
-											{/* <button onClick={() => setMobileSearchtoggle(!mobileSearchtoggle)} className="p-1 focus:outline-none focus:shadow-outline"> */}
-											{/* <button className="p-1 focus:outline-none focus:shadow-outline"> */}
-												<img src="/searchIcon.svg" width={20} height={20} alt="search" className=""/>
-											{/* </button> */}
-										</span>
-										<input onChange={e => setSearchForUser(e.target.value)} value={searchForUser} type="search" name="q" className="  border-transparent focus:border-transparent focus:ring-0 w-[170px] py-2 text-sm text-[#6E4778] placeholder-[#6E4778] bg-[#411742] rounded-xl pl-10 focus:outline-none focus:bg-primary-dark-500 focus:text-primary-white-200" placeholder="Search..." />
-										{userNotFound && <p className="text-red-500 absolute text-xs pt-1 text-left">{userNotFound}</p>}
-									</div> 
-									) : (
-										<button onClick={() => setMobileSearchtoggle(!mobileSearchtoggle)} className="px-1 mt-1 bg-[#411742] rounded-xl focus:outline-none focus:shadow-outline">
-										{/* <img src="/searchIcon.svg" width={30} height={30} alt="search" className=""/> */}
-											<MagnifyingGlassIcon className=" h-7 w-10 text-[#6d4678]" />
-										</button>
-								)}
-							</form>
+				<nav className="  absolute place-content-center  items-center mt-[30px] mb-[55px] h-auto flex w-full sm:w-[80%] justify-between space-x-5 z-20  p-3 rounded-xl glass">
+					
+					<div className=" flex justify-between">
+						<Link href="/" className="flex">
+							<p className=" font-Glitch text-pink-200 text-4xl text-justify pr-5 pt-1">Pong</p>
+						</Link>
+						<form onSubmit={handleSearchSubmit} className=" pt-[7px]">
+							{isAboveMediumScreens || mobileSearchtoggle ? (
+								<div className="relative ">
+									<span className="absolute inset-y-0 left-2 flex items-center ">
+										{/* <button onClick={() => setMobileSearchtoggle(!mobileSearchtoggle)} className="p-1 focus:outline-none focus:shadow-outline"> */}
+										{/* <button className="p-1 focus:outline-none focus:shadow-outline"> */}
+											<img src="/searchIcon.svg" width={20} height={20} alt="search" className=""/>
+										{/* </button> */}
+									</span>
+									<input 	onFocus={handleInputFocus}
+											onBlur={handleInputBlur}
+											onChange={e => setSearchForUser(e.target.value)}
+											value={searchForUser}
+											type="search" name="q"
+											className="  border-transparent focus:border-transparent focus:ring-0 w-[170px] py-2 text-sm text-[#6E4778] placeholder-[#6E4778] bg-[#411742] rounded-xl pl-10 focus:outline-none focus:bg-primary-dark-500 focus:text-primary-white-200" placeholder="Search..." />
+									{userNotFound && isInputFocused && searchForUser && <p className="text-red-500 absolute text-xs pt-1 text-left">{userNotFound}</p>}
+								</div> 
+								) : (
+									<button onClick={() => setMobileSearchtoggle(!mobileSearchtoggle)} className="px-1 mt-1 bg-[#411742] rounded-xl focus:outline-none focus:shadow-outline">
+									{/* <img src="/searchIcon.svg" width={30} height={30} alt="search" className=""/> */}
+										<MagnifyingGlassIcon className=" h-7 w-10 text-[#6d4678]" />
+									</button>
+							)}
+						</form>
 
-						</div>
-						{isAboveMediumScreens ? (
-							<>
-								<div className=" bg-primary-dark-300 drop-shadow-[6px_5px_0_rgba(0,0,00.25)] opacity-80 rounded-3xl w-[340px]">
-									<Nav />
-								</div>
-								<div className=" flex justify-between space-x-7">
-									<div className=" z-50">
-										<NotificationDropDown />
-									</div>
-									<div className=" z-50">
-										<ProfileDropDown />
-									</div>
-								</div>  
-							</>
-						) : (
-							<div className="  flex space-x-2">
+					</div>
+					{isAboveMediumScreens ? (
+						<>
+							<div className=" bg-primary-dark-300 drop-shadow-[6px_5px_0_rgba(0,0,00.25)] opacity-80 rounded-3xl w-[340px]">
+								<Nav />
+							</div>
+							<div className=" flex justify-between space-x-7">
 								<div className=" z-50">
 									<NotificationDropDown />
 								</div>
-								<button
-								className=" items-end rounded-full bg-secondary-500 p-2"
-								onClick={() => setIsMenuToggled(!isMenuToggled)}
-								>
-									{!isMenuToggled ? (
-										<Bars3Icon className="h-10 w-10 text-white" />
-
-									) : (<XMarkIcon className=" h-10 w-10 text-white"/>)}
-								</button>
+								<div className=" z-50">
+									<ProfileDropDown />
+								</div>
+							</div>  
+						</>
+					) : (
+						<div className="  flex space-x-2">
+							<div className=" z-50">
+								<NotificationDropDown />
 							</div>
+							<button
+							className=" items-end rounded-full bg-secondary-500 p-2"
+							onClick={() => setIsMenuToggled(!isMenuToggled)}
+							>
+								{!isMenuToggled ? (
+									<Bars3Icon className="h-10 w-10 text-white" />
+
+								) : (<XMarkIcon className=" h-10 w-10 text-white"/>)}
+							</button>
+						</div>
+					)}
+							{!isAboveMediumScreens && isMenuToggled && (
+							<>
+							<div className="absolute right-0  z-40 h-full w-full bg-primary-100 drop-shadow-xl ease-in duration-300 top-20">
+							{/* CLOSE ICON */}
+								<div className=" w-full rounded-2xl bg-black flex flex-col text-2xl  ">
+									<div className=" grid grid-cols-1 px-10 pt-6  font-Heading tracking-wide duration-300">
+										<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href={"/users/Fouamepp"} className="hover:text-primary-pink-300/[0.9] duration-300">My Profile</Link>
+									</div>
+									<div className="divider"></div> 
+									<div className=" grid grid-cols-1 px-10   font-Heading tracking-wide duration-300">
+										<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href="/" >
+											<MobileLinks pathname={pathName} toGo="/" value="Home" />
+										</Link >
+										<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href="/chat" >
+											<MobileLinks pathname={pathName} toGo="/chat" value="Chat" />
+										</Link >
+										<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href="/leaderboard" >
+											<MobileLinks pathname={pathName} toGo="/leaderboard" value="Leaderboard" />
+										</Link >
+										<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href="/channels" >
+											<MobileLinks pathname={pathName} toGo="/channels" value="Channels" />
+										</Link >
+									</div>
+									<div className="divider"></div>
+									<div className="px-10 pb-5 text-2xl text-white font-Heading tracking-wide duration-300">
+										<button onClick={handleSignOut} className=" hover:bg-[#FF7171]/[0.9] rounded-lg duration-300 px-2 py-1">Sign out</button>
+									</div>
+								</div>
+								</div>
+							</>
 						)}
-						      {!isAboveMediumScreens && isMenuToggled && (
-								<>
-								<div className="absolute right-0  z-40 h-full w-full bg-primary-100 drop-shadow-xl ease-in duration-300 top-20">
-								{/* CLOSE ICON */}
-									<div className=" w-full rounded-2xl bg-black flex flex-col text-2xl  ">
-										<div className=" grid grid-cols-1 px-10 pt-6  font-Heading tracking-wide duration-300">
-											<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href={"/users/Fouamepp"} className="hover:text-primary-pink-300/[0.9] duration-300">My Profile</Link>
-										</div>
-										<div className="divider"></div> 
-										<div className=" grid grid-cols-1 px-10   font-Heading tracking-wide duration-300">
-											<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href="/" >
-												<MobileLinks pathname={pathName} toGo="/" value="Home" />
-											</Link >
-											<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href="/chat" >
-												<MobileLinks pathname={pathName} toGo="/chat" value="Chat" />
-											</Link >
-											<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href="/leaderboard" >
-												<MobileLinks pathname={pathName} toGo="/leaderboard" value="Leaderboard" />
-											</Link >
-											<Link onClick={() => setIsMenuToggled(!isMenuToggled)} href="/channels" >
-												<MobileLinks pathname={pathName} toGo="/channels" value="Channels" />
-											</Link >
-										</div>
-										<div className="divider"></div>
-										<div className="px-10 pb-5 text-2xl text-white font-Heading tracking-wide duration-300">
-											<button onClick={handleSignOut} className=" hover:bg-[#FF7171]/[0.9] rounded-lg duration-300 px-2 py-1">Sign out</button>
-										</div>
-									</div>
-									</div>
-								</>
-							)}
-						
-						</nav>
+					
+					</nav>
 
 			// </div>
 			// Mobile navigation

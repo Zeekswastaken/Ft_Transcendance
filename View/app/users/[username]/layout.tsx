@@ -87,7 +87,7 @@ export default function RootLayout({
   const handleAddFriend = () => {
     setIsClicked(!isClicked);
   };
-
+  const avatar = "bg-[url('" + userData?.avatar_url + "')]";
   return (
     <div className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat h-screen overflow-y-scroll no-scrollbar w-full">
         <div className=" 2xl:mt-[270px] lg:mt-[160px] mt-[50px] min-w-[400px] overflow-y-scroll w-full h-[75vh] no-scrollbar ">
@@ -108,13 +108,13 @@ export default function RootLayout({
             <div className=" mt-20 lg:mt-0 order-1 flex place-content-center">
               <div className="  bg-[#321B38]/[0.7] shadow-2xl rounded-2xl w-[85%]">
                 <div className=" 2xl:mb-0 mt-[50px] grid place-content-center ">
-                  <img
-                    src={userData?.avatar_url}
-                    alt="avatar"
-                    width={150}
-                    height={150}
-                    className=" border-4 border-primary-pink-300 rounded-full"
-                  />
+                  <div className=" w-[150px] h-[150px] border-4 border-primary-pink-300 rounded-full">
+                    <img
+                      src={userData?.avatar_url}
+                      alt="avatar"
+                      className=" w-full h-full rounded-full"
+                    />
+                  </div>
                   <div className=" text-center pt-4 space-y-2 font-Heading tracking-wider">
                     <p className=" text-3xl text-white overflow-hidden text-ellipsis ">{User}</p>
                   </div>

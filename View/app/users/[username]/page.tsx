@@ -47,7 +47,7 @@ const CardStats:React.FC<Props> = ( {styles, title, number} ) => {
   return (
     <div className="  bg-[#471D49] flex items-center place-content-center drop-shadow-[6px_5px_0_rgba(0,0,00.15)] hover:bg-[#5b315d] hover:opacity-90 duration-300  rounded-3xl">
     <div className=" ">
-      <p className=" break-all text-center font-Bomb text-[34px] mt-5 text-[#D4D4D4]">{title}</p>
+      <p className=" break-all text-center font-Bomb text-[34px] mt-5 text-white">{title}</p>
       <p className={` break-all text-center font-Bomb mb-2 text-4xl  ${styles} `}>{number}</p>
     </div>  
   </div>
@@ -103,6 +103,8 @@ const MatchHistory: React.FC<Props> = ({ styles, title }) => {
     </div>
   );
 }
+
+
 
 const Achievments: React.FC<Props> = ({ styles, title }) => {
   return (

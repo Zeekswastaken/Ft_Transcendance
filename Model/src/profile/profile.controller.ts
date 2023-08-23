@@ -56,7 +56,7 @@ export class ProfileController {
                         Body.avatar_url = usersec.avatar_url;
                     if (!Body.Bio)
                         Body.Bio = usersec.Bio;
-                    if (!Body.privacy)
+                    if (Body.privacy == null)
                         Body.privacy = usersec.privacy;
                     await this.userservice.update(Body,id);
                     const user = await this.userservice.findById(id); 

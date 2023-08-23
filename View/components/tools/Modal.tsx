@@ -117,23 +117,6 @@ const slides:any = [
   game2
 ]
 
-const TenorEmbed: React.FC = () => {
-  return (
-    <div
-      className="tenor-gif-embed"
-      data-postid="17683396"
-      data-share-method="host"
-      data-aspect-ratio="1.33333"
-      data-width="100%"
-    >
-      <a href="https://tenor.com/view/pingpong-pingpong-ani-anime-rally-sports-gif-17683396">
-        Pingpong Pingpong Ani GIF
-      </a>
-      from <a href="https://tenor.com/search/pingpong-gifs">Pingpong GIFs</a>
-    </div>
-  );
-};
-
 
 const Spectate:React.FC<Props> = ( {title} ) => {
   const [curr, setCurr] = useState(0)
@@ -148,7 +131,6 @@ const Spectate:React.FC<Props> = ( {title} ) => {
       <h3 className="text-[40px] mt-2 font-Bomb leading-6 text-gray-200 tracking-wide"> {title} </h3>
       <div  className=' space-x-2 my-5 px-10 flex justify-between items-center'>
           <div onClick={prev} className="text-white text-4xl font-Bomb">
-            {/* <button onClick={prev}>l</button> */}
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-[50px] h-[50px]">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
@@ -171,7 +153,6 @@ const Spectate:React.FC<Props> = ( {title} ) => {
           </div>
         </div>
           <div onClick={next} className=' text-white text-4xl font-Bomb'>
-            {/* <button onClick={next}>r</button> */}
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-[50px] h-[50px]">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>

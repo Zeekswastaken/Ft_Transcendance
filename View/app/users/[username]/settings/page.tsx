@@ -6,6 +6,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { useRouter } from "next/navigation";
 import { useUserDataContext } from "@/app/userDataProvider";
 import Link from "next/link";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 
 interface Props {
@@ -45,8 +46,15 @@ const Settings = () => {
   const handleApply = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // useEffect(() => {
+      let pr:boolean | null
+      if (privacy === "Private")
+        pr = false
+      else if (privacy === "Public")
+        pr = true
+      else
+        pr = null
       await axios.put(`http://localhost:3000/profile/update/${user?.id}`, {
-        privacy: privacy,
+        privacy: pr,
         username: username,
         password: password,
         Bio: bio
@@ -77,6 +85,17 @@ const Settings = () => {
     }).catch(res => {console.log(res)});
   }
   
+  const [canSee, setCanSee] = useState<boolean>(false)
+  const [inputType, setInputType] = useState("password");
+  const handleEyeclicked = (e: MouseEvent<HTMLButtonElement>) => {
+    setCanSee(!canSee)
+    if(!canSee)
+      setInputType("text");
+    else
+      setInputType("password");
+
+  }
+
   const [privacy, setPrivacy] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -180,7 +199,16 @@ const Settings = () => {
                       Password
                   </label>
                   <div className=" mt-1">
-                    <input onChange={e => setPassword(e.target.value)} value={password} type="password" name="password" autoComplete="off" className=" font-Heading tracking-wider border-transparent focus:ring-0 focus:border-transparent bg-[#562257] w-full h-[50px] sm:text-sm  rounded-2xl placeholder:text-[#B1B1B1] placeholder:font-bold placeholder:text-base" />
+                    <div className=" flex place-content-end items-center">
+                      <button onClick={handleEyeclicked} className=" absolute px-4">
+                        {canSee ? (
+                          <EyeSlashIcon className=" w-6 h-6"/>
+                        ) : (
+                          <EyeIcon className=" w-6 h-6 "/>
+                        )}
+                      </button>
+                      <input onChange={e => setPassword(e.target.value)} value={password} type={inputType} name="password" autoComplete="off" className=" font-Heading tracking-wider border-transparent focus:ring-0 focus:border-transparent bg-[#562257] w-full h-[50px] sm:text-sm  rounded-2xl placeholder:text-[#B1B1B1] placeholder:font-bold placeholder:text-base" />
+                    </div>
                     {passwordError && <p className="text-red-500 text-xs pt-1 text-left">{passwordError}</p>}
                   </div>
                 </div>
