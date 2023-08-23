@@ -32,6 +32,7 @@ export declare class fortytwo_Controller {
     private readonly usersrvice;
     constructor(authservice: AuthService, usersrvice: UserService);
     googlelogin(req: any, res: any): void;
+    notExists: any;
     fortytwo_loginredirect(req: any, res: any): Promise<{
         token: String;
         user: User;

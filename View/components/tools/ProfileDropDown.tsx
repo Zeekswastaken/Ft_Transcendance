@@ -5,6 +5,7 @@ import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { FormEvent, Fragment, use, useEffect, useState } from 'react'
 import axios from "axios";
+import { useUserDataContext } from "@/app/userDataProvider";
 
 const ProfileDropDown = () => {
 
@@ -13,6 +14,8 @@ const ProfileDropDown = () => {
     e.preventDefault();
     router.push(profilePage);
   }
+  // const user = useAppSelector((state) => state.userDataReducer.value)
+  // const user = useUserDataContext()
   const [user, setUser] = useState<JwtPayload>()
   
   const token = getCookie("accessToken");
@@ -25,7 +28,7 @@ const ProfileDropDown = () => {
   } catch (error) {
     console.error('Error decoding token:');
   }
-}, [])
+}, [token])
 
   const currentUsername = user?.username;
   const profilePage = `/users/${currentUsername}`;

@@ -14,12 +14,6 @@ type People = {
 
 const people = [
   {
-    id: 0,
-    name: 'Choose Friend',
-    avatar:
-      'https://unsplash.com/photos/dLij9K4ObYY',
-  },
-  {
     id: 1,
     name: 'Wade Cooper',
     avatar:

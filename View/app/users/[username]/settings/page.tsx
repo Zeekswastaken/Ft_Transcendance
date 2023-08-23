@@ -4,6 +4,8 @@ import { getCookie, setCookie } from "cookies-next";
 import React, { FormEvent, MouseEvent, MouseEventHandler, use, useEffect, useState } from "react";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { useRouter } from "next/navigation";
+import { useUserDataContext } from "@/app/userDataProvider";
+import Link from "next/link";
 
 
 interface Props {
@@ -19,6 +21,9 @@ const Settings = () => {
   const [user, setUser] = useState<JwtPayload>()
   const router = useRouter();
   const token = getCookie("accessToken");
+  const [invalidUsername, setInvalidUsername] = useState("");
+  const [passwordError, setPasswordError] = useState('');
+
   useEffect(() => {
     try {
       const user = jwt.decode(token as string) as JwtPayload
@@ -30,33 +35,45 @@ const Settings = () => {
   }
 }, [])
 
-  const handleApply = (e: MouseEvent<HTMLButtonElement>) => {
+  // const handleCancel = (e: MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault()
+  //   router.push(`/users/${user?.username}`)
+  // }
+
+  // const userNameTmp = use
+
+  const handleApply = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    axios.put(`http://localhost:3000/profile/update/${user?.id}`, {
-      privacy: privacy,
-      username: username,
-      password: password,
-      Bio: bio
-    }).then(res => {
-      if (res.data.message === "error") {
-        console.log(res)
-        return ;
-      }
-      else {
-        console.log("token = ", res.data.token)
-        setCookie("accessToken", res.data.token);
-        // useEffect(() => {
-            try {
-              const user = jwt.decode(res.data.token as string) as JwtPayload
-              if (user)
-                setUser(user);
-              router.push(`/users/${user?.username}`);
-          } catch (error) {
-            console.error('Error decoding token:');
+    // useEffect(() => {
+      await axios.put(`http://localhost:3000/profile/update/${user?.id}`, {
+        privacy: privacy,
+        username: username,
+        password: password,
+        Bio: bio
+      }).then(res => {
+        if (res.data.message === "error") {
+          console.log(res)
+          return ;
+        }
+        else if (res.data.message === "weak"){
+          setPasswordError("Your Password not Strong enough, Please try again.");
+          setInvalidUsername("");
+          return;
+        }
+        else if (res.data.message === "exists") {
+          setInvalidUsername("Invalid Username, please try again!");
+          setPasswordError("");
+          return
+        }
+        else if (res.data.message === "success") {
+          setCookie("accessToken", res.data.token);
+          
+          if (username) {
+            router.push(`/users/${username}`);
           }
-        // }, [])
-        
-      }
+          else
+            router.push(`/users/${user?.username}`)
+        }
     }).catch(res => {console.log(res)});
   }
   
@@ -64,6 +81,7 @@ const Settings = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
+  const userData = useUserDataContext();
 
   return (
     <div className=" border-2 mt-10 border-primary-pink-300 rounded-[20px]">
@@ -118,7 +136,7 @@ const Settings = () => {
                       rows={3}
                       name="comment"
                       id="comment"
-                      className="shadow-sm no-scrollbar font-bold resize-none text-[#D4D4D4] block w-full sm:text-sm bg-[#562257] rounded-md"
+                      className="shadow-sm no-scrollbar border-transparent focus:ring-0 focus:border-transparent font-bold resize-none text-[#D4D4D4] block w-full sm:text-sm bg-[#562257] rounded-md"
                       defaultValue={""}
                     />
                   </div>
@@ -134,7 +152,8 @@ const Settings = () => {
                       Username
                   </label>
                   <div className=" mt-1">
-                    <input onChange={e => setUserName(e.target.value)} value={username} type="text" name="text" autoComplete="off" className=" fonct-Heading tracking-wider bg-[#562257] w-full h-[50px] sm:text-sm  rounded-2xl placeholder:text-[#B1B1B1] placeholder:font-bold placeholder:text-base" placeholder="Fouamep" />
+                    <input onChange={e => setUserName(e.target.value)} value={username} type="text" name="text" autoComplete="off" className=" font-Heading tracking-widest bg-[#562257] w-full h-[50px] sm:text-sm border-transparent focus:ring-0 focus:border-transparent rounded-2xl placeholder:text-[#B1B1B1] placeholder:font-bold placeholder:text-base" placeholder={userData?.username} />
+                    {invalidUsername && <p className="text-red-500 text-xs pt-1 text-left">{invalidUsername}</p>}
                   </div>
                 </div>
 
@@ -146,7 +165,8 @@ const Settings = () => {
                       Privacy
                   </label>
                   <div className=" mt-1">
-                    <select onChange={e => setPrivacy(e.target.value)}  defaultValue="Public"  name="Privacy" autoComplete="off" className="shadow-base fonct-Heading tracking-wider bg-[#562257] sm:text-sm  rounded-2xl placeholder:text-[#B1B1B1] placeholder:font-bold placeholder:text-base w-full h-[50px] ">
+                    <select onChange={e => setPrivacy(e.target.value)}  defaultValue="Privacy"  name="Privacy" autoComplete="off" className="shadow-base font-Heading tracking-widest bg-[#562257] sm:text-sm border-transparent focus:ring-0 focus:border-transparent rounded-2xl placeholder:text-[#B1B1B1] placeholder:font-bold placeholder:text-base w-full h-[50px] ">
+                      <option className=" text-[#562257]" disabled value="Privacy">Privacy</option>
                       <option value="Public">Public</option>
                       <option value="Private">Private</option>
                     </select>
@@ -160,12 +180,14 @@ const Settings = () => {
                       Password
                   </label>
                   <div className=" mt-1">
-                    <input onChange={e => setPassword(e.target.value)} value={password} type="password" name="password" autoComplete="off" className=" fonct-Heading tracking-wider bg-[#562257] w-full h-[50px] sm:text-sm  rounded-2xl placeholder:text-[#B1B1B1] placeholder:font-bold placeholder:text-base" />
+                    <input onChange={e => setPassword(e.target.value)} value={password} type="password" name="password" autoComplete="off" className=" font-Heading tracking-wider border-transparent focus:ring-0 focus:border-transparent bg-[#562257] w-full h-[50px] sm:text-sm  rounded-2xl placeholder:text-[#B1B1B1] placeholder:font-bold placeholder:text-base" />
+                    {passwordError && <p className="text-red-500 text-xs pt-1 text-left">{passwordError}</p>}
                   </div>
                 </div>
               </div>
               <div className=" flex space-x-5 my-5 place-content-center">
-                  <button className=" text-white font-Heading text-xl tracking-wide hover:text-primary-pink-300 duration-300">Cancel</button>
+                  {/* <button onClick={handleCancel} className=" text-white font-Heading text-xl tracking-wide hover:text-primary-pink-300 duration-300">Cancel</button> */}
+                  <Link href={`/users/${user?.username}`} className=" text-white font-Heading text-xl tracking-wide hover:text-primary-pink-300 duration-300">Cancel</Link>
                   <div className=" border-2 rounded-xl hover:bg-primary-pink-300 duration-300  border-primary-pink-300 ">
                     <button onClick={handleApply} className=" py-1 px-2 text-white font-Heading text-xl tracking-wide duration-300">Apply</button>
                   </div>

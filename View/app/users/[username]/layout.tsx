@@ -8,6 +8,7 @@ import { getCookie } from "cookies-next";
 import axios from "axios";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { useUserDataContext } from "../../userDataProvider";
+import { useAppSelector } from "@/redux/hooks";
 
 interface Props {
   styles: string;
@@ -53,7 +54,7 @@ export default function RootLayout({
   const User = useParams().username;
   const [currentUsername, setCurrentUsername] = useState<string>("");
   const userData = useUserDataContext();
-  // const [userData, setUserData] = useState<userData>({} as userData)
+  // const userData = useAppSelector((state) => state.userDataReducer.value)
   const token = getCookie("accessToken");
   useEffect(() => {
     try {
@@ -64,7 +65,7 @@ export default function RootLayout({
     } catch (error) {
       console.error('Error decoding token:');
     }
-  }, [User])
+  }, [])
 
   // console.log(userData);
   const isFriend = false;
@@ -91,7 +92,7 @@ export default function RootLayout({
     <div className=" bg-[url('/neon-background2.jpeg')] bg-cover bg-center bg-no-repeat h-screen overflow-y-scroll no-scrollbar w-full">
         <div className=" 2xl:mt-[270px] lg:mt-[160px] mt-[50px] min-w-[400px] overflow-y-scroll w-full h-[75vh] no-scrollbar ">
           <div className=" grid grid-cols-1 2xl:grid-cols-3 mb-10">
-            {isPrivate && (userData?.username !== currentUsername)  ?  (
+            {isPrivate && !isFriend && (userData?.username !== currentUsername)  ?  (
               <div className=" 2xl:order-1 order-2 col-span-2  p-20">
                 <div className=" flex items-center place-content-center glass w-full 2xl:h-full">
                   <h1 className=" text-3xl font-Heading text-white tracking-wider">
@@ -126,7 +127,7 @@ export default function RootLayout({
                   </div>
 
                   ) : ("")}
-                  {isPrivate && (userData?.username !== currentUsername) ? (
+                  {isPrivate && !isFriend && (userData?.username !== currentUsername) ? (
                     <div className=" bg-[#411941]/[0.8]  shadow-xl overflow-hidden whitespace-wrap mt-10 w-[75%] rounded-xl mb-10">
                       <div className=" grid place-items-center items-center  h-[200px]">
                         <img

@@ -40,7 +40,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Stats.prototype, "winrate", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => user_entity_1.User, user => user.stats),
+    (0, typeorm_1.OneToOne)(() => user_entity_1.User, user => user.stats, { cascade: true, eager: true, onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", user_entity_1.User)
 ], Stats.prototype, "user", void 0);

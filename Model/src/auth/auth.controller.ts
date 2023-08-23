@@ -32,7 +32,8 @@ export class AuthController {
             console.log(user);
             const cookie_token = await this.authservice.generateToken_2(user);
             console.log(await this.jwtservice.decoded(cookie_token));
-            res.send(cookie_token);
+            res.send(cookie_token)
+            res.redirect('localhost:3001/home')
         }
         else
             res.send('Error');
@@ -60,7 +61,7 @@ export class AuthController {
 
         // console.log(Body);
         if (!Body.username)
-            res.send('empty');
+            res.send({message:'empty'});
         const user1 = await this.localStrategy.validate(Body.username,Body.password);
         const user = await this.userservice.findByName(Body.username);
         if (!user1)
@@ -69,7 +70,7 @@ export class AuthController {
         {
             const cookie_token = await this.authservice.generateToken_2(user);
             const user2 = await this.jwtservice.decoded(cookie_token);
-            res.send({message:'success',cookie:cookie_token,user:user2});
+            res.send({message:'success',token:cookie_token,user:user2});
         }
     }
     @Get('Sign-Out')
@@ -77,7 +78,7 @@ export class AuthController {
         // const decode = await this.jwtservice.decoded(Body.cookie);
         res.clearCookie('accessToken');
         res.status(200)
-        .redirect('localhost:3001/login');
+        // .redirect('localhost:3001/login');
     }
 }
 
@@ -104,7 +105,7 @@ export class googleController{
             const cookie_token = await this.authservice.generateToken_2(newUser);
 
             res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
+            //httpOnly: true,
               });
               
             res.redirect("http://localhost:3001/");
@@ -123,7 +124,7 @@ export class googleController{
             const usertoken = await this.userservice.findByName(req.user.username);
             const cookie_token = await this.authservice.generateToken_2(usertoken);
             res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
+               // httpOnly: true,
               });
               
               res.redirect("http://localhost:3001/");
@@ -150,7 +151,7 @@ export class fortytwo_Controller{
     googlelogin(@Req() req,@Res() res){
         console.log("heloWorld")
     }
-
+    notExists
 
     @Get('from-42')
     @UseGuards(AuthGuard('42'))
@@ -164,7 +165,7 @@ export class fortytwo_Controller{
             console.log("Fist time")
             const cookie_token = await this.authservice.generateToken_2(newUser);
             res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
+                // httpOnly: true,
               });
               
               //res.redirect("http://localhost:3001/");
@@ -180,7 +181,7 @@ export class fortytwo_Controller{
             console.log(usertoken);
             const cookie_token = await this.authservice.generateToken_2(usertoken);
             res.cookie('accessToken', cookie_token, {
-                httpOnly: true
+                // httpOnly: true
               });
               
             console.log('coockie token = '+ cookie_token);

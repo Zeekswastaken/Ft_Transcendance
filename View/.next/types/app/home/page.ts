@@ -1,4 +1,4 @@
-// File: /goinfre/fbouanan/orb/View/app/home/page.tsx
+// File: /goinfre/fbouanan/Ft_Transcendence/View/app/home/page.tsx
 import * as entry from '../../../../app/home/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -40,6 +40,7 @@ let AuthController = exports.AuthController = class AuthController {
             const cookie_token = await this.authservice.generateToken_2(user);
             console.log(await this.jwtservice.decoded(cookie_token));
             res.send(cookie_token);
+            res.redirect('localhost:3001/home');
         }
         else
             res.send('Error');
@@ -59,7 +60,7 @@ let AuthController = exports.AuthController = class AuthController {
     }
     async checking(Body, res) {
         if (!Body.username)
-            res.send('empty');
+            res.send({ message: 'empty' });
         const user1 = await this.localStrategy.validate(Body.username, Body.password);
         const user = await this.userservice.findByName(Body.username);
         if (!user1)
@@ -67,13 +68,12 @@ let AuthController = exports.AuthController = class AuthController {
         else {
             const cookie_token = await this.authservice.generateToken_2(user);
             const user2 = await this.jwtservice.decoded(cookie_token);
-            res.send({ message: 'success', cookie: cookie_token, user: user2 });
+            res.send({ message: 'success', token: cookie_token, user: user2 });
         }
     }
     async log_out(Body, res) {
         res.clearCookie('accessToken');
-        res.status(200)
-            .redirect('localhost:3001/login');
+        res.status(200);
     }
 };
 __decorate([
@@ -127,9 +127,7 @@ let googleController = exports.googleController = class googleController {
         const newUser = await this.authservice.create_Oauth(user);
         if (typeof newUser == 'object') {
             const cookie_token = await this.authservice.generateToken_2(newUser);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
-            });
+            res.cookie('accessToken', cookie_token, {});
             res.redirect("http://localhost:3001/");
             console.log('coockie token = ' + cookie_token);
             return {
@@ -142,9 +140,7 @@ let googleController = exports.googleController = class googleController {
         else {
             const usertoken = await this.userservice.findByName(req.user.username);
             const cookie_token = await this.authservice.generateToken_2(usertoken);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
-            });
+            res.cookie('accessToken', cookie_token, {});
             res.redirect("http://localhost:3001/");
             console.log('coockie token = ' + cookie_token + "\n\n\n\n");
             return {
@@ -192,9 +188,7 @@ let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controlle
         if (typeof newUser == 'object') {
             console.log("Fist time");
             const cookie_token = await this.authservice.generateToken_2(newUser);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true,
-            });
+            res.cookie('accessToken', cookie_token, {});
             res.redirect("http://localhost:3001/");
             const user_data = { token: cookie_token,
                 user: newUser,
@@ -206,9 +200,7 @@ let fortytwo_Controller = exports.fortytwo_Controller = class fortytwo_Controlle
             const usertoken = await this.usersrvice.findByName(req.user.username);
             console.log(usertoken);
             const cookie_token = await this.authservice.generateToken_2(usertoken);
-            res.cookie('accessToken', cookie_token, {
-                httpOnly: true
-            });
+            res.cookie('accessToken', cookie_token, {});
             console.log('coockie token = ' + cookie_token);
             res.redirect("http://localhost:3001/");
             const user_data = { token: cookie_token,

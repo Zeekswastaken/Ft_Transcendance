@@ -27,9 +27,9 @@ export class User{
     @ManyToMany(() => User, user => user.friends)
     @JoinTable({ name: 'userFriends' })
     friends: User[];
-    @OneToOne(() => Stats, stats => stats.user, { cascade: true, eager: true })
+    @OneToOne(() => Stats, stats => stats.user)
     @JoinColumn()
-    stats: Stats;
+    stats: Stats ;
     @OneToMany(() => GameInvite, invite => invite.sender, { cascade: true, onDelete: 'CASCADE' })
     sentInvites: GameInvite[];
     @OneToMany(() => GameInvite, invite => invite.receiver, { cascade: true, onDelete: 'CASCADE' })

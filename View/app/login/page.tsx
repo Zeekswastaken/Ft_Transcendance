@@ -1,5 +1,6 @@
 "use client"
 import axios from "axios";
+import { setCookie } from "cookies-next";
 import { redirect } from 'next/navigation'
 import { useRouter } from "next/navigation";
 import React, { useState } from "react"
@@ -8,17 +9,28 @@ import { FormEvent } from "react";
 const login = ({response}:any) => {
   
   const router = useRouter();
+  const [invalidUsername, setInvalidUsername] = useState("")
+  // const [empty, setEmpty] = useState("");
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
     await axios.post("http://localhost:3000/auth/login", {
       password,
       username,
+    }).then(res => {
+      if (res.data.message === "empty") {
+        // setEmpty("Enter Username!");
+        setInvalidUsername("Enter Username!");
+        return;
+      }
+      else if (res.data.message === "notExists") {
+        setInvalidUsername("Invalid Username or Password!");
+        // setEmpty("");
+        return;
+      }
+      setCookie("accessToken", res.data.token);
+      router.push("/");
     })
-    
-    // Your logic here, if needed
-    // console.log(result);
-    router.push("/");
   };
   
   const [password, setPassword] = useState("");
@@ -50,6 +62,7 @@ const login = ({response}:any) => {
             
             
             <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Username" className="bg-[#1C0D16] border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-10 sm:mx-0 mx-5 rounded-xl"/>
+            {invalidUsername && <p className="text-red-500 text-xs pt-1 text-left">{invalidUsername}</p>}
             <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="Password" className="bg-[#1C0D16] border-transparent focus:border-transparent focus:ring-0 focus:outline-primary-pink-300  placeholder:text-[#837F7F] p-4 mt-4 sm:mx-0 mx-5 rounded-xl "/>
             
             

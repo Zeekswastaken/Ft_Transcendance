@@ -12,7 +12,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 export const store = configureStore({
   reducer: {
     avatarReducer,
-    userData: userDataReducer, // Include the userDataReducer
+    userDataReducer, // Include the userDataReducer
   },
   devTools: process.env.NODE_ENV !== "production",
 });

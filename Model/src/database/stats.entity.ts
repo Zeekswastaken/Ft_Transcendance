@@ -17,7 +17,7 @@ export class Stats{
     winrate:Number;
     // @Column()
     // Achievement;
-    @OneToOne(() => User, user => user.stats)
+    @OneToOne(() => User, user => user.stats, { cascade: true, eager: true, onDelete: 'CASCADE' })
     @JoinColumn()
     user: User ;
     @OneToMany(() => Achievements, achievements => achievements.stats)

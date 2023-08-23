@@ -1,5 +1,7 @@
 "use client"
 
+import { setUserData } from "@/redux/features/userDataSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -30,7 +32,6 @@ const userDataContext = createContext<userData | undefined>(undefined);
 export function useUserDataContext(): userData | undefined {
   return useContext(userDataContext);
 }
-
 // Define the userDataProvider component
 interface userDataProviderProps {
   children: React.ReactNode;
@@ -42,23 +43,27 @@ export function UserDataProvider({ children, }: userDataProviderProps) {
   // e.preventDefault()
   const User = useParams().username;
   const router = useRouter();
-  const [userData, setUserData] = useState<userData>({} as userData)
+  const [user, setUser] = useState<userData>({} as userData)
   useEffect(() => {
     axios.get(`http://localhost:3000/profile/${User}`).then((res) =>{
       if(!res.data){
         // router.push("/not-found");
         return;
       }
-      setUserData(res.data);
+      setUser(res.data);
     }).catch((err) => {
       console.log(err);
     })
     
-  }, [userData])
+  }, [User])
 
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setUserData(user));
+  }, [dispatch, user]);
 
   return (
-    <userDataContext.Provider value={userData}>
+    <userDataContext.Provider value={user}>
       {children}
     </userDataContext.Provider>
   );
