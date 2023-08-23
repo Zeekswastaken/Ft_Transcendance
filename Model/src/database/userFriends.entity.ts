@@ -9,9 +9,11 @@ export class UserFriends {
   @Column()
   status: String;
 
-  @Column()
-  senderid: Number;
+  @ManyToOne(() => User, user => user.friendsassender, { eager: true })
+  @JoinColumn({ name: 'senderid' })
+  sender: User; // Store only the id of the sender
 
-  @Column()
-  receiverid: Number;
+  @ManyToOne(() => User, user => user.friendsasreceiver, { eager: true })
+  @JoinColumn({ name: 'receiverid' })
+  receiver: User;
 }

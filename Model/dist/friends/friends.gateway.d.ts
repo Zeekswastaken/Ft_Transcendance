@@ -9,7 +9,7 @@ export declare class FriendsGateway {
     create(data: {
         userID: Number;
         recipientID: Number;
-    }, client: Socket): Promise<void>;
+    }, client: Socket): Promise<import("../database/userFriends.entity").UserFriends>;
     accept(data: {
         userID: Number;
         recipientID: Number;

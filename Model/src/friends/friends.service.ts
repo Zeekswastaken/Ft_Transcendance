@@ -20,76 +20,58 @@ export class FriendsService {
     const recipient = await this.userRepository.findOne({where: { id: Equal(recipientid)}, relations: ['friendsassender', 'friendsasreceiver'],});
     if (!initiator || !recipient)
       throw new HttpException("User or Recipient not found",HttpStatus.FORBIDDEN);
-    const friendship = await this.userFriendsRepository.findOne({where: [{senderid: Equal(userid), receiverid: Equal(recipientid)},{senderid: Equal(recipientid), receiverid: Equal(userid)}]});
+      const friendship = await this.userFriendsRepository.findOne({where: [{sender: Equal(userid), receiver: Equal(recipientid)},{sender: Equal(recipientid), receiver: Equal(userid)}]});
     if (friendship)
-      throw new HttpException("The friend request has already been sent", HttpStatus.FORBIDDEN);
-    // const actualFriendship = new UserFriends();
-    // actualFriendship.senderid = initiator.id;
-    // actualFriendship.receiverid = recipient.id;
-    // actualFriendship.status = "pending";
-    // await this.userFriendsRepository.save(actualFriendship);
-    // initiator.friendsassender.push(actualFriendship);
-    // console.log(initiator.friendsassender)
-    // recipient.friendsasreceiver.push(actualFriendship);
-    // await this.userRepository.save(initiator);
-    // await this.userRepository.save(recipient);
-    // console.log("--------------------------> ",initiator.friendsassender[0].senderid);
-    // return actualFriendship;
+      throw new HttpException("The friend request has already been sent/accepted", HttpStatus.FORBIDDEN);
+    const actualFriendship = new UserFriends();
+    actualFriendship.sender = initiator;
+    actualFriendship.receiver = recipient;
+    actualFriendship.status = "pending";
+    await this.userFriendsRepository.save(actualFriendship);
+    initiator.friendsassender.push(actualFriendship);
+    console.log("-----=-=-=-=-> ", initiator.friendsassender)
+    recipient.friendsasreceiver.push(actualFriendship);
+    await this.userRepository.save(initiator);
+    await this.userRepository.save(recipient);
+    console.log("--------------------------> ",recipient.friendsasreceiver[0].receiver);
+    return actualFriendship;
   }
 
   findAll() {
     return `This action returns all friends`;
   }
+
   async acceptRequest(userid: Number, recipientid: Number) {
-    console.log(userid, " ======= ", recipientid);
-    const friendship = await this.userFriendsRepository.findOne({where: {senderid: Equal(recipientid), receiverid: Equal(userid)}});
-    console.log("=======> ", friendship.receiverid);
-    
-    if (!friendship) {
+    const friendship = await this.userFriendsRepository.findOne({
+      where: { sender: Equal(recipientid), receiver: Equal(userid)}, relations: ['receiver', 'sender']});
+  if (!friendship) {
       throw new HttpException("No request to accept", HttpStatus.FORBIDDEN);
-    }
-    // const accepting = await this.userRepository.createQueryBuilder("u")
-    // .leftJoinAndSelect("u.friendsasreceiver", "friendsasreceiver")
-    // .where("u.id = :userid", { userid })
-    // .getOne();
-    // console.log("FRIEND ====== ", accepting.friendsasreceiver[0].senderid); 
-    
-    // // console.log("======> ", accepting);
-    // // console.log("**********> ", accepting.friendsasreceiver[0]);
-    // // console.log("---------> ", accepting.friendsasreceiver[0]?.sender); 
-    // friendship.status = "accepted";
-    // console.log(friendship.receiver);
-    // await this.userFriendsRepository.save(friendship);
-
-
-    // const waiting = await this.userRepository.findOne({
-    //     where: { id: Equal(recipientid) },
-    //     relations: ['friendsassender', 'friendsasreceiver']
-    // });
-
-    // if (!accepting || !waiting) {
-    //     throw new HttpException("Users not found", HttpStatus.FORBIDDEN);
-    // }
-    // accepting.friendsasreceiver[0].sender = accepting;
-
-    
-    // const friendsassenderhip = accepting.friendsassender.find(
-    //     friend => friend.receiver.id === recipientid
-    // );
-    // if (friendsassenderhip) {
-    //     friendsassenderhip.status = "accepted";
-    // }
-
-    // // Update receiver's friendsasreceiver
-    // const friendsasreceiverhip = waiting.friendsassender.find(
-    //     friend => friend.sender.id === userid
-    // );
-    // if (friendsasreceiverhip) {
-    //     friendsasreceiverhip.status = "accepted";
-    // }
-
-    // console.log("****************> ", waiting.friendsassender[0]?.receiver);
-    // await this.userRepository.save([accepting, waiting]);
+  }
+  const accepting = await this.userRepository.findOne({
+      where: { id: Equal(userid) },
+      relations: ['friendsasreceiver']
+  });
+  const waiting = await this.userRepository.findOne({
+    where: { id: Equal(recipientid) },
+    relations: ['friendsassender']
+  });
+  if (!accepting || !waiting) {
+      throw new HttpException("User not found", HttpStatus.FORBIDDEN);
+  }
+  console.log("Friendship Receiver ID:", friendship.receiver);
+  console.log("Accepting Sender ID:", accepting.friendsasreceiver[0].sender);
+  console.log("Waiting Receiver ID", waiting.friendsassender[0].receiver);
+  const position = waiting.friendsassender.findIndex(
+    (friendship2) => friendship2.id === friendship.id
+  );
+  waiting.friendsassender[position].status = 'accepted';
+  const position2 = accepting.friendsasreceiver.findIndex(
+    (friendship2) => friendship2.id === friendship.id
+  );
+  accepting.friendsasreceiver[position].status = 'accepted';
+  friendship.status = 'accepted';
+  await this.userFriendsRepository.save(friendship);
+  await this.userRepository.save([accepting, waiting]);
 }
 
   

@@ -57,13 +57,11 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "memberships", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.senderid),
-    (0, typeorm_1.JoinColumn)({ name: "senderid" }),
+    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.sender),
     __metadata("design:type", Array)
 ], User.prototype, "friendsassender", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.receiverid),
-    (0, typeorm_1.JoinColumn)({ name: "receiverid" }),
+    (0, typeorm_1.OneToMany)(() => userFriends_entity_1.UserFriends, userFriends => userFriends.receiver),
     __metadata("design:type", Array)
 ], User.prototype, "friendsasreceiver", void 0);
 __decorate([

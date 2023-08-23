@@ -7,7 +7,7 @@ export declare class FriendsService {
     private readonly userRepository;
     private readonly notificationsRepository;
     constructor(userFriendsRepository: Repository<UserFriends>, userRepository: Repository<User>, notificationsRepository: Repository<Notification>);
-    create(userid: Number, recipientid: Number): Promise<void>;
+    create(userid: Number, recipientid: Number): Promise<UserFriends>;
     findAll(): string;
     acceptRequest(userid: Number, recipientid: Number): Promise<void>;
     refuseRequest(userid: Number, recipientid: Number): Promise<void>;
