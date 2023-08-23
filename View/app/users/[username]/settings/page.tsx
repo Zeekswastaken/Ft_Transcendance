@@ -104,7 +104,7 @@ const Settings = () => {
 
   return (
     <div className=" border-2 mt-10 border-primary-pink-300 rounded-[20px]">
-      <div className=" glass w-full h-auto ">
+      <div className="   glass w-full h-auto ">
         <div className=" flex place-content-center">
           <div className="  w-[78%] h-auto pb-20">
             <div className=" overflow-hidden whitespace-wrap">
@@ -114,7 +114,7 @@ const Settings = () => {
             </div>
             <div className="bg-[#2F0331] w-full grid grid-cols-1  2xl:grid-cols-3 mt-3 rounded-2xl opacity-90 border border-primary-pink-300">
               <div className=" 2xl:pt-16 pt-5 px-10 w-full">
-                <div className="  flex place-content-center mt-0">
+                <div className=" animate-fade-left animate-delay-100 flex place-content-center mt-0">
                   <label
                     htmlFor="uploadImage"
                     className="cursor-pointer flex relative place-content-center"
@@ -141,7 +141,7 @@ const Settings = () => {
                     name="avatar"
                   />
                 </div>
-                <div className=" mt-5 w-full">
+                <div className=" animate-fade-left animate-delay-300 mt-5 w-full">
                   <div className="mt-4">
                     <label
                         htmlFor="Bio"
@@ -163,7 +163,7 @@ const Settings = () => {
               </div>
               <div className="  p-12 grid col-span-2 space-y-4">
                 {/* <Inputs label="Username" exContent="Fouamep" type="text" /> */}
-                <div>
+                <div className=" animate-fade-left animate-delay-200">
                   <label
                       htmlFor="Username"
                       className=" text-xl tracking-wide font-Heading text-[#D4D4D4] "
@@ -176,7 +176,7 @@ const Settings = () => {
                   </div>
                 </div>
 
-                <div>
+                <div className="animate-fade-left animate-delay-[300ms]">
                   <label
                       htmlFor="Privacy"
                       className=" text-xl tracking-wide font-Heading text-[#D4D4D4] "
@@ -191,7 +191,7 @@ const Settings = () => {
                     </select>
                   </div>
                 </div>
-                <div>
+                <div className=" animate-fade-left animate-delay-[400ms]">
                   <label
                     htmlFor="Password"
                     className=" text-xl tracking-wide font-Heading text-[#D4D4D4] "
@@ -213,7 +213,7 @@ const Settings = () => {
                   </div>
                 </div>
               </div>
-              <div className=" flex space-x-5 my-5 place-content-center">
+              <div className="animate-fade-left animate-delay-[500ms] flex space-x-5 my-5 place-content-center items-center">
                   {/* <button onClick={handleCancel} className=" text-white font-Heading text-xl tracking-wide hover:text-primary-pink-300 duration-300">Cancel</button> */}
                   <Link href={`/users/${user?.username}`} className=" text-white font-Heading text-xl tracking-wide hover:text-primary-pink-300 duration-300">Cancel</Link>
                   <div className=" border-2 rounded-xl hover:bg-primary-pink-300 duration-300  border-primary-pink-300 ">

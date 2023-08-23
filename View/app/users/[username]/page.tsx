@@ -28,7 +28,7 @@ const LevelReached: React.FC<Props> = ({ styles, title }) => {
   const userData = useUserDataContext();
   return (
     <div
-      className={` glass overflow-auto no-scrollbar h-[350px] ${styles}`}
+      className={` animate-fade-right  glass overflow-auto no-scrollbar h-[350px] ${styles}`}
     >
         <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
         <div className=" flex place-content-center items-end">
@@ -58,9 +58,9 @@ const WinRate: React.FC<Props> = ({ styles, title }) => {
   const userData = useUserDataContext();
   return (
     <div
-      className={` glass ${styles}`}
+      className={` glass animate-fade-right animate-delay-150 ${styles}`}
     >
-      <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
+      <p className="  p-6 font-Bomb text-3xl text-white">{title}</p>
         <div className="  grid auto-cols-min my-10 grid-cols-1 2xl:grid-cols-4 gap-5 2xl:w-full px-6">
           <div className="  flex items-center place-content-center opacity-90 rounded-3xl">
               <div className=" flex items-end justify-center">
@@ -79,7 +79,7 @@ const WinRate: React.FC<Props> = ({ styles, title }) => {
 const MatchHistory: React.FC<Props> = ({ styles, title }) => {
   return (
     <div
-      className={` glass no-scrollbar h-[350px] whitespace-wrap overflow-auto ${styles}`}
+      className={` glass animate-fade-right animate-delay-150 no-scrollbar h-[350px] whitespace-wrap overflow-auto ${styles}`}
     >
       <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
       <div className=" relative text-white px-8 ">
@@ -92,11 +92,11 @@ const MatchHistory: React.FC<Props> = ({ styles, title }) => {
 						</tr>
 					</thead>
 					<tbody className=" font-bold overflow-auto text-xl">
-						<Row opponent="Hawkins" score="2-5" date="May 30, 2023" result="lost" avatar="/avatars/avatar1.png" />
-						<Row opponent="Gloria" score="5-2" date="May 30, 2023" result="win" avatar="/avatars/avatar2.png" />
-						<Row opponent="Colleen" score="6-3" date="May 30, 2023" result="win" avatar="/avatars/avatar3.png" />
-						<Row opponent="Karim" score="2-5" date="May 30, 2023" result="lost" avatar="/avatars/avatar4.png" />
-						<Row opponent="Samir" score="6-3" date="May 30, 2023" result="win" avatar="/avatars/avatar5.png" />
+						<Row opponent="Hawkins" score="2-5" date="May 30, 2023" result="lost" avatar="/avatars/avatar1.png "style="animate-fade-up animate-delay-[200ms]" />
+						<Row opponent="Gloria" score="5-2" date="May 30, 2023" result="win" avatar="/avatars/avatar2.png "style="animate-fade-up animate-delay-[400ms]" />
+						<Row opponent="Colleen" score="6-3" date="May 30, 2023" result="win" avatar="/avatars/avatar3.png "style="animate-fade-up animate-delay-[600ms]" />
+						<Row opponent="Karim" score="2-5" date="May 30, 2023" result="lost" avatar="/avatars/avatar4.png "style="animate-fade-up animate-delay-[800ms]" />
+						<Row opponent="Samir" score="6-3" date="May 30, 2023" result="win" avatar="/avatars/avatar5.png "style="animate-fade-up animate-delay-[1000ms]" />
 					</tbody>
 				</table>
 			</div>
@@ -109,11 +109,19 @@ const MatchHistory: React.FC<Props> = ({ styles, title }) => {
 const Achievments: React.FC<Props> = ({ styles, title }) => {
   return (
     <div
-      className={` glass h-[350px] whitespace-wrap overflow-hidden ${styles}`}
+      className={` animate-fade-right overflow-auto no-scrollbar glass h-[350px] ${styles}`}
     >
-      <p className=" p-6 font-Bomb text-3xl text-white">{title}</p>
-      <div>
-        d
+      <p className=" p-6 font-Bomb text-3xl text-white break-all">{title}</p>
+      <div className="px-2 sm:px-8 md:px-14 xl:px-32 2xl:px-6 space-y-1 ">
+        <div className="w-full h-20 flex rounded-xl bg-[#471D49]/[0.7]">
+          <div className="w-1/5 p-4  h-full flex items-center justify-center">
+            <img src="/Spectate.png" alt="" />
+          </div>
+          <div className="w-4/5 py-4  h-full flex-1 items-start">
+            <p className="font-Bomb text-white text-lg">Spectate 10 matches</p>
+            <p className=" mb-5 font-Heading text-sm">sdds</p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -121,7 +129,7 @@ const Achievments: React.FC<Props> = ({ styles, title }) => {
 
 const Profile = () => {
   return (
-    <div className=" grid grid-rows-2 gap-y-10 h-auto ">
+    <div className=" grid grid-rows-2 gap-y-10 h-auto">
       <div className=" grid grid-cols-1 2xl:grid-cols-3 gap-6 xl:gap-x-6">
         <LevelReached title="Level Reached" styles="" number="" />
         <WinRate title="Win Rate" styles="xl:col-span-2" number="" />

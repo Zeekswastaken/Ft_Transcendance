@@ -102,7 +102,7 @@ const Navbar = () => {
 					</div>
 					{isAboveMediumScreens ? (
 						<>
-							<div className=" bg-primary-dark-300 drop-shadow-[6px_5px_0_rgba(0,0,00.25)] opacity-80 rounded-3xl w-[340px]">
+							<div className="  bg-primary-dark-300 drop-shadow-[6px_5px_0_rgba(0,0,00.25)] opacity-80 rounded-3xl w-[340px]">
 								<Nav />
 							</div>
 							<div className=" flex justify-between space-x-7">

@@ -5,10 +5,13 @@ import React, { useEffect, useState } from "react";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { getCookie } from "cookies-next";
 
+type Props = {
+  styles: string;
+}
 
-const FriendCard = () => {
+const FriendCard = ( {styles}:Props ) => {
   return (
-    <div className=" bg-[#3A0E3B] drop-shadow-[6px_5px_0_rgba(0,0,00.15)] rounded-2xl px-2 2xl:px-6 py-3">
+    <div className={` ${styles} bg-[#3A0E3B] drop-shadow-[6px_5px_0_rgba(0,0,00.15)] rounded-2xl px-2 2xl:px-6 py-3`}>
       <div className=" flex justify-between space-x-2 items-center">
         <div className=" flex space-x-5">
           <img
@@ -117,7 +120,7 @@ const Friends = () => {
             friend list
           </h1>
           <div className="  py-8 bg-[#2F0331] rounded-3xl">
-            <div className="pt-1 pl-2 2xl:pl-10">
+            <div className=" animate-fade-left pt-1 pl-2 2xl:pl-10">
               <div className=" flex space-x-3 text-white font-Heading text-2xl tracking-wide">
                 <div className={friendButtonStyle}>
                   <button onClick={handleFriendClickedTab}>Friends</button>
@@ -130,14 +133,14 @@ const Friends = () => {
               </div>
             </div>
             {friends && !blocked ? (
-              <div className=" overflow-y-auto no-scrollbar max-h-[450px] rounded-xl mx-2 2xl:mx-10 mt-8 grid  grid-cols-1 xl:grid-cols-2 gap-4 ">
-                <FriendCard />
-                <FriendCard />
-                <FriendCard />
+              <div className=" animate-fade-left overflow-y-auto no-scrollbar max-h-[450px] rounded-xl mx-2 2xl:mx-10 mt-8 grid  grid-cols-1 xl:grid-cols-2 gap-4 ">
+                <FriendCard styles=""/>
+                <FriendCard styles=""/>
+                <FriendCard styles=""/>
 
               </div>
             ) : (
-              <div className=" overflow-y-auto no-scrollbar max-h-[450px] rounded-xl mx-2 2xl:mx-10 mt-8 grid  grid-cols-1 xl:grid-cols-2 gap-4 ">
+              <div className=" animate-fade-right overflow-y-auto no-scrollbar max-h-[450px] rounded-xl mx-2 2xl:mx-10 mt-8 grid  grid-cols-1 xl:grid-cols-2 gap-4 ">
                 <BlockedCard />
                 <BlockedCard />
                 <BlockedCard />

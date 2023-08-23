@@ -16,7 +16,7 @@ const Icon = ({ link, imageSrc, imageAlt} : LinkData) => {
 	useEffect(() => {
 	  }, [pathname])
 	return (
-		<div>
+		<div className="">
 			<Link href={link} >
 				<div className=" relative">
 					

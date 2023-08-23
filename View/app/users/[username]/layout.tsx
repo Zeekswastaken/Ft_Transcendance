@@ -16,11 +16,11 @@ interface Props {
   link: string;
 }
 
-const ProfileTabs: React.FC<Props> = ({ title, link }) => {
+const ProfileTabs: React.FC<Props> = ({ title, link, styles }) => {
   const pathname = usePathname();
   useEffect(() => {}, [pathname]);
   return (
-    <>
+    <div className={styles}>
       {pathname === link ? (
         <div className=" text-primary-pink-300 flex space-x-3 pb-4 duration-300">
           <ProfileSvgs SvgColor="#FF1382" SvgName={title} />
@@ -36,7 +36,7 @@ const ProfileTabs: React.FC<Props> = ({ title, link }) => {
           </p>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
@@ -105,7 +105,7 @@ export default function RootLayout({
                 {children}
               </div>
             )}
-            <div className=" mt-20 lg:mt-0 order-1 flex place-content-center">
+            <div className=" animate-fade-up mt-20 lg:mt-0 order-1 flex place-content-center">
               <div className="  bg-[#321B38]/[0.7] shadow-2xl rounded-2xl w-[85%]">
                 <div className=" 2xl:mb-0 mt-[50px] grid place-content-center ">
                   <div className=" w-[150px] h-[150px] border-4 border-primary-pink-300 rounded-full">
@@ -144,7 +144,7 @@ export default function RootLayout({
                         <Link href={`/users/${User}`}>
                           <ProfileTabs
                             link={`/users/${User}`}
-                            styles=""
+                            styles="animate-fade-right animate-delay-[150ms]"
                             title="Overview"
                           />
                         </Link>
@@ -153,7 +153,7 @@ export default function RootLayout({
                           <Link href={`/users/${User}/settings`}>
                             <ProfileTabs
                               link={`/users/${User}/settings`}
-                              styles=""
+                              styles="animate-fade-right animate-delay-[350ms]"
                               title="Settings"
                             />
                           </Link>
@@ -163,14 +163,14 @@ export default function RootLayout({
                         <Link href={`/users/${User}/friends`}>
                           <ProfileTabs
                             link={`/users/${User}/friends`}
-                            styles=""
+                            styles="animate-fade-right animate-delay-[550ms]"
                             title="Friends"
                           />
                         </Link>
                         <Link href={`/users/${User}/groups`}>
                           <ProfileTabs
                             link={`/users/${User}/groups`}
-                            styles=""
+                            styles="animate-fade-right animate-delay-[750ms]"
                             title="Channels"
                           />
                         </Link>

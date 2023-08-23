@@ -1,8 +1,13 @@
+import { type } from "os";
 import React from "react";
 
-const GroupCard = () => {
+type Props = {
+  styles: string;
+};
+
+const GroupCard = ( {styles}:Props ) => {
   return (
-    <div className=" bg-[#3A0E3B] drop-shadow-[6px_5px_0_rgba(0,0,00.15)] h-[160px] rounded-xl">
+    <div className={` ${styles} bg-[#3A0E3B] drop-shadow-[6px_5px_0_rgba(0,0,00.15)] h-[160px] rounded-xl`}>
       <div className=" h-[40%] bg-[url('/neon-background2.jpeg')] rounded-t-xl bg-cover bg-center "></div>
       <p className=" text-white font-Heading text-xl tracking-widest pt-3 px-4">
         Vestibulum
@@ -37,9 +42,9 @@ const Groups = () => {
           </h1>
           <div className=" overflow-auto no-scrollbar py-8  bg-[#2F0331] rounded-3xl">
             <div className=" overflow-y-auto no-scrollbar max-h-[450px] mx-4 md:mx-10 grid grid-cols-1 xl:grid-cols-2 gap-4 ">
-              <GroupCard />
-              <GroupCard />
-              <GroupCard />
+              <GroupCard styles="animate-fade-up animate-delay-100"/>
+              <GroupCard styles="animate-fade-up animate-delay-200"/>
+              <GroupCard styles="animate-fade-up animate-delay-300"/>
             </div>
           </div>
         </div>

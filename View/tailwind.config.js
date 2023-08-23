@@ -11,18 +11,6 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    // screens: {
-    // 'sm': '640px',
-    // 'md': '768px',
-    // 'lg': '1024px',
-    // 'xl': '1280px',
-    // '2xl': '1536px',
-    // '3xl': '1792px',
-    // '4xl': '2048px',
-    // '5xl': '2304px',
-    // '6xl': '2560px',
-    // '7xl': '2700px',
-    // },
     extend: {
       aspectRatio: {
         '3': '3',
@@ -35,12 +23,6 @@ module.exports = {
         'OneVsBot': "url('/OneVsBot.png')",
         'Spactate': "url('/Spactate.png')"
       },
-      // fontFamily: {
-      //   'glitch' : ['"Glitch Inside"'],
-      //   'heading': ['"Heading Pro Trial"'],
-      //   'manrope': ["Manrope"],
-      //   'bomb': ['"The Bomb Sound"'],
-      // },
       colors: {
         "primary-purple-100": "#411742",
         "primary-purple-200": "#450746",
