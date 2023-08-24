@@ -112,17 +112,31 @@ const Achievments: React.FC<Props> = ({ styles, title }) => {
       className={` animate-fade-right overflow-auto no-scrollbar glass h-[350px] ${styles}`}
     >
       <p className=" p-6 font-Bomb text-3xl text-white break-all">{title}</p>
-      <div className="px-2 sm:px-8 md:px-14 xl:px-32 2xl:px-6 space-y-1 ">
+
+      <div className=" grid gap-x-6 gap-y-2 mx-8 2xl:mx-1 grid-cols-1 sm:grid-cols-2 2xl:grid-cols-1 ">
+        <div className="w-full h-20 flex rounded-xl justify-between bg-[#471D49]/[0.7]">
+          <div className=" p-4 top-0 z-50 w-[80px] h-full flex justify-center items-center ">
+            <img src="/Spectate.png" alt="" className=" rounded-lg" />
+          </div>
+          <div className="py-4 h-full flex-1 items-start">
+            <p className="font-Heading 2xl:tracking-normal tracking-wide text-white text-base"><span className=" font-Bomb">3</span> hard mode Matches</p>
+            <p className=" mb-5 font-Heading text-sm">played <span className=" font-Bomb">2</span></p>
+          </div>
+          <p className=" font-Bomb text-white text-sm p-3 2xl:py-2">2/3</p>
+          <div className=" h-20 absolute w-2/3 bg-slate-400/[0.2] rounded-xl animate-fade-right animate-ease-in animate-duration-1000 animate-delay-700"/>
+        </div>
+      </div>
+      {/* <div className="px-2 sm:px-8 md:px-14 xl:px-32 2xl:px-6 space-y-1 ">
         <div className="w-full h-20 flex rounded-xl bg-[#471D49]/[0.7]">
           <div className="w-1/5 p-4  h-full flex items-center justify-center">
-            <img src="/Spectate.png" alt="" />
+            <img src="/Spectate.png" alt="" className=" rounded-lg" />
           </div>
           <div className="w-4/5 py-4  h-full flex-1 items-start">
             <p className="font-Bomb text-white text-lg">Spectate 10 matches</p>
             <p className=" mb-5 font-Heading text-sm">sdds</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

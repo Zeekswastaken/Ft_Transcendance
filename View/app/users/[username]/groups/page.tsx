@@ -18,7 +18,7 @@ const GroupCard = ( {styles}:Props ) => {
             <button>Chat</button>
           </div>
           <div className=" bg-[#6E4778] hover:bg-[#6E4778]/[0.8] duration-300 text-base rounded-lg font-Heading tracking-wider text-white py-1 px-3">
-            <button>Joind</button>
+            <button>Joined</button>
           </div>
         
         </div>

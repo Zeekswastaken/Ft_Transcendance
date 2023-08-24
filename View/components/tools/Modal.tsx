@@ -88,13 +88,13 @@ const OneVsBot:React.FC<Props> = ({ title }) => {
     <div className=" w-auto place-content-center backdrop-blur-sm">
       <h3 className="text-[40px] mt-2 font-Bomb leading-6 text-gray-100 tracking-wide"> {title} </h3>
       <div className='font-Bomb text-3xl tracking-wide text-white  my-10 flex space-x-6 '>
-            <button onClick={handelChoosenBot} className=" animate-fade-right animate-delay-100 shadow-xl hover:shadow-green-300 hover:text-green-100 duration-300 brightness-100 bg-[url('/easy.jpeg')]  bg-cover bg-center  h-[250px] w-[180px] rounded-3xl">
+            <button onClick={handelChoosenBot} className=" animate-fade-up animate-delay-100 shadow-xl hover:shadow-green-300 hover:text-green-100 duration-300 brightness-100 bg-[url('/easy.jpeg')]  bg-cover bg-center  h-[250px] w-[180px] rounded-3xl">
               <p className=" mt-[200px]">EASY</p>
             </button>
-            <button onClick={handelChoosenBot} className=" animate-fade-right animate-delay-500 shadow-xl hover:shadow-yellow-300 hover:text-yellow-100 duration-300 bg-[url('/meduim.jpeg')] bg-cover bg-center h-[250px] w-[180px] rounded-3xl ">
+            <button onClick={handelChoosenBot} className=" animate-fade-up animate-delay-500 shadow-xl hover:shadow-yellow-300 hover:text-yellow-100 duration-300 brightness-100 bg-[url('/meduim.jpeg')] bg-cover bg-center h-[250px] w-[180px] rounded-3xl ">
               <p className="mt-[200px]" >Medium</p>
             </button>
-            <button onClick={handelChoosenBot} className=" animate-fade-right animate-delay-[900ms] shadow-xl hover:shadow-red-400 hover:text-red-100 duration-300 bg-[url('/hard.jpeg')] bg-cover bg-center h-[250px] w-[180px] rounded-3xl">
+            <button onClick={handelChoosenBot} className=" animate-fade-up animate-delay-[900ms] shadow-xl hover:shadow-red-400 hover:text-red-100 duration-300 brightness-100 bg-[url('/hard.jpeg')] bg-cover bg-center h-[250px] w-[180px] rounded-3xl">
               <p className="mt-[200px]">Hard</p>
             </button>
           <div className="slider-container">

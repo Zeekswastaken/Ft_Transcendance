@@ -32,7 +32,7 @@ const Card = ( {title, description, buttonText, image, span} : Cards ) => {
   function openModal() {setIsOpen(true)}
 
   return (
-    <div className="group card_shape animate-fade-up">
+    <div className="group card_shape ">
       <div className="h-96 ">
         <img className=" card_image" src={image} alt="" />
       </div>
