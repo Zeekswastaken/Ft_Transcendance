@@ -13,26 +13,61 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
+const bcrypt = require("bcrypt");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const user_entities_1 = require("../DB_tables/user.entities");
-let UserService = class UserService {
-    constructor(userRepo) {
+const user_entity_1 = require("../database/user.entity");
+const stats_entity_1 = require("../database/stats.entity");
+let UserService = exports.UserService = class UserService {
+    constructor(userRepo, statsRepository) {
         this.userRepo = userRepo;
+        this.statsRepository = statsRepository;
+    }
+    async compare(password, hashedone) {
+        return await bcrypt.compare(password, hashedone);
+    }
+    async hashpassword(password) {
+        const saltOrRounds = 10;
+        return await bcrypt.hash(password, saltOrRounds);
     }
     async save(Body) {
         await this.userRepo.save(Body);
     }
-    async findByemail(email) {
-        const user = await this.userRepo.findOne({ where: { email: email } });
+    async update(Body, id) {
+        console.log("id = " + id);
+        await this.userRepo.update(id, Body);
+    }
+    async findByName(username) {
+        const user = await this.userRepo.findOne({ where: { username: username }, relations: ['stats'] });
         return user;
     }
+    async findById(id) {
+        const user = await this.userRepo.findOne({ where: { id: id } });
+        return user;
+    }
+    async create(User) {
+        await this.userRepo.create(User);
+    }
+    async saveStat(stat) {
+        await this.statsRepository.save(stat);
+    }
+    async initStats(user) {
+        const stats = new stats_entity_1.Stats();
+        stats.winrate = 0;
+        stats.wins = 0;
+        stats.losses = 0;
+        stats.level = 0;
+        stats.matches_played = 0;
+        stats.user = user;
+        return await this.statsRepository.save(stats);
+    }
 };
-UserService = __decorate([
+exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_entities_1.User)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __param(1, (0, typeorm_1.InjectRepository)(stats_entity_1.Stats)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], UserService);
-exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

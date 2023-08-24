@@ -12,12 +12,11 @@ type LinkData = {
 }
 
 const Icon = ({ link, imageSrc, imageAlt} : LinkData) => {
-	// const router = useRouter();
 	const pathname = usePathname();
 	useEffect(() => {
 	  }, [pathname])
 	return (
-		<div>
+		<div className="">
 			<Link href={link} >
 				<div className=" relative">
 					
@@ -51,8 +50,8 @@ const Nav = () => {
 		<Icon link="/" imageSrc="/home-2.svg" imageAlt="Home Page" />
 		<Icon link="/chat" imageSrc="/messages-2.svg" imageAlt="Chat Page" />
 		<Icon link="/leaderboard" imageSrc="/ranking.svg" imageAlt="Leaderboard Page" />
-		<Icon link="/game" imageSrc="/gameboy.svg" imageAlt="Game Page" />
-		<Icon link="/groups" imageSrc="/people.svg" imageAlt="Groups Page" />
+		{/* <Icon link="/game" imageSrc="/gameboy.svg" imageAlt="Game Page" /> */}
+		<Icon link="/channels" imageSrc="/people.svg" imageAlt="Groups Page" />
 	</div>    
   )
 }

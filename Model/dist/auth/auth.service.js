@@ -8,40 +8,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
+const user_entity_1 = require("../database/user.entity");
 const user_service_1 = require("../user/user.service");
 const jwt_service_1 = require("./jwt.service");
-let AuthService = class AuthService {
+const passwordChecker_1 = require("../utils/passwordChecker");
+const stats_entity_1 = require("../database/stats.entity");
+let AuthService = exports.AuthService = class AuthService {
     constructor(userservice, jwtoken) {
         this.userservice = userservice;
         this.jwtoken = jwtoken;
     }
-    singin(res) {
-        res.sendFile('/Users/orbiay/Desktop/App2/app/views/login.html');
-    }
-    singup(res) {
-        res.sendFile('/Users/orbiay/Desktop/App2/app/views/signup.html');
-    }
     async check_and_create(body) {
-        if (body.password == body.confirmpassword) {
-            if (await this.userservice.findByemail(body.email) == null) {
-                await this.userservice.save(body);
-                return true;
+        if (!body.username)
+            return 'empty';
+        if ((0, passwordChecker_1.checkPasswordStrength)(body.password) == 'Weak')
+            return 'weak';
+        if (body.password == body.repassword) {
+            if (await this.userservice.findByName(body.username) == null) {
+                const user = new user_entity_1.User();
+                user.username = body.username;
+                user.password = await this.userservice.hashpassword(body.password);
+                user.avatar_url = body.avatar_url;
+                await this.userservice.save(user);
+                console.log("************>>" + user.id);
+                const stats = new stats_entity_1.Stats();
+                stats.level = 0;
+                stats.losses = 0;
+                stats.matches_played = 0;
+                stats.winrate = 0;
+                stats.wins = 0;
+                user.stats = stats;
+                stats.user = user;
+                await this.userservice.saveStat(stats);
+                await this.userservice.save(user);
+                console.log("************>>" + user.id);
+                return user;
             }
             else
-                return false;
+                return 'exists';
         }
         else
-            return false;
+            return 'notMatch';
     }
-    async validate_by_email(email, password) {
-        const user = await this.userservice.findByemail(email);
-        if (user && password == user.password && user.password && user.password != 'Oauth') {
+    async validate_by_username(username, password) {
+        const user = await this.userservice.findByName(username);
+        if (user && user.password && await this.userservice.compare(password, user.password) && user.password != 'Oauth') {
             console.log(user);
             return user;
         }
@@ -51,36 +65,40 @@ let AuthService = class AuthService {
         }
     }
     async create_Oauth(body) {
-        const user = await this.userservice.findByemail(body.email);
-        if (!user) {
-            await this.userservice.save(body);
-            return true;
+        const user1 = await this.userservice.findByName(body.username);
+        if (!user1) {
+            console.log(body);
+            const user = new user_entity_1.User();
+            user.username = body.username;
+            user.avatar_url = body.avatar_url;
+            await this.userservice.save(user);
+            const stats = new stats_entity_1.Stats();
+            stats.level = 0;
+            stats.losses = 0;
+            stats.matches_played = 0;
+            stats.winrate = 0;
+            stats.wins = 0;
+            user.stats = stats;
+            stats.user = user;
+            await this.userservice.saveStat(stats);
+            console.log("BEFORE");
+            await this.userservice.save(user);
+            console.log("AFTER");
+            console.log("************>>" + user.id);
+            return user;
         }
         else
             return false;
     }
-    async generatOken(user) {
-        return await this.jwtoken.generateToken(user);
+    async generateToken_2(user) {
+        return await this.jwtoken.generateToken_2(user);
     }
     async isValid(token) {
         return await this.jwtoken.verify(token);
     }
 };
-__decorate([
-    __param(0, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], AuthService.prototype, "singin", null);
-__decorate([
-    __param(0, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], AuthService.prototype, "singup", null);
-AuthService = __decorate([
+exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_service_1.UserService, jwt_service_1.JWToken])
 ], AuthService);
-exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

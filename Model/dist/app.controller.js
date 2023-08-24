@@ -18,29 +18,32 @@ const guards_1 = require("./auth/guards");
 const user_service_1 = require("./user/user.service");
 const use_Dto_1 = require("./Dto/use.Dto");
 const jwt_service_1 = require("./auth/jwt.service");
-let AppController = class AppController {
+let AppController = exports.AppController = class AppController {
     constructor(userservice, jwt) {
         this.userservice = userservice;
         this.jwt = jwt;
     }
     async default(res, req, query) {
         const status = req.user;
-        console.log(status);
-        if (status.status == 'unauthorized')
-            res.sendFile('/Users/orbiay/Desktop/App2/app/views/index.html');
+        console.log(status.message);
+        if (status.status == 'unauthorized') {
+            res.send(status);
+            return {
+                status: status,
+            };
+        }
         if (status.status == 'authorized') {
-            console.log(query.avatar_URL);
+            console.log(query.avatar_url);
             const decoded = await this.jwt.decoded(status.token);
-            const user = await this.userservice.findByemail((decoded).email);
-            console.log('user == ' + JSON.stringify(user));
-            res.render('profile', { user });
+            const user = await this.userservice.findByName((decoded).username);
+            res.send({ user: user, status: status });
         }
         console.log("status = " + status);
         return status;
     }
 };
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Post)(),
     (0, common_1.UseGuards)(guards_1.TokenGuard),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Req)()),
@@ -49,9 +52,8 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, use_Dto_1.UserDto]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "default", null);
-AppController = __decorate([
+exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [user_service_1.UserService, jwt_service_1.JWToken])
 ], AppController);
-exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map

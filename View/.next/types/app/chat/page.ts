@@ -1,4 +1,4 @@
-// File: /Users/yel-aoun/Desktop/Ft_Transcendence/View/app/chat/page.tsx
+// File: /goinfre/yel-aoun/Ft_Transcendence (copy)/View/app/chat/page.tsx
 import * as entry from '../../../../app/chat/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

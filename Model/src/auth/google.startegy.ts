@@ -13,11 +13,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy,'google'){
         // Access the tokens
         //console.log('Access Token:', accessToken);
         //console.log('Refresh Token:', refreshToken);
+
+        console.log( "Profile = " + JSON.stringify(Profile));
         const {  name, emails ,photos} = profile;
+        const firstName = name?.givenName;
         const user = {
-          username:name,
+          username:firstName,
           email: emails[0].value, 
-          image:photos[0].value,
+          avatar_url:photos[0].value,
         };
 
         return user;

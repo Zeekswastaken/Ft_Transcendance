@@ -1,17 +1,14 @@
-import { Response } from 'express';
-import { UserDto, jwtDTO } from 'src/Dto/use.Dto';
-import { User } from 'src/DB_tables/user.entities';
+import { UserDto } from 'src/Dto/use.Dto';
+import { User } from 'src/database/user.entity';
 import { UserService } from 'src/user/user.service';
 import { JWToken } from './jwt.service';
 export declare class AuthService {
     private readonly userservice;
     private readonly jwtoken;
     constructor(userservice: UserService, jwtoken: JWToken);
-    singin(res: Response): void;
-    singup(res: Response): void;
-    check_and_create(body: UserDto): Promise<boolean>;
-    validate_by_email(email: String, password: String): Promise<User | null>;
-    create_Oauth(body: UserDto): Promise<boolean>;
-    generatOken(user: jwtDTO): Promise<string>;
+    check_and_create(body: UserDto): Promise<String | boolean | User>;
+    validate_by_username(username: String, password: String): Promise<User | null>;
+    create_Oauth(body: UserDto): Promise<boolean | User>;
+    generateToken_2(user: Partial<User>): Promise<String>;
     isValid(token: String): Promise<boolean>;
 }
