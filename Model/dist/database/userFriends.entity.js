@@ -23,12 +23,12 @@ __decorate([
     __metadata("design:type", String)
 ], UserFriends.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.friendsassender, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.friendsassender, { eager: true, cascade: true, onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)({ name: 'senderid' }),
     __metadata("design:type", user_entity_1.User)
 ], UserFriends.prototype, "sender", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.friendsasreceiver, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.friendsasreceiver, { eager: true, cascade: true, onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)({ name: 'receiverid' }),
     __metadata("design:type", user_entity_1.User)
 ], UserFriends.prototype, "receiver", void 0);

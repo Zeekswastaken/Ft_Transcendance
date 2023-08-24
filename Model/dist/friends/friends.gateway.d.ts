@@ -24,9 +24,9 @@ export declare class FriendsGateway {
     }, client: Socket): Promise<void>;
     getAll(data: {
         userID: Number;
-    }, client: Socket): Promise<{
-        id: Number;
-        username: String;
-        avatar_url: any;
-    }[]>;
+    }, client: Socket): Promise<import("../database/user.entity").User[]>;
+    check(data: {
+        userID: Number;
+        recipientID: Number;
+    }, client: Socket): Promise<boolean>;
 }

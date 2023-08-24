@@ -79,11 +79,48 @@ let FriendsService = exports.FriendsService = class FriendsService {
         await this.userRepository.save([accepting, waiting]);
     }
     async refuseRequest(userid, recipientid) {
+        const friendship = await this.userFriendsRepository.findOne({ where: { sender: (0, typeorm_2.Equal)(userid), receiver: (0, typeorm_2.Equal)(recipientid) } });
+        if (!friendship)
+            throw new common_1.HttpException("No request to accept", common_1.HttpStatus.FORBIDDEN);
+        await this.userFriendsRepository.remove(friendship);
     }
     async removeFriendship(userid, recipientid) {
+        const friendship = await this.userFriendsRepository.findOne({ where: [{ sender: (0, typeorm_2.Equal)(userid), receiver: (0, typeorm_2.Equal)(recipientid) }, { sender: (0, typeorm_2.Equal)(recipientid), receiver: (0, typeorm_2.Equal)(userid) }] });
+        if (!friendship)
+            throw new common_1.HttpException("No friendship to remove", common_1.HttpStatus.FORBIDDEN);
+        await this.userFriendsRepository.remove(friendship);
     }
     async getUserFriends(userid) {
-        return [];
+        const user = await this.userRepository.findOne({
+            where: { id: (0, typeorm_2.Equal)(userid) },
+            relations: ['friendsassender', 'friendsasreceiver'],
+        });
+        if (!user) {
+            throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        const friends = user.friendsasreceiver
+            .concat(user.friendsassender)
+            .filter(friendship => friendship.status === 'accepted')
+            .map(friendship => friendship.sender.id != userid ? friendship.sender : friendship.receiver);
+        return friends;
+    }
+    async isFriend(userid, recipientid) {
+        const user = await this.userRepository.findOne({
+            where: { id: (0, typeorm_2.Equal)(userid) },
+            relations: ['friendsassender', 'friendsasreceiver'],
+        });
+        if (!user) {
+            throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        console.log(userid, " ===== ", recipientid);
+        const friends = user.friendsasreceiver
+            .concat(user.friendsassender)
+            .filter(friendship => friendship.status === 'accepted')
+            .find(friend => friend.sender.id == recipientid || friend.receiver.id == recipientid);
+        if (friends)
+            return true;
+        else
+            return false;
     }
 };
 exports.FriendsService = FriendsService = __decorate([

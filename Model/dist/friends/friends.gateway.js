@@ -89,6 +89,17 @@ let FriendsGateway = exports.FriendsGateway = class FriendsGateway {
             throw error;
         }
     }
+    async check(data, client) {
+        try {
+            const isfriend = await this.friendsService.isFriend(data.userID, data.recipientID);
+            return isfriend;
+        }
+        catch (error) {
+            console.error('Error getting the friends of the user: ', error.message);
+            client.emit('error', error.message);
+            throw error;
+        }
+    }
 };
 __decorate([
     (0, websockets_1.WebSocketServer)(),
@@ -134,6 +145,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
     __metadata("design:returntype", Promise)
 ], FriendsGateway.prototype, "getAll", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('checkFriend'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __param(1, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
+    __metadata("design:returntype", Promise)
+], FriendsGateway.prototype, "check", null);
 exports.FriendsGateway = FriendsGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {

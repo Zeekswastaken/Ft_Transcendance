@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@nestjs/config": "^3.0.0",
     "@nestjs/passport": "^10.0.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/passport-local": "^1.0.35",

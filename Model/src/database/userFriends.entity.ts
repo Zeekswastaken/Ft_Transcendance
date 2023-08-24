@@ -9,11 +9,11 @@ export class UserFriends {
   @Column()
   status: String;
 
-  @ManyToOne(() => User, user => user.friendsassender, { eager: true })
+  @ManyToOne(() => User, user => user.friendsassender, { eager: true , cascade: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'senderid' })
-  sender: User; // Store only the id of the sender
+  sender: User; 
 
-  @ManyToOne(() => User, user => user.friendsasreceiver, { eager: true })
+  @ManyToOne(() => User, user => user.friendsasreceiver, { eager: true, cascade: true, onDelete: 'CASCADE'  })
   @JoinColumn({ name: 'receiverid' })
   receiver: User;
 }

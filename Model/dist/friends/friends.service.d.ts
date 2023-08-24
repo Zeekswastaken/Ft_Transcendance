@@ -12,9 +12,6 @@ export declare class FriendsService {
     acceptRequest(userid: Number, recipientid: Number): Promise<void>;
     refuseRequest(userid: Number, recipientid: Number): Promise<void>;
     removeFriendship(userid: Number, recipientid: Number): Promise<void>;
-    getUserFriends(userid: Number): Promise<{
-        id: Number;
-        username: String;
-        avatar_url: any;
-    }[]>;
+    getUserFriends(userid: Number): Promise<User[]>;
+    isFriend(userid: Number, recipientid: Number): Promise<boolean>;
 }
