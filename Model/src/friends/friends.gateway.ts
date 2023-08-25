@@ -106,4 +106,17 @@ export class FriendsGateway {
       throw error;
     }
   }
+
+  @SubscribeMessage('checkPending')
+  async checkPend(@MessageBody() data: { userID: Number, recipientID: Number}, @ConnectedSocket() client: Socket) {
+    try{
+      const isfriend = await this.friendsService.isPending(data.userID, data.recipientID);
+      return isfriend;
+    }catch (error)
+    {
+      console.error('Error getting the friends of the user: ',error.message);
+      client.emit('error', error.message);
+      throw error;
+    }
+  }
 }
